@@ -10,6 +10,14 @@
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1"
   },
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-csso": "^3.0.1",
+    "gulp-if": "^3.0.0",
+    "gulp-sass": "^4.0.2",
+    "del": "^5.1.0"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
