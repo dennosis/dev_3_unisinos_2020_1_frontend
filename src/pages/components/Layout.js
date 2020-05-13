@@ -12,7 +12,7 @@ class Layout extends Component {
 				<Header/>
 				
 				
-				<Content>
+				<Content addClassName="content-body">
 					{
 						this.props.children
 					}

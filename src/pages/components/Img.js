@@ -21,37 +21,37 @@ class Img extends Component {
         super(props)
 
         let classImg=""
-        let classContainer="flex align-items--center justify-content--center overflow--hidden position--relative"
+        let classContainer=`flex align-items--center justify-content--center overflow--hidden position--relative ${props.addClassName}`
 
         switch(props.mode){
             case 1:
-                imgClass="height-max--100 width-max--100"
+                classImg="max-height--100 max-width--100"
                 break
 
             case 2:
-                imgClass="height-min--100 width-min--100"
+                classImg="min-height--100 min-width--100"
                 break
 
             case 3:
-                imgClass="height-max--100 width-min--100"
+                classImg="max-height--100 min-width--100"
                 break
 
             case 4:
-                imgClass="height-min--100 width-max--100"
+                classImg="min-height--100 max-width--100"
                 break
 
             default:
-                imgClass="height-max--100 width-max--100"
+                classImg="max-height--100 max-width--100"
                 break
         }
 
         let style={}
     
-        if(this.state.width)
-            style['width'] = this.state.width 
+        if(this.props.width)
+            style['width'] = this.props.width 
 
-        if(this.state.height)
-            style['height'] = this.state.height 
+        if(this.props.height)
+            style['height'] = this.props.height 
 
         this.state={
             classImg,

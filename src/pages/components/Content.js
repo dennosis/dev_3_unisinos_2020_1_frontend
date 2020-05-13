@@ -4,7 +4,7 @@ class Content extends Component {
 
     render() {
         return (
-            <section className="l-content flex flex--column" >
+            <section className={"l-content flex flex--column "+ this.props.addClassName} >
                 {
                     this.props.children
                 }

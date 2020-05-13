@@ -28,7 +28,6 @@ $color-palette: (
     "transparent":transparent,
     
     "white": #ffffff,
-
     'grey-10': #f2f2f2,
     'grey-20': #e5e5e5,
     'grey-30': #CCCCCC,  
@@ -47,11 +46,12 @@ $color-palette: (
     "warning-10": #eba034,        //cor utilizada nas msgm de atenção 
     "warning-20": #fff8d5,        //cor utilizada nas msgm de atenção 
 
-    'base-10': #25292e,
-    'base-20': #1d1f25,
-    'base-30': #18191e,
-    'base-40': #ac2800,
+    'base-10': #303338, //background
+    'base-20': #25282d,
+    'base-30': #7f8186, //title
+    'base-40': #b7bfcc, //text
 
+    'base-50': #ac2800,
 );
 
 $opacity-size:(
