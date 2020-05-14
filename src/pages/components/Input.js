@@ -5,12 +5,27 @@ import React, { Component } from 'react';
 class Input extends Component {
     constructor(props){
         super(props)
-        this.state={}
+        this.state={
+            value:props.value
+        }
     }
+/*
+    static getDerivedStateFromProps(props, state){ 
+        if (props.value !== state.value) {
+            console.log(props.value)
+            return {
+                value: props.value,
+            };
+        }
+        return null;
+    }
+*/
 
-    static getDerivedStateFromProps(nextProps) {    
-        return{
-            value: nextProps.value,
+    componentWillReceiveProps(nextProps) {
+        if (this.state.value !== nextProps.value) {
+            this.setState({
+                value: nextProps.value
+            });
         }
     }
 
@@ -31,9 +46,9 @@ class Input extends Component {
                 type={this.props.value || "text"}  
                 name={this.props.name} 
                 id={this.props.id} 
-                defaultValue={this.state.value} 
+                value={this.state.value} 
                 placeholder={this.props.placeholder || "..."}
-                onChange={this.props.onChange} 
+                onChange={this.handleChange} 
                 
                 className="input shadow-neumorphic--inset padding--s border-radius--2xs"
             />

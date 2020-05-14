@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+
+import api from '../Api'
+
 import Layout from './components/Layout';
 
 import Container from './components/Container';
@@ -9,7 +12,31 @@ import Img from './components/Img';
 
 
 
+
 class Exemples extends Component {
+	constructor(props){
+        super(props)
+        this.state = {
+			inputs:[]        
+		}
+    }
+	
+
+	setData = () =>{
+		api.test()
+			.then(
+				res=>{
+					console.log(res.data)
+					this.setState({ inputs:res.data })
+				},
+				error=>{
+					console.log({type:"error", content: "Erro ao buscar dados"})
+				}
+			)
+	}
+
+
+
   render(){
       	return(
 			<Layout>
@@ -31,10 +58,10 @@ class Exemples extends Component {
 						<div className="grid grid-gap--xs">	
 							<Input value={"teste"}/>
 							<Input  value={"teste2"}/>
-							<Input/>
-							<Input/>
-							<Input/>
-							<Button text={"button"}/>
+							<Input  value={this.state.inputs[0] || ""}/>
+							<Input value={ this.state.inputs[1] || ""} />
+							<Input value={ this.state.inputs[2] || ""} />
+							<Button text={"click"} onClick={()=>this.setData()} />
 							<Button text={"button2"}/>
 						</div>
 					</Container>
