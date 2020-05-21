@@ -9,17 +9,6 @@ class Input extends Component {
             value:props.value
         }
     }
-/*
-    static getDerivedStateFromProps(props, state){ 
-        if (props.value !== state.value) {
-            console.log(props.value)
-            return {
-                value: props.value,
-            };
-        }
-        return null;
-    }
-*/
 
     componentWillReceiveProps(nextProps) {
         if (this.state.value !== nextProps.value) {

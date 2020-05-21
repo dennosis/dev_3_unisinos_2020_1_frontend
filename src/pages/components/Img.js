@@ -19,9 +19,12 @@ import React, { Component } from 'react';
 class Img extends Component {
     constructor(props){
         super(props)
+        this.state=this.data(props)
+    }
 
+    data = (props) =>{
         let classImg=""
-        let classContainer=`flex align-items--center justify-content--center overflow--hidden position--relative ${props.addClassName}`
+        let classContainer=`flex align-items--center justify-content--center overflow--hidden position--relative ${props.addClassName||""}`
 
         switch(props.mode){
             case 1:
@@ -41,19 +44,19 @@ class Img extends Component {
                 break
 
             default:
-                classImg="max-height--100 max-width--100"
+                classImg=""
                 break
         }
 
         let style={}
     
-        if(this.props.width)
-            style['width'] = this.props.width 
+        if(props.width)
+            style['width'] = props.width 
 
-        if(this.props.height)
-            style['height'] = this.props.height 
+        if(props.height)
+            style['height'] = props.height 
 
-        this.state={
+        return{
             classImg,
             classContainer,
             style: style,
@@ -62,12 +65,21 @@ class Img extends Component {
         }  
     }
 
+    componentWillReceiveProps(nextProps) {
+        //if (this.state !== nextProps) {
+            this.setState(this.data(nextProps));
+        //}
+    }
+
+
+
+
     render() {
 
         return (
-            <div style={this.state.style} className={this.state.classContainer} >
+            <figure style={this.state.style} className={this.state.classContainer} >
                 <img src={this.state.src} alt={this.state.alt} className={this.state.classImg} />
-            </div>
+            </figure>
         )
     }
 }
