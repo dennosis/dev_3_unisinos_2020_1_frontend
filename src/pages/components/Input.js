@@ -5,8 +5,10 @@ import React, { Component } from 'react';
 class Input extends Component {
     constructor(props){
         super(props)
+        
         this.state={
-            value:props.value
+            value:props.value || "",
+            name:props.name
         }
     }
 
@@ -19,12 +21,18 @@ class Input extends Component {
     }
 
     handleChange = (event) =>{
-        event.preventDefault();
         this.setState({
             value: event.target.value
         });
-        if(this.props.onChange)
-            this.props.onChange(this.state.value)
+        if(this.props.onChange){
+            let value
+            if(this.state.name){
+                value = {name:this.state.name, value:event.target.value}
+            }else{
+                value = event.target.value
+            }
+            this.props.onChange(value)
+        }
     }
 
 
@@ -32,7 +40,7 @@ class Input extends Component {
     render(){
         return(
             <input 
-                type={this.props.value || "text"}  
+                type={this.props.type || "text"}  
                 name={this.props.name} 
                 id={this.props.id} 
                 value={this.state.value} 

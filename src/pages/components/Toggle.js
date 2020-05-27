@@ -5,17 +5,36 @@ export default class Toggle extends Component {
     constructor(props){
         super(props)
         this.state={
-            value:false
+            value:props.value || false,
+            name:props.name
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (this.state.value !== nextProps.value) {
+            this.setState({
+                value: nextProps.value
+            });
+        }
+    }
+
+
     handleChange = (event) =>{
-        event.preventDefault();
+
         this.setState({
             value: !this.state.value
         });
-        if(this.props.onChange)
-            this.props.onChange(this.state.value)
+
+        if(this.props.onChange){
+            let value
+            if(this.state.name){
+                value = {name:this.state.name, value:!this.state.value}
+            }else{
+                value = !this.state.value
+            }
+            this.props.onChange(value)
+        }
+
     }
 
     render() {
