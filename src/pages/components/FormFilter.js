@@ -11,15 +11,14 @@ class FormFilter extends Component {
 
 	constructor(props) {
         super(props)
-        //console.log(props.values.modelYear)
         this.state = {
             datePickup: props.values.datePickup || "",
             dateDelivery: props.values.dateDelivery || "",
             locationPickup: props.values.locationPickup || "",
             locationDelivery: props.values.locationDelivery || "",
-            isAplicationCar: props.values.isAplicationCar || false,
-            manufactureYear: props.values.manufactureYear || "",
-            modelYear: props.values.modelYear || ""
+            isAplicationCar: JSON.parse(props.values.isAplicationCar) || false,
+            manufactureYear: parseInt(props.values.manufactureYear) || "",
+            modelYear: parseInt(props.values.modelYear) || ""
         }
 	}
 
@@ -27,10 +26,24 @@ class FormFilter extends Component {
         this.setState({[input.name]:input.value})
     }
 
-    onSubmit(e){
+    async onSubmit(e){
         if(this.props.onSubmit){
             e.preventDefault();
-            this.props.onSubmit(this.state)
+
+            let values
+
+            if(this.props.notEmptyValues){
+                let obj = {...this.state}
+                await Object.keys(obj).forEach(key => {
+                    if(obj[key] === null || obj[key] === undefined || obj[key] === "") 
+                        delete obj[key]
+                })
+                values = obj
+            }else{
+                values = this.state
+            }
+
+            await this.props.onSubmit(values)
         }
     }
 

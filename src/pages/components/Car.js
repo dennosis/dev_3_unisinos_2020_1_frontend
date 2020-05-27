@@ -32,7 +32,8 @@ const icon = {
 class Car extends Component {
 
 	constructor(props) {
-		super(props)
+        super(props)
+        console.log(props)
 		this.state = {
 
         }
@@ -45,18 +46,18 @@ class Car extends Component {
                     
                     <Img width={150} height={150}  mode={1} src="https://ichef.bbci.co.uk/news/410/cpsprodpb/16CE8/production/_109061439_hi018470968.jpg" />
                     
-                    <div className="grid grid-template-rows--2fr">
+                    <div className="flex flex--column">
                         
                         <Title tag="h2" text="Chevrolet Prisma" />
         
-                        <div className="grid grid-template-columns--2fr">
+                        <div className="grid grid-template-columns--2fr grid-gap--s">
                             <div className="grid grid-template-columns--2fr">
                                 <FaRegSnowflake style={icon} />
                                 <h3>10</h3>
                             </div>
                             <div className="grid grid-template-columns--2fr">
                                 <AiFillCar style={icon} />
-                                <h3>10</h3>
+                                <h3>{this.props.manufactureYear}</h3>
                             </div>
                             <div className="grid grid-template-columns--2fr">
                                 <MdBusinessCenter style={icon} />

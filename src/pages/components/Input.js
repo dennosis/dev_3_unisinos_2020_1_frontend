@@ -20,18 +20,20 @@ class Input extends Component {
         }
     }
 
-    handleChange = (event) =>{
-        this.setState({
-            value: event.target.value
+    handleChange = async (event) =>{
+
+        await this.setState({
+            value: event.target.valueAsNumber || event.target.value
         });
+        
         if(this.props.onChange){
             let value
             if(this.state.name){
-                value = {name:this.state.name, value:event.target.value}
+                value = {name:this.state.name, value:this.state.value}
             }else{
                 value = event.target.value
             }
-            this.props.onChange(value)
+            await this.props.onChange(value)
         }
     }
 

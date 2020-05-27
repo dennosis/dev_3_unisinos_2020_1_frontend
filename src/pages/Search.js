@@ -29,7 +29,7 @@ class Search extends Component {
 		api.search(value)
 			.then(
 				res => {
-					console.log(res.data)
+					//console.log(res.data)
 					this.setState({ cars: res.data })
 				},
 				error => {
@@ -48,6 +48,7 @@ class Search extends Component {
 
 
 	onSubmit=(value)=>{
+		console.log(value)
 		this.search(value)
 	}
 
@@ -58,17 +59,13 @@ class Search extends Component {
 
 				<div style={templateColumns} className="grid grid-gap--l">
 					
-					<Container className="grid grid-gap--m">
+					<Container className="grid grid-gap--m margin-bottom--auto">
 						{this.state.cars.map((value, index) => {
 							return  <Car key={index} {...value}/>
 						})}
-						
-						<Car/>
-						<Car/>
-						<Car/>
 					</Container>
 
-					<FormFilter values={this.state.filter} onSubmit={(value)=>this.onSubmit(value)} />
+					<FormFilter values={this.state.filter} onSubmit={(value)=>this.onSubmit(value)} notEmptyValues />
 
 				</div>
 
