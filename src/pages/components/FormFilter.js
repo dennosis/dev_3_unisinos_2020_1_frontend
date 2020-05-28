@@ -16,7 +16,7 @@ class FormFilter extends Component {
             dateDelivery: props.values.dateDelivery || "",
             locationPickup: props.values.locationPickup || "",
             locationDelivery: props.values.locationDelivery || "",
-            isAplicationCar: JSON.parse(props.values.isAplicationCar) || false,
+            isAplicationCar:  props.values.isAplicationCar && JSON.parse(props.values.isAplicationCar) || false,
             manufactureYear: parseInt(props.values.manufactureYear) || "",
             modelYear: parseInt(props.values.modelYear) || ""
         }
