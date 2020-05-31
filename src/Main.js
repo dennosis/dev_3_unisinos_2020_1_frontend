@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Home from './pages/Home.js';
 import Exemples from './pages/Exemples.js';
 import Search from './pages/Search.js';
+import Login from './pages/Login.js';
 
 class Main extends Component {
     render(){
@@ -12,6 +13,7 @@ class Main extends Component {
                     <Switch>
                         <Route exact path="/search" component={Search}/>
                         <Route exact path="/exemples" component={Exemples}/>
+                        <Route exact path="/login" component={Login} />
                         <Route exact path="/" component={Home} />              
                     </Switch>
             </BrowserRouter>

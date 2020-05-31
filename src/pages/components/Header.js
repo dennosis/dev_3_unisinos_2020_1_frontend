@@ -12,8 +12,12 @@ class Header extends Component {
                 <Img src={LogoLocadoraBoaViagem} alt="Logo" />
 
                 <div className="grid grid-template-columns--2fr grid-gap--m">
-                    <Button text="Login" />
-                    <Button text="Cadastre-se" />
+                    <a href="/login">
+                        <Button text="Login"/>
+                    </a>
+                    <a href="/SignUp">
+                        <Button text="Cadastre-se"/>
+                    </a>
                 </div>
             </header>
         );
