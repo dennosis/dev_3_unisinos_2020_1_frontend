@@ -3,8 +3,8 @@ import Button from './Button.js';
 import Img from './Img';
 import LogoLocadoraBoaViagem from '../../images/LogoLocadoraBoaViagem-title-wb.png';
 
-
 class Header extends Component {
+
   render() {
         return (
             <header className="l-header position--fixed width--100 flex justify-content--space-between align-items--center padding--m background-color--base-10">
