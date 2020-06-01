@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import queryString from 'query-string';
+import api from '../Api'
+import { deleteToken, deleteUser } from '../persist'
+
 import Input from './components/Input';
 import Layout from './components/Layout';
 import Container from './components/Container';
@@ -11,103 +13,115 @@ class SignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            filter: queryString.parse(this.props.location.search) || false,
-            width: '250px',
-            height: '250px'
+            values:{},
+            errors:{}
         };
     }
 
-    handleInputChange(input) {
-        this.setState({ [input.name]: input.value })
+    componentWillMount() {
+        deleteToken()
+        deleteUser() 
+    }
+
+    handleInputChange(input){
+        this.setState({
+            values:{
+                ...this.state.values,
+                [input.name]:input.value,
+            },
+            errors:{
+                ...this.state.errors,
+                [input.name]:undefined
+            }
+        })
     }
 
     onClear() {
         this.setState({
-            name: "",
-            cpf: "",
-            rg: "",
-            phone: "",
-            cellphone: "",
-            email: "",
-            cnh: "",
-            cnhExpirationDate: "",
-            cnhCategory: "",
-            cep: "",
-            address: "",
-            number: "",
-            residentialComplement: "",
-            neighborhood: "",
-            city: "",
-            state: "",
-            country: ""
+            values:{},
+            errors:{}
         })
-        if (this.props.onClear) {
-            this.props.onClear(this.state)
-        }
     }
 
     async onSubmit(e) {
-        //TODO: Implementar função.
+        e.preventDefault();
+
+        //if((Object.keys(this.state.errors).length === 0)){
+
+            if(this.state.values.password != this.state.values.passwordConfirm){
+                this.setState({
+                    errors:{
+                        ...this.state.errors,
+                        password:"Is not equal",
+                        passwordConfirm:"Is not equal"
+                    }
+                })
+                return
+            }
+
+            api.register(this.state.values).then(
+                res => {
+                    this.props.history.push('/login')
+                },
+                error => {
+                    this.setState({
+                        errors:error.response.data.errors
+                    })
+                }
+            )
+        //}
     }
 
     render() {
         return (
             <Layout>
-                <form onSubmit={(e) => this.onSubmit(e)} className="grid grid-gap--xs" >
-                    <div className="grid grid-gap--l">
-                        <div className="grid grid-template-columns--3fr">
-                            <div></div>
-                            <div className="grid grid-template-columns--3fr">
-                                <div></div>
+                <form onSubmit={(e) => this.onSubmit(e)} className="grid grid-gap--l" >
+                        <div className="flex justify-content--center">
                                 <Img
                                     mode={1}
-                                    width={this.state.width}
-                                    height={this.state.height}
+                                    width="150px"
+                                    height="150px"
                                     addClassName="border-radius--50"
                                     src="https://cdn.pixabay.com/photo/2017/06/13/12/53/profile-2398782_960_720.png"
                                 />
-                                <div></div>
-                            </div>
-                            <div></div>
                         </div>
-                        <div className="grid grid-gap--l grid-template-columns--2fr grid-gap--2xl">
+                        <div className="grid grid-template-columns--2fr grid-gap--2xl">
                             <Container className="grid grid-gap--m margin-bottom--auto">
-                                <Input name="name" placeholder="Nome" value={this.state.name} onChange={(value) => this.handleInputChange(value)} />
-                                <Input name="cpf" placeholder="CPF" value={this.state.cpf} onChange={(value) => this.handleInputChange(value)} />
-                                <Input name="rg" placeholder="RG" value={this.state.rg} onChange={(value) => this.handleInputChange(value)} />
-                                <Input name="phone" placeholder="Telefone" value={this.state.phone} onChange={(value) => this.handleInputChange(value)} />
-                                <Input name="cellphone" placeholder="Celular" value={this.state.cellphone} onChange={(value) => this.handleInputChange(value)} />
-                                <Input name="email" type="email" placeholder="E-Mail" value={this.state.email} onChange={(value) => this.handleInputChange(value)} />
-                                <Input name="cnh" placeholder="CNH" value={this.state.cnh} onChange={(value) => this.handleInputChange(value)} />
-                                <div className="grid grid-gap--l grid-template-columns--2fr grid-gap--2xl">
-                                    <Input name="cnhExpirationDate" placeholder="Validade CNH" value={this.state.cnhExpirationDate} onChange={(value) => this.handleInputChange(value)} />
-                                    <Input name="cnhCategory" placeholder="Categoria CNH" value={this.state.cnhCategory} onChange={(value) => this.handleInputChange(value)} />
+                                <Input name="name" placeholder="Nome" error={this.state.errors.name } value={this.state.values.name} onChange={(value) => this.handleInputChange(value)} />
+                                <Input name="cpf" placeholder="CPF" error={this.state.errors.cpf } value={this.state.values.cpf} onChange={(value) => this.handleInputChange(value)} />
+                                <Input name="rg" placeholder="RG" error={this.state.errors.rg } value={this.state.values.rg} onChange={(value) => this.handleInputChange(value)} />
+                                <Input name="phone" placeholder="Telefone" error={this.state.errors.phone } value={this.state.values.phone} onChange={(value) => this.handleInputChange(value)} />
+                                <Input name="cellphone" placeholder="Celular" error={this.state.errors.cellphone } value={this.state.values.cellphone} onChange={(value) => this.handleInputChange(value)} />
+                                <Input name="email" type="email" placeholder="E-Mail" error={this.state.errors.email } value={this.state.values.email} onChange={(value) => this.handleInputChange(value)} />
+                                <Input name="cnhNumber" placeholder="CNH"  error={this.state.errors.cnhNumber } value={this.state.values.cnhNumber} onChange={(value) => this.handleInputChange(value)} />
+                                <div className="grid grid-gap--m grid-template-columns--2fr">
+                                    <Input  type="date" name="cnhExpirationDate"  error={this.state.errors.cnhExpirationDate } placeholder="Validade CNH" value={this.state.values.cnhExpirationDate} onChange={(value) => this.handleInputChange(value)} />
+                                    <Input name="cnhCategory" placeholder="Categoria CNH"  error={this.state.errors.cnhCategory } value={this.state.values.cnhCategory} onChange={(value) => this.handleInputChange(value)} />
                                 </div>
                             </Container>
 
                             <Container className="grid grid-gap--m margin-bottom--auto">
-                                <Input name="cep" placeholder="CEP" value={this.state.cep} onChange={(value) => this.handleInputChange(value)} />
-                                <Input name="address" placeholder="Endereço" value={this.state.address} onChange={(value) => this.handleInputChange(value)} />
-                                <Input name="number" placeholder="Número" value={this.state.number} onChange={(value) => this.handleInputChange(value)} />
-                                <Input name="residentialComplement" placeholder="Complemento" value={this.state.residentialComplement} onChange={(value) => this.handleInputChange(value)} />
-                                <Input name="neighborhood" placeholder="Bairro" value={this.state.neighborhood} onChange={(value) => this.handleInputChange(value)} />
-                                <Input name="city" placeholder="Cidade" value={this.state.city} onChange={(value) => this.handleInputChange(value)} />
-                                <Input name="state1" placeholder="Estado" value={this.state.state} onChange={(value) => this.handleInputChange(value)} />
-                                <Input name="country" placeholder="País" value={this.state.country} onChange={(value) => this.handleInputChange(value)} />
+                                <Input name="cep" placeholder="CEP"  error={this.state.errors.cep } value={this.state.values.cep} onChange={(value) => this.handleInputChange(value)} />
+                                <Input name="address" placeholder="Endereço"  error={this.state.errors.address } value={this.state.values.address} onChange={(value) => this.handleInputChange(value)} />
+                                <Input name="number" placeholder="Número"  error={this.state.errors.number } value={this.state.values.number} onChange={(value) => this.handleInputChange(value)} />
+                                <Input name="residentialComplement" placeholder="Complemento"  error={this.state.errors.residentialComplement } value={this.state.values.residentialComplement} onChange={(value) => this.handleInputChange(value)} />
+                                <Input name="neighborhood" placeholder="Bairro"  error={this.state.errors.neighborhood } value={this.state.values.neighborhood} onChange={(value) => this.handleInputChange(value)} />
+                                <Input name="city" placeholder="Cidade"  error={this.state.errors.city } value={this.state.values.city} onChange={(value) => this.handleInputChange(value)} />
+                                <Input name="state1" placeholder="Estado"  error={this.state.errors.statel } value={this.state.values.state} onChange={(value) => this.handleInputChange(value)} />
+                                <Input name="country" placeholder="País"  error={this.state.errors.country } value={this.state.values.country} onChange={(value) => this.handleInputChange(value)} />
                             </Container>
                         </div>
 
-                        <div className="grid grid-gap--l grid-template-columns--2fr grid-gap--2xl">
-                            <Input type="password" placeholder="Senha" />
-                            <Input type="passwordConfirm" placeholder="Confirmar senha" />
+                        <div className="grid grid-template-columns--2fr grid-gap--2xl">
+                            <Input name="password" type="password" placeholder="Senha"  error={this.state.errors.password } value={this.state.values.password} onChange={(value) => this.handleInputChange(value)} />
+                            <Input name="passwordConfirm" type="password"  error={this.state.errors.passwordConfirm } placeholder="Confirmar senha" value={this.state.values.passwordConfirm} onChange={(value) => this.handleInputChange(value)} />
                         </div>
 
-                        <div className="grid grid-gap--l grid-template-columns--2fr grid-gap--2xl">
-                            <Button type="reset" onClick={() => this.onClear()} text={'Limpar filtros'} addClassName="gradient-color--black" />
+                        <div className="grid grid-template-columns--2fr grid-gap--2xl">
+                            <Button type="reset" onClick={() => this.onClear()} text={'Limpar dados'} addClassName="gradient-color--black" />
                             <Button type="submit" text={'Cadastrar'} addClassName="gradient-color--base-60" />
                         </div>
 
-                    </div>
                 </form>
             </Layout >
         );

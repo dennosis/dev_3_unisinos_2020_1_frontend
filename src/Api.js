@@ -15,6 +15,9 @@ let header = {
     //"Authorization":"Bearer "
 }
 
+export const login = (authenticate) => api.post('/authenticate/signin', authenticate)
+export const register = (user) => api.post('/user/register', user)
+
 
 export const test = () => api.get('/',{headers: {...header}})
 
@@ -24,6 +27,8 @@ export const search = (filter) => api.post('/cars/search',filter,{headers: {...h
 
 
 const apis = {
+    login,
+    register,
     test,
     search
 }
