@@ -7,7 +7,7 @@ import Title from './components/Title';
 import ImageBankSlip from '../images/BankSlip.png';
 import ImageCreditCard from '../images/CreditCard.png';
 
-const componentsPaymentMethods = {
+const componentPaymentMethods = {
     position: 'relative',
     left: '25%',
     right: '25%',
@@ -43,7 +43,7 @@ class PaymentMethods extends Component {
                     <div></div>
                     <div></div>
                         <a>
-                            <Img style={componentsPaymentMethods} width={this.state.width} mode={1} addClassName="border-radius--xs" src={ImageCreditCard} />
+                            <Img style={componentPaymentMethods} width={this.state.width} mode={1} addClassName="border-radius--xs" src={ImageCreditCard} />
                             <div style={templateCreditCardNumber} className="grid">
                                 <div></div>
                                 <Title style={templateCreditCardNumber} tag="h3" text="**** **** **** 1234" />
@@ -58,7 +58,7 @@ class PaymentMethods extends Component {
                     <div></div>
                     <div></div>
                     <a>
-                        <Img style={componentsPaymentMethods} width={this.state.width} mode={1} addClassName="border-radius--xs" src={ImageCreditCard} />
+                        <Img style={componentPaymentMethods} width={this.state.width} mode={1} addClassName="border-radius--xs" src={ImageCreditCard} />
                         <div style={templateCreditCardNumber} className="grid">
                             <div></div>
                             <Title style={templateCreditCardNumber} tag="h3" text="**** **** **** 5678" />
@@ -77,7 +77,7 @@ class PaymentMethods extends Component {
                     <div></div>
                     <div></div>
                     <a>
-                        <Img style={componentsPaymentMethods} width={this.state.width} mode={1} addClassName="border-radius--xs" src={ImageCreditCard} />
+                        <Img style={componentPaymentMethods} width={this.state.width} mode={1} addClassName="border-radius--xs" src={ImageCreditCard} />
                     </a>
                     <div></div>
                     <div></div>
@@ -91,7 +91,7 @@ class PaymentMethods extends Component {
                     <div></div>
                     <div></div>
                     <a>
-                        <Img style={componentsPaymentMethods} width={this.state.width} mode={1} addClassName="border-radius--xs" src={ImageBankSlip} />
+                        <Img style={componentPaymentMethods} width={this.state.width} mode={1} addClassName="border-radius--xs" src={ImageBankSlip} />
                     </a>
                     <div></div>
                     <div></div>
