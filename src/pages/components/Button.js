@@ -8,7 +8,7 @@ class Button extends Component {
         const Element = this.props.href ? "a":"button"
 
         const attribs = {}
-        if(Element=="button"){
+        if(Element==="button"){
             attribs['type'] = this.props.type || "button"
         }else{
             attribs['href'] = this.props.href

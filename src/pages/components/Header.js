@@ -26,9 +26,6 @@ class Header extends Component {
 
 
     render() {
-
-         const user = getUser()
-
         return (
             <header className="l-header position--fixed width--100 flex justify-content--space-between align-items--center padding--m padding-right--2xl padding-left--2xl background-color--base-10">
                     
@@ -40,7 +37,7 @@ class Header extends Component {
                         <span className="font-size-s font--regular color--base-40">Seja bem vindo</span>
                         <div className="flex align-items--baseline">
                             <span className="font-size--2xl font--bold color--base-40">{this.state.user.name}</span>
-                            <a onClick={(e)=>this.logout(e)} className="font-size--xs font--bold margin-left--xs color--base-30 hover-color--base-40">sair</a>
+                            <a href onClick={(e)=>this.logout(e)} className="font-size--xs font--bold margin-left--xs color--base-30 hover-color--base-40">sair</a>
                         </div>
                     </div>
                 }

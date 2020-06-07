@@ -7,16 +7,18 @@ class Input extends Component {
         super(props)
         
         this.state={
-            value: props.value?props.value: "",
-            name:props.name,
+            value: props.value || "",
+            name:props.name || "",
             error:[]
         }
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.state.value !== nextProps.value) {
+        const value = nextProps.value || ""
+
+        if (this.state.value !== value) {
             this.setState({
-                value: nextProps.value
+                value
             });
         }
         if (this.state.error !== nextProps.error) {
@@ -37,7 +39,7 @@ class Input extends Component {
     handleChange = async (event) =>{
 
         await this.setState({
-            value: event.target.valueAsNumber || event.target.value,
+            value: this.props.type==="number"?event.target.valueAsNumber:event.target.value,
         });
         
         if(this.props.onChange){
@@ -59,12 +61,13 @@ class Input extends Component {
             <label>
                 <input 
                     type={this.props.type || "text"}  
-                    name={this.props.name} 
+                    name={this.state.name} 
                     id={this.props.id} 
                     value={this.state.value} 
                     placeholder={this.props.placeholder || "..."}
                     onChange={this.handleChange} 
-                    
+                    max={this.props.max}
+                    autoComplete={this.props.autocomplete||"on"}
                     className="input shadow-neumorphic--inset padding--s border-radius--2xs"
                 />
                 {

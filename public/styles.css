@@ -187,7 +187,7 @@ svg {
 ::placeholder {
   color: #999999; }
 
-select.input {
+select.select {
   -webkit-appearance: none;
   -ms-appearance: none;
   -moz-appearance: none;
@@ -771,7 +771,7 @@ select.input {
 .input-label {
   width: 210px; }
 
-.input {
+.input, .select {
   min-width: 0px;
   width: 100%; }
 

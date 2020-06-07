@@ -16,7 +16,7 @@ class FormFilter extends Component {
             dateDelivery: props.values.dateDelivery || "",
             locationPickup: props.values.locationPickup || "",
             locationDelivery: props.values.locationDelivery || "",
-            isAplicationCar:  props.values.isAplicationCar && JSON.parse(props.values.isAplicationCar) || false,
+            isAplicationCar:  props.values.isAplicationCar && JSON.parse(props.values.isAplicationCar),
             manufactureYear: parseInt(props.values.manufactureYear) || "",
             modelYear: parseInt(props.values.modelYear) || ""
         }
@@ -66,8 +66,8 @@ class FormFilter extends Component {
 		return (
 			<Container addClassName="margin-bottom--auto">
                 <form onSubmit={(e)=>this.onSubmit(e)} className="grid grid-gap--xs" >
-                    <Input name="datePickup" value={this.state.datePickup} placeholder="Data de Retirada"  onChange={(value)=>this.handleInputChange(value)} />
-                    <Input name="dateDelivery" value={this.state.dateDelivery} placeholder="Data de Entrega" onChange={(value)=>this.handleInputChange(value)} />
+                    <Input type="date" name="datePickup" value={this.state.datePickup} placeholder="Data de Retirada"  onChange={(value)=>this.handleInputChange(value)} />
+                    <Input type="date" name="dateDelivery" value={this.state.dateDelivery} placeholder="Data de Entrega" onChange={(value)=>this.handleInputChange(value)} />
 
                     <div className="border-top--2 border-color--base-40"></div>
 
