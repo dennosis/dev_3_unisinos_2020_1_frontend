@@ -2,20 +2,25 @@ import React, { Component } from 'react';
 import api from '../Api'
 
 import Layout from './components/Layout';
-import Container from './components/Container';
 import Img from './components/Img';
 import Title from './components/Title';
-import BankSlipImage from '../images/BankSlip.png';
+import ImageBankSlip from '../images/BankSlip.png';
+import ImageCreditCard from '../images/CreditCard.png';
 
-const componentsPaymentMethods = {
+const componentPaymentMethods = {
     position: 'relative',
     left: '25%',
     right: '25%',
     top: '25%',
-    height: '50%',
-    width: '50%',
+    height: '25%',
+    width: '25%',
     marginBottom: '35px'
 }
+
+const templateCreditCardNumber = {
+    gridTemplateColumns: '1fr 19fr 1fr'
+};
+
 
 class PaymentMethods extends Component {
 
@@ -34,75 +39,62 @@ class PaymentMethods extends Component {
                     <Title text="Seus Cartões Salvos" />
                 </div>
 
-                <div style={componentsPaymentMethods} className="grid grid-gap--2xl">
-                    <a>
-                        <Container>
-                            <div className="grid grid-template-columns--2fr grid-gap--2xl">
-                                <Title tag="h2" text="NÚMERO:" />
-                                <Title tag="h2" text="**** **** **** 4567" />
-                            </div>
-                            <div className="grid grid-template-columns--2fr grid-gap--2xl">
-                                <Title tag="h2" text="VALIDADE:" />
-                                <Title tag="h2" text="05/2024" />
-                            </div>
-                            <div className="grid grid-template-columns--2fr grid-gap--2xl">
-                                <Title tag="h2" text="CPF:" />
-                                <Title tag="h2" text="090.230.360-00" />
-                            </div>
-                        </Container>
-                    </a>
+                <div className="grid grid-template-columns--5fr grid-gap--2xl margin--m">
+                    <div></div>
+                    <div></div>
+                        <a>
+                            <Img style={componentPaymentMethods} width={this.state.width} mode={1} addClassName="border-radius--xs" src={ImageCreditCard} />
+                            <div style={templateCreditCardNumber} className="grid">
+                                <div></div>
+                                <Title style={templateCreditCardNumber} tag="h3" text="**** **** **** 1234" />
+                                <div></div>
+                            </div>                        
+                        </a>
+                    <div></div>
+                    <div></div>
                 </div>
 
-                <div style={componentsPaymentMethods} className="grid grid-gap--2xl">
+                <div className="grid grid-template-columns--5fr grid-gap--2xl margin--m">
+                    <div></div>
+                    <div></div>
                     <a>
-                        <Container>
-                            <div className="grid grid-template-columns--2fr grid-gap--2xl">
-                                <Title tag="h2" text="NÚMERO:" />
-                                <Title tag="h2" text="**** **** **** 4567" />
-                            </div>
-                            <div className="grid grid-template-columns--2fr grid-gap--2xl">
-                                <Title tag="h2" text="VALIDADE:" />
-                                <Title tag="h2" text="05/2024" />
-                            </div>
-                            <div className="grid grid-template-columns--2fr grid-gap--2xl">
-                                <Title tag="h2" text="CPF:" />
-                                <Title tag="h2" text="090.230.360-00" />
-                            </div>
-                        </Container>
+                        <Img style={componentPaymentMethods} width={this.state.width} mode={1} addClassName="border-radius--xs" src={ImageCreditCard} />
+                        <div style={templateCreditCardNumber} className="grid">
+                            <div></div>
+                            <Title style={templateCreditCardNumber} tag="h3" text="**** **** **** 5678" />
+                            <div></div>
+                        </div>
                     </a>
+                    <div></div>
+                    <div></div>
                 </div>
 
                 <div className="flex justify-content--center">
                     <Title text="Novo Cartão" />
                 </div>
 
-                <div style={componentsPaymentMethods} className="grid">
+                <div className="grid grid-template-columns--5fr grid-gap--2xl margin--m">
+                    <div></div>
+                    <div></div>
                     <a>
-                        <Container>
-                            <div className="grid grid-template-columns--2fr grid-gap--2xl">
-                                <Title tag="h2" text="NÚMERO:" />
-                                <Title tag="h2" text="**** **** **** 4567" />
-                            </div>
-                            <div className="grid grid-template-columns--2fr grid-gap--2xl">
-                                <Title tag="h2" text="VALIDADE:" />
-                                <Title tag="h2" text="05/2024" />
-                            </div>
-                            <div className="grid grid-template-columns--2fr grid-gap--2xl">
-                                <Title tag="h2" text="CPF:" />
-                                <Title tag="h2" text="090.230.360-00" />
-                            </div>
-                        </Container>
+                        <Img style={componentPaymentMethods} width={this.state.width} mode={1} addClassName="border-radius--xs" src={ImageCreditCard} />
                     </a>
+                    <div></div>
+                    <div></div>
                 </div>
 
                 <div className="flex justify-content--center">
                     <Title text="Boleto Bancário" />
                 </div>
 
-                <div style={componentsPaymentMethods} className="grid">                  
+                <div className="grid grid-template-columns--5fr grid-gap--2xl margin--m">
+                    <div></div>
+                    <div></div>
                     <a>
-                        <Img style={componentsPaymentMethods} width={this.state.width} mode={1} addClassName="border-radius--xs" src={BankSlipImage} />
+                        <Img style={componentPaymentMethods} width={this.state.width} mode={1} addClassName="border-radius--xs" src={ImageBankSlip} />
                     </a>
+                    <div></div>
+                    <div></div>
                 </div>
 
             </Layout>
