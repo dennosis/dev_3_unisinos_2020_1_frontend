@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Layout from './components/Layout';
 import Container from './components/Container';
 import Input from './components/Input';
+import Select from './components/Select';
 import Toggle from './components/Toggle';
 import Button from './components/Button';
 
@@ -26,14 +27,12 @@ class NewCard extends Component {
         super(props)
         this.state = {
             values:{
-                paymentTerms:"",
                 holderBirthDate:"",
-                holderDocId:"",
+                document:"",
                 cardNumber:"",
-                cardExpMonth:"",
-                cardExpYear:"",
-                cardCsv:"",
-                saveCard:"",
+                expirationMonth:"",
+                expirationYear:"",
+                csv:"",
             },
             errors:{}
         }
@@ -55,15 +54,32 @@ class NewCard extends Component {
 
     render(){
 
-        const condintionPayment = [
-            {name:"1 x R$ 200,00", value:"A"},
-            {name:"B", value:"B"},
-            {name:"C", value:"C"},
-            {name:"D", value:"D"}
+        const optionsYear = [
+            {name:'2020', value:'2020'},
+            {name:'2021', value:'2021'},
+            {name:'2022', value:'2022'},
+            {name:'2023', value:'2023'},
+            {name:'2024', value:'2024'},
+            {name:'2025', value:'2025'},
+            {name:'2026', value:'2026'},
+            {name:'2027', value:'2027'},
+            {name:'2028', value:'2028'},
         ]
 
-
-
+        const optionsMonth = [
+            {name:'01', value:'01'},
+            {name:'02', value:'02'},
+            {name:'03', value:'03'},
+            {name:'04', value:'04'},
+            {name:'05', value:'05'},
+            {name:'06', value:'06'},
+            {name:'07', value:'07'},
+            {name:'08', value:'08'},
+            {name:'09', value:'09'},
+            {name:'10', value:'10'},
+            {name:'11', value:'11'},
+            {name:'12', value:'12'},
+        ]
 
         return (
             <Layout>
@@ -73,23 +89,20 @@ class NewCard extends Component {
                             <h2>Novo cartão</h2>
                         </div>
 
-                        <Input  placeholder = "Condição de pagamento (combo)" name = "paymentTerms" value = {this.state.values.paymentTerms} error = {this.state.errors.paymentTerms} onChange = {(value)=>this.handleInputChange(value)}/>
-                        
                         <div className="grid grid-gap--m grid-template-columns--2fr">
                             <label style={dateComp}> Data de nascimento do titular:</label>
                             <Input name = "holderBirthDate" type = "date" value = {this.state.values.holderBirthDate} error = {this.state.errors.holderBirthDate} onChange = {(value)=>this.handleInputChange(value)}/>
                         </div>
                         
-                        <Input placeholder = "CPF/CNPJ" name = "holderDocId" value = {this.state.values.holderDocId} error = {this.state.errors.holderDocId} onChange = {(value)=>this.handleInputChange(value)}/>
+                        <Input placeholder = "CPF/CNPJ" name = "document" value = {this.state.values.document} error = {this.state.errors.document} onChange = {(value)=>this.handleInputChange(value)}/>
                         <Input placeholder = "Numero do cartão" name = "cardNumber" value = {this.state.values.cardNumber} error = {this.state.errors.cardNumber} onChange = {(value)=>this.handleInputChange(value)}/>
                         
                         <div className="grid grid-gap--m grid-template-columns--2fr">
-                            <Input placeholder = "Mês (combo)" name = "cardExpMonth" value = {this.state.values.cardExpMonth} error = {this.state.errors.cardExpMonth} onChange = {(value)=>this.handleInputChange(value)} />
-                            <Input placeholder = "Ano (combo)" name = "cardExpYear" value = {this.state.values.cardExpYear} error = {this.state.errors.cardExpYear} onChange = {(value)=>this.handleInputChange(value)}/>
+                            <Select options={optionsYear} placeholder = "Mês (combo)" name = "expirationMonth" value = {this.state.values.expirationMonth} error = {this.state.errors.expirationMonth} onChange = {(value)=>this.handleInputChange(value)} />
+                            <Select options={optionsMonth} placeholder = "Ano (combo)" name = "expirationYear" value = {this.state.values.expirationYear} error = {this.state.errors.expirationYear} onChange = {(value)=>this.handleInputChange(value)}/>
                         </div>
                         
-                        <Input placeholder = "Código de segurança (CSV)" name = "cardCsv" value = {this.state.values.cardCsv} error = {this.state.errors.cardCsv} onChange = {(value)=>this.handleInputChange(value)}/>
-                        <Toggle text = "Salvar cartão" name = "saveCard" value = {this.state.values.saveCard} error = {this.state.errors.saveCard} onChange = {(value)=>this.handleInputChange(value)}/>
+                        <Input placeholder = "Código de segurança (CSV)" name = "csv" value = {this.state.values.csv} error = {this.state.errors.csv} onChange = {(value)=>this.handleInputChange(value)}/>
                         
                         <div className="grid grid-gap--m grid-template-columns--1fr">
                             <Button type="submit" text={"confirmar"} addClassName="gradient-color--base-60" />

@@ -24,6 +24,7 @@ class FormFilter extends Component {
 
     handleInputChange(input){
         this.setState({[input.name]:input.value})
+        console.log(input.value)
     }
 
     async onSubmit(e){

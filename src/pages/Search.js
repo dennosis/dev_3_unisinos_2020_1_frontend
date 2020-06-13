@@ -19,8 +19,17 @@ const templateColumns = {
 class Search extends Component {
 	constructor(props) {
 		super(props)
+
+		let filter = queryString.parse(this.props.location.search)
+		if(!filter.datePickup){
+			const dateInit = new Date()
+			const dateEnd = new Date()
+			dateEnd.setDate(dateInit.getDate()+1)
+			filter["datePickup"] = dateInit.toISOString().substring(0, 10)
+			filter["dateDelivery"] = dateEnd.toISOString().substring(0, 10)
+		}
 		this.state = {
-			filter: queryString.parse(this.props.location.search) || false ,
+			filter,
 			cars:[]
 		}
 	}
@@ -76,8 +85,8 @@ class Search extends Component {
 
 
 
-	componentDidMount(){
-		this.search(this.state.filter)
+	async componentWillMount(){
+		await this.search(this.state.filter)
 	}
 
 

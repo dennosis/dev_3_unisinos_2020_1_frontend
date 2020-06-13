@@ -25,6 +25,8 @@ const rentalCompany = (company) => api.post('/rental-company',company,{headers: 
 const getRentalCompanies = () => api.get('/rental-companies',{headers: {...header}})
 const getRentalCompanyById = (id) => api.get(`/rental-company/${id}`,{headers: {...header}})
 
+const card = (card) => api.post('/cards',card,{headers: {...header}})
+
 
 const test = () => api.get('/',{headers: {...header}})
 
