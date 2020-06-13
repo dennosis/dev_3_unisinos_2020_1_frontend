@@ -39,6 +39,7 @@ class NewCard extends Component {
         }
     }
 
+    
     handleInputChange(input){
         this.setState({
             values:{
@@ -53,6 +54,17 @@ class NewCard extends Component {
     }
 
     render(){
+
+        const condintionPayment = [
+            {name:"1 x R$ 200,00", value:"A"},
+            {name:"B", value:"B"},
+            {name:"C", value:"C"},
+            {name:"D", value:"D"}
+        ]
+
+
+
+
         return (
             <Layout>
                 <Container style={componentsCard} className = "newCard">
@@ -61,7 +73,7 @@ class NewCard extends Component {
                             <h2>Novo cartão</h2>
                         </div>
 
-                        <Input placeholder = "Condição de pagamento (combo)" name = "paymentTerms" value = {this.state.values.paymentTerms} error = {this.state.errors.paymentTerms} onChange = {(value)=>this.handleInputChange(value)}/>
+                        <Input  placeholder = "Condição de pagamento (combo)" name = "paymentTerms" value = {this.state.values.paymentTerms} error = {this.state.errors.paymentTerms} onChange = {(value)=>this.handleInputChange(value)}/>
                         
                         <div className="grid grid-gap--m grid-template-columns--2fr">
                             <label style={dateComp}> Data de nascimento do titular:</label>

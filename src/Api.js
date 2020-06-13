@@ -1,5 +1,6 @@
 
 import axios from 'axios'
+import {getToken} from './persist'
   
 
 
@@ -11,26 +12,35 @@ if (process.env.NODE_ENV !== 'production')
 
 let header = {
     'Content-Type': 'application/json',
-    'Accept': 'application/json, text/plain, */*'
-    //"Authorization":"Bearer "
+    'Accept': 'application/json, text/plain, */*',
+    "Authorization": `Bearer ${getToken()}`
 }
 
-export const login = (authenticate) => api.post('/authenticate/signin', authenticate)
-export const register = (user) => api.post('/user/register', user)
+const login = (authenticate) => api.post('/authenticate/signin', authenticate)
+const register = (user) => api.post('/user/register', user)
+const getUser = () => api.get(`/user`,{headers: {...header}})
+const setUser = (user) => api.put(`/user/update`, user, {headers: {...header}})
+
+const rentalCompany = (company) => api.post('/rental-company',company,{headers: {...header}})
+const getRentalCompanies = () => api.get('/rental-companies',{headers: {...header}})
+const getRentalCompanyById = (id) => api.get(`/rental-company/${id}`,{headers: {...header}})
 
 
-export const test = () => api.get('/',{headers: {...header}})
+const test = () => api.get('/',{headers: {...header}})
 
 
-export const search = (filter) => api.post('/cars/search',filter,{headers: {...header}})
-
+const search = (filter) => api.post('/cars/search',filter)
 
 
 const apis = {
     login,
     register,
+    getUser,
+    setUser,
     test,
-    search
+    search,
+    getRentalCompanies,
+    rentalCompany
 }
 
 export default apis

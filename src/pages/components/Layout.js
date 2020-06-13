@@ -9,10 +9,9 @@ class Layout extends Component {
 	render() {
         return (
 			<>
-				<Header/>
+				<Header isMiniFilter = {this.props.isMiniFilter} mode={this.props.headerMode} history={this.props.history}/>
 				
-				
-				<Content addClassName="content-body">
+				<Content addClassName={`content-body ${this.props.isMiniFilter?"content-body--home":""}`} >
 					{
 						this.props.children
 					}

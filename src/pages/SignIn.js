@@ -67,7 +67,7 @@ class Login extends Component{
 
     render(){
 		return (
-			<Layout>
+			<Layout headerMode={1}  >
                 <Container style={componentsLogin} className="grandeFera">
                     <form onSubmit={(e)=>this.onSubmit(e)} className="grid grid-gap--xs" >
                         <Input 

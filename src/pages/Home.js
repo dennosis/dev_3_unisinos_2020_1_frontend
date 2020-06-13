@@ -13,8 +13,9 @@ import Img from './components/Img';
 class Home extends Component {
     render(){
 		return(
-			<Layout>
+			<Layout isMiniFilter={true} history={this.props.history}>
 				<Title text="Home"/>
+
 			</Layout>
 		)
   	}

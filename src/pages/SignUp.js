@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import api from '../Api'
-import { deleteToken, deleteUser } from '../persist'
+import { deleteToken, deleteUser, getUser} from '../persist'
 
 import Input from './components/Input';
 import Select from './components/Select';
@@ -19,12 +19,33 @@ class SignUp extends Component {
             optionsUf:[],
             optionsCity:[]
         };
-        
     }
 
     componentWillMount() {
-        deleteToken()
-        deleteUser()
+
+        if(this.props.isEdit){
+            const user = getUser()
+            if(!user)
+                this.props.history.push('/signin')
+
+            api.getUser().then(
+                res => {
+                    console.log(res.data)
+                    
+                    this.setState({
+                        values:res.data
+                    })
+                    
+                },
+                error => {
+                    console.log(error)
+                }
+            )
+        }else{
+            deleteToken()
+            deleteUser()
+        }
+
         this.getOptionsUf()
     }
 
@@ -47,8 +68,6 @@ class SignUp extends Component {
                     residentialComplement:complemento,
                     neighborhood:bairro,
                     uf,
-                    //city: localidade,
-
                 }
             })
             
@@ -61,9 +80,6 @@ class SignUp extends Component {
                     city: localidade+"",
                 }
             })
-
-await  console.log(this.state.values);
-await console.log(localidade)
 
         })
     }
@@ -114,22 +130,36 @@ await console.log(localidade)
     async onSubmit(e) {
         e.preventDefault();
 
-        //if((Object.keys(this.state.errors).length === 0)){
+        if(this.state.values.password !== this.state.values.passwordConfirm){
+            this.setState({
+                errors:{
+                    ...this.state.errors,
+                    password:"Is not equal",
+                    passwordConfirm:"Is not equal"
+                }
+            })
+            return
+        }
+        if(this.props.isEdit){
 
-            if(this.state.values.password !== this.state.values.passwordConfirm){
-                this.setState({
-                    errors:{
-                        ...this.state.errors,
-                        password:"Is not equal",
-                        passwordConfirm:"Is not equal"
-                    }
-                })
-                return
-            }
+            api.setUser(this.state.values).then(
+                res => {
+                    this.props.history.push('/')
+                },
+                error => {
+                    console.log(error.response.data.errors)
+                    /*
+                    this.setState({
+                        errors:
+                    })
+                    */
+                }
+            )
 
+        }else{
             api.register(this.state.values).then(
                 res => {
-                    this.props.history.push('/login')
+                    this.props.history.push('/signin')
                 },
                 error => {
                     this.setState({
@@ -137,7 +167,7 @@ await console.log(localidade)
                     })
                 }
             )
-        //}
+        }
     }
 
     render() {
@@ -149,7 +179,7 @@ await console.log(localidade)
             {name:"D", value:"D"}
         ]
         return (
-            <Layout>
+            <Layout headerMode={1} >
                 <form onSubmit={(e) => this.onSubmit(e)} className="grid grid-gap--l" >
                         <div className="grid grid-template-columns--2fr grid-gap--2xl">
                             <Container className="grid grid-gap--m margin-bottom--auto">
@@ -158,7 +188,7 @@ await console.log(localidade)
                                 <Input name="rg" type="number" placeholder="RG" error={this.state.errors.rg } value={this.state.values.rg} onChange={(value) => this.handleInputChange(value)} />
                                 <Input name="phone" type="number" placeholder="Telefone" error={this.state.errors.phone } value={this.state.values.phone} onChange={(value) => this.handleInputChange(value)} />
                                 <Input name="cellphone" type="number" placeholder="Celular" error={this.state.errors.cellphone } value={this.state.values.cellphone} onChange={(value) => this.handleInputChange(value)} />
-                                <Input name="email" type="email" placeholder="E-Mail" error={this.state.errors.email } value={this.state.values.email} onChange={(value) => this.handleInputChange(value)} />
+                                <Input name="email" type="email" autocomplete="off" placeholder="E-Mail" error={this.state.errors.email } value={this.state.values.email} onChange={(value) => this.handleInputChange(value)} />
                                 <Input name="cnhNumber" type="number" placeholder="CNH"  error={this.state.errors.cnhNumber } value={this.state.values.cnhNumber} onChange={(value) => this.handleInputChange(value)} />
                                 <div className="grid grid-gap--m grid-template-columns--2fr">
                                     <Input  type="date" name="cnhExpirationDate"  error={this.state.errors.cnhExpirationDate } placeholder="Validade CNH" value={this.state.values.cnhExpirationDate} onChange={(value) => this.handleInputChange(value)} />
@@ -178,13 +208,16 @@ await console.log(localidade)
                         </div>
 
                         <div className="grid grid-template-columns--2fr grid-gap--2xl">
-                            <Input name="password" type="password" placeholder="Senha"  error={this.state.errors.password } value={this.state.values.password} onChange={(value) => this.handleInputChange(value)} />
-                            <Input name="passwordConfirm" type="password"  error={this.state.errors.passwordConfirm } placeholder="Confirmar senha" value={this.state.values.passwordConfirm} onChange={(value) => this.handleInputChange(value)} />
+                            <Input name="password" autocomplete="off" type="password" placeholder="Senha"  error={this.state.errors.password } value={this.state.values.password} onChange={(value) => this.handleInputChange(value)} />
+                            <Input name="passwordConfirm" autocomplete="off" type="password"  error={this.state.errors.passwordConfirm } placeholder="Confirmar senha" value={this.state.values.passwordConfirm} onChange={(value) => this.handleInputChange(value)} />
                         </div>
 
                         <div className="grid grid-template-columns--2fr grid-gap--2xl">
-                            <Button type="reset" onClick={() => this.onClear()} text={'Limpar dados'} addClassName="gradient-color--black" />
-                            <Button type="submit" text={'Cadastrar'} addClassName="gradient-color--base-60" />
+                            {
+                                !this.props.isEdit &&
+                                <Button type="reset" onClick={() => this.onClear()} text={'Limpar dados'} addClassName="gradient-color--black" />
+                            }
+                            <Button type="submit" text={this.props.isEdit?'Salvar':'Cadastrar'} addClassName="gradient-color--base-60" />
                         </div>
 
                 </form>

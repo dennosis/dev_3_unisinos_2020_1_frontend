@@ -58,7 +58,7 @@ class Input extends Component {
 
     render(){
         return(
-            <label>
+            <label className="flex flex--column flex__item--grow">
                 <input 
                     type={this.props.type || "text"}  
                     name={this.state.name} 
@@ -68,7 +68,7 @@ class Input extends Component {
                     onChange={this.handleChange} 
                     max={this.props.max}
                     autoComplete={this.props.autocomplete||"on"}
-                    className="input shadow-neumorphic--inset padding--s border-radius--2xs"
+                    className="input shadow-neumorphic--inset padding--xs border-radius--2xs"
                 />
                 {
                     this.state.error.map((value, index) => {

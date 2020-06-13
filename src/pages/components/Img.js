@@ -78,7 +78,7 @@ class Img extends Component {
 
         return (
             <figure style={this.state.style} className={this.state.classContainer} >
-                <img src={this.state.src} alt={this.state.alt} className={this.state.classImg} />
+                <img src={this.state.src} alt={this.state.alt} className={`object-fit--cover ${this.state.classImg}`} />
             </figure>
         )
     }

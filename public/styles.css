@@ -160,7 +160,7 @@ a,
 button {
   cursor: pointer; }
 
-input {
+input, select {
   font-size: inherit;
   font-weight: inherit; }
 
@@ -2311,6 +2311,9 @@ select.select {
 .content-body {
   margin-top: 110px;
   margin-bottom: 30px; }
+
+.content-body--home {
+  margin-top: 145px; }
 
 /* ==== STATE ===== */
 .is-show {
