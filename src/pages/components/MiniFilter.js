@@ -27,7 +27,7 @@ class MiniFilter extends Component {
             },
             error => {
                 this.setState({
-                    errors:error.response.data.errors
+                    //errors:error.response.data.errors
                 })
             }
         )
@@ -59,7 +59,7 @@ class MiniFilter extends Component {
                 delete values[key]
         })
 
-        if(Object.keys(values).length===0){
+        if(Object.keys(values).length!==3){
             return
         }
 
@@ -72,7 +72,7 @@ class MiniFilter extends Component {
         return(
             <section className="margin-top--xs">
                 <form className="grid grid-gap--m grid--row"  onSubmit={(e)=>this.onSubmit(e)}>
-                    <Select name="locationPickup" firstOption={{name:"Selecione um local", value:""}} options={this.state.values.optionsLocal} onChange={(value)=>this.handleInputChange(value)}/>
+                    <Select name="locationPickup" firstOption={{name:"Selecione um local", value:""}} options={this.state.optionsLocal} onChange={(value)=>this.handleInputChange(value)}/>
                     <Input type="date" name="datePickup" value={this.state.values.datePickup} placeholder="Data de Retirada"  onChange={(value)=>this.handleInputChange(value)} />
                     <Input type="date" name="dateDelivery" value={this.state.values.dateDelivery} placeholder="Data de Entrega" onChange={(value)=>this.handleInputChange(value)} />
                     <Button type="submit" text="Buscar"/>

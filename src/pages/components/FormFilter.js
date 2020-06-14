@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-
+import api from '../../Api'
 
 import Container from './Container';
 import Input from './Input';
 import Button from './Button';
 import Toggle from './Toggle';
+import Select from './Select'
 
 
 class FormFilter extends Component {
@@ -12,36 +13,65 @@ class FormFilter extends Component {
 	constructor(props) {
         super(props)
         this.state = {
-            datePickup: props.values.datePickup || "",
-            dateDelivery: props.values.dateDelivery || "",
-            locationPickup: props.values.locationPickup || "",
-            locationDelivery: props.values.locationDelivery || "",
-            isAplicationCar:  props.values.isAplicationCar && JSON.parse(props.values.isAplicationCar),
-            manufactureYear: parseInt(props.values.manufactureYear) || "",
-            modelYear: parseInt(props.values.modelYear) || ""
+            values:{
+                datePickup: props.values.datePickup || "",
+                dateDelivery: props.values.dateDelivery || "",
+                rentalCompanyPickup: props.values.rentalCompanyPickup || "",
+                rentalCompanyDelivery: props.values.rentalCompanyDelivery || "",
+                isAplicationCar:  props.values.isAplicationCar && JSON.parse(props.values.isAplicationCar),
+                manufactureYear: parseInt(props.values.manufactureYear) || "",
+                modelYear: parseInt(props.values.modelYear) || ""
+            },
+            optionsLocal:[]
+
         }
 	}
 
+
+    componentWillMount() {
+        
+        api.getRentalCompanies().then(
+            res => {
+                const options = res.data.map(opt=>{return{value:opt.id,name:opt.name}})
+                this.setState({
+                    optionsLocal: options || []
+                })
+            },
+            error => {
+                this.setState({
+                    //errors:error.response.data.errors
+                })
+            }
+        )
+    }
+
     handleInputChange(input){
-        this.setState({[input.name]:input.value})
-        console.log(input.value)
+        this.setState({
+            values:{
+                ...this.state.values,
+                [input.name]:input.value,
+            },
+            errors:{
+                ...this.state.errors,
+                [input.name]:undefined
+            },
+            alert:{}
+        })
+
     }
 
     async onSubmit(e){
         if(this.props.onSubmit){
+
             e.preventDefault();
 
-            let values
+            const values = this.state.values
 
             if(this.props.notEmptyValues){
-                let obj = {...this.state}
-                await Object.keys(obj).forEach(key => {
-                    if(obj[key] === null || obj[key] === undefined || obj[key] === "") 
-                        delete obj[key]
+                await Object.keys(values).forEach(key => {
+                    if(values[key] === null || values[key] === undefined || values[key] === "") 
+                        delete values[key]
                 })
-                values = obj
-            }else{
-                values = this.state
             }
 
             await this.props.onSubmit(values)
@@ -52,8 +82,8 @@ class FormFilter extends Component {
         this.setState({
             datePickup:"",
             dateDelivery:"",
-            locationPickup:"",
-            locationDelivery:"",
+            rentalCompanyPickup:"",
+            rentalCompanyDelivery:"",
             isAplicationCar:false,
             manufactureYear:"",
             modelYear:""
@@ -67,20 +97,20 @@ class FormFilter extends Component {
 		return (
 			<Container addClassName="margin-bottom--auto">
                 <form onSubmit={(e)=>this.onSubmit(e)} className="grid grid-gap--xs" >
-                    <Input type="date" name="datePickup" value={this.state.datePickup} placeholder="Data de Retirada"  onChange={(value)=>this.handleInputChange(value)} />
-                    <Input type="date" name="dateDelivery" value={this.state.dateDelivery} placeholder="Data de Entrega" onChange={(value)=>this.handleInputChange(value)} />
+                    <Input type="date" name="datePickup" value={this.state.values.datePickup} placeholder="Data de Retirada"  onChange={(value)=>this.handleInputChange(value)} />
+                    <Input type="date" name="dateDelivery" value={this.state.values.dateDelivery} placeholder="Data de Entrega" onChange={(value)=>this.handleInputChange(value)} />
 
                     <div className="border-top--2 border-color--base-40"></div>
 
-                    <Input name="locationPickup" value={this.state.locationPickup} placeholder="Localização de Retirada" onChange={(value)=>this.handleInputChange(value)} />
-                    <Input name="locationDelivery" value={this.state.locationDelivery} placeholder="Localização de Entrega" onChange={(value)=>this.handleInputChange(value)} />
-                    
+                    <Select name="rentalCompanyPickup" firstOption={{name:"Selecione a Localização de Retirada", value:""}} options={this.state.values.optionsLocal} onChange={(value)=>this.handleInputChange(value)}/>
+                    <Select name="rentalCompanyDelivery" firstOption={{name:"Selecione a Localização de Entrega", value:""}} options={this.state.values.rentalCompanyDelivery} onChange={(value)=>this.handleInputChange(value)}/>
+
                     <Toggle text={'Entrega em Outra Localização'} />
                     
                     <div className="border-top--2 border-color--base-40"></div>
 
-                    <Input type="number" name="manufactureYear" value={this.state.manufactureYear} placeholder="Ano do Fabricação" onChange={(value)=>this.handleInputChange(value)} />
-                    <Input type="number" name="modelYear" value={this.state.modelYear} placeholder="Ano de Modelo" onChange={(value)=>this.handleInputChange(value)} />
+                    <Input type="number" name="manufactureYear" value={this.state.values.manufactureYear} placeholder="Ano do Fabricação" onChange={(value)=>this.handleInputChange(value)} />
+                    <Input type="number" name="modelYear" value={this.state.values.modelYear} placeholder="Ano de Modelo" onChange={(value)=>this.handleInputChange(value)} />
                     
                     <div className="border-top--2 border-color--base-40"></div>
 

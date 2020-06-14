@@ -46,11 +46,11 @@ class Car extends Component {
                         <h2 className="font-size--3xl flex flex--column padding-bottom--s">
                             <span>{`${this.props.brand} ${this.props.model} ${this.props.modelYear}`}</span>
                             {
-                                this.props.rentalCompany &&
+                                this.props.currentRentalCompany &&
                                 <div className="grid grid--row grid-gap--3xs align-items--center margin-right--auto margin-top--3xs color--base-30">
                                     <GoLocation style={{ width: '12px', height: '12px' }} />
                                     <small className="font-size--s font--regular flex align-items--center ">
-                                        {this.props.rentalCompany.name}
+                                        {this.props.currentRentalCompany.name}
                                     </small>
                                 </div>
                             }
@@ -106,7 +106,7 @@ class Car extends Component {
                         <div className="grid grid--row grid-gap--xs margin-right--auto margin-top--2xs">
                             { 
                                     this.props.apps &&
-                                    this.props.apps.map(app=>(<small className="color--base-30">{app}</small>))
+                                    this.props.apps.map((app,key)=>(<small key={key} className="color--base-30">{app}</small>))
 
                             }
                         </div>
@@ -116,7 +116,7 @@ class Car extends Component {
                     <div className="flex flex--column align-items--center">
                         <span className="font-size--s color--base-30 margin-bottom--3xs">{`R$ ${this.props.cost}/dia`}</span>
                         <span className="font-size--3xl font--bold margin-bottom--xs">{`R$ ${this.props.cost * this.props.days }`}</span>
-                        <Button text={'Alugar'} addClassName="gradient-color--base-60 align-self--stretch"/>
+                        <Button text={'Alugar'} onClick={()=>this.props.onRent(this.props.id, this.props.currentRentalCompany.id)} addClassName="gradient-color--base-60 align-self--stretch"/>
                     </div>
 
             </Container>

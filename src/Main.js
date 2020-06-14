@@ -15,16 +15,31 @@ class Main extends Component {
         return(
             <BrowserRouter>
                     <Switch>
+
+                        <Route exact path="/" component={Home} />
+
                         <Route exact path="/search" component={Search}/>
                         <Route exact path="/exemples" component={Exemples}/>
                         <Route exact path="/signin" component={SignIn} />
                         <Route exact path="/signup" component={SignUp} />
                         <Route exact path="/user" render={props => <SignUp {...props} isEdit={true} />}  />
                         <Route exact path="/card" component={NewCard} />
-                        <Route exact path="/paymentmethods" component={PaymentMethods} />
-                        <Route exact path="/newcard" component={NewCard} />
-                        <Route exact path="/confirmrent" component={ConfirmRent} />
-                        <Route exact path="/" component={Home} />
+
+
+                        {/* Rotas para confirmação */}
+                        <Route exact path="/rent/:rentID" component={ConfirmRent} />
+                        <Route exact path="/rent/:rentID/card/:cardId" component={ConfirmRent} />
+
+
+                        {/* Rotas para escolha do metodo de pagamento */}
+                        <Route exact path="/rent/:rentID/paymentmethods" component={PaymentMethods} />
+                        <Route exact path="/rent/:rentID/newcard" component={NewCard} />
+
+                        {/* Rotas para edição de usuario */}
+                        <Route exact path="/rent/:rentID/newcard" component={NewCard} />
+
+
+
                     </Switch>
             </BrowserRouter>
         )

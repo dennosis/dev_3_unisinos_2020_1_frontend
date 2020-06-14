@@ -17,7 +17,9 @@ class SignUp extends Component {
             values:{},
             errors:{},
             optionsUf:[],
-            optionsCity:[]
+            optionsCity:[],
+            alert:{}
+
         };
     }
 
@@ -30,10 +32,10 @@ class SignUp extends Component {
 
             api.getUser().then(
                 res => {
-                    console.log(res.data)
-                    
+                    const values = res.data
+                    values.cnhExpirationDate = (new Date(values.cnhExpirationDate)).toISOString().substring(0, 10)
                     this.setState({
-                        values:res.data
+                        values
                     })
                     
                 },
@@ -108,7 +110,9 @@ class SignUp extends Component {
                 ...this.state.errors,
                 [input.name]:undefined
             },
+            alert:{}
         })
+
     }
 
     handleInputCep(input){
@@ -136,7 +140,8 @@ class SignUp extends Component {
                     ...this.state.errors,
                     password:"Is not equal",
                     passwordConfirm:"Is not equal"
-                }
+                },
+                alert:{type:"error", content:"Verfique os campos!"}
             })
             return
         }
@@ -163,7 +168,8 @@ class SignUp extends Component {
                 },
                 error => {
                     this.setState({
-                        errors:error.response.data.errors
+                        errors:error.response.data.errors,
+                        alert:{type:"error", content:"Erro ao cadastrar-se, verfique os campos!"}
                     })
                 }
             )
@@ -179,8 +185,8 @@ class SignUp extends Component {
             {name:"D", value:"D"}
         ]
         return (
-            <Layout headerMode={1} >
-                <form onSubmit={(e) => this.onSubmit(e)} className="grid grid-gap--l" >
+            <Layout alert={this.state.alert} headerMode={1} >
+                <form onSubmit={(e) => this.onSubmit(e)} className="grid grid-gap--l" autoComplete="false" >
                         <div className="grid grid-template-columns--2fr grid-gap--2xl">
                             <Container className="grid grid-gap--m margin-bottom--auto">
                                 <Input name="name" placeholder="Nome" error={this.state.errors.name } value={this.state.values.name} onChange={(value) => this.handleInputChange(value)} />
@@ -208,8 +214,8 @@ class SignUp extends Component {
                         </div>
 
                         <div className="grid grid-template-columns--2fr grid-gap--2xl">
-                            <Input name="password" autocomplete="off" type="password" placeholder="Senha"  error={this.state.errors.password } value={this.state.values.password} onChange={(value) => this.handleInputChange(value)} />
-                            <Input name="passwordConfirm" autocomplete="off" type="password"  error={this.state.errors.passwordConfirm } placeholder="Confirmar senha" value={this.state.values.passwordConfirm} onChange={(value) => this.handleInputChange(value)} />
+                            <Input name="password" autocomplete="Off" type="password" placeholder="Senha"  error={this.state.errors.password } value={this.state.values.password || ""} onChange={(value) => this.handleInputChange(value)} />
+                            <Input name="passwordConfirm" autocomplete="false" type="password"  error={this.state.errors.passwordConfirm } placeholder="Confirmar senha" value={this.state.values.passwordConfirm || ""} onChange={(value) => this.handleInputChange(value)} />
                         </div>
 
                         <div className="grid grid-template-columns--2fr grid-gap--2xl">

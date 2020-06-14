@@ -39,12 +39,14 @@ $color-palette: (
     "black": #000000,
     
 
-    "danger-10": #ef5a5a,         //cor utilizada nas msgm de erro
+    "danger-10": #BC5569,         //cor utilizada nas msgm de erro
     "danger-20": #ffc6c6,         //cor utilizada nas msgm de erro
-    "success-10": #3c763d,        //cor utilizada nas msgm de sucesso 
+    "success-10": #85A06B,        //cor utilizada nas msgm de sucesso 
     "success-20": #d9fccb,        //cor utilizada nas msgm de sucesso 
-    "warning-10": #eba034,        //cor utilizada nas msgm de atenção 
+    "warning-10": #ebbb34,        //cor utilizada nas msgm de atenção 
     "warning-20": #fff8d5,        //cor utilizada nas msgm de atenção 
+    "info-10": #3D8DCB,           //cor utilizada nas msgm de informação
+    "info-20": #9fbace,           //cor utilizada nas msgm de informacao
 
     'base-10': #2d333e, //background
     'base-20': #25282d,
@@ -58,6 +60,16 @@ $color-palette: (
 
 
 );
+
+.color-alert-bloq{
+    color: #fff;
+    background: #BC5569;
+}
+
+
+
+
+
 
 $opacity-size:(
     "10":   0.1,

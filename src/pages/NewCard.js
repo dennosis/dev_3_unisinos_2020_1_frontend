@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
+import api from '../Api'
+
 import Layout from './components/Layout';
 import Container from './components/Container';
 import Input from './components/Input';
 import Select from './components/Select';
-import Toggle from './components/Toggle';
 import Button from './components/Button';
 
 const componentsCard={
@@ -34,7 +35,9 @@ class NewCard extends Component {
                 expirationYear:"",
                 csv:"",
             },
-            errors:{}
+            errors:{},
+            alert:{}
+
         }
     }
 
@@ -48,8 +51,27 @@ class NewCard extends Component {
             errors:{
                 ...this.state.errors,
                 [input.name]:undefined
-            }
+            },
+            alert:{}
+
         })
+    }
+
+    async onSubmit(e) {
+        e.preventDefault();
+
+        api.card(this.state.values).then(
+            res => {
+                this.props.history.push('/signin')
+            },
+            error => {
+                this.setState({
+                    errors:error.response.data.errors,
+                    alert:{type:"error", content:"Erro ao cadastrar o cartão, verfique os campos!"}
+                })
+            }
+        )
+        
     }
 
     render(){
@@ -82,7 +104,7 @@ class NewCard extends Component {
         ]
 
         return (
-            <Layout>
+            <Layout alert={this.state.alert} >
                 <Container style={componentsCard} className = "newCard">
                     <form onSubmit={(e) => this.onSubmit(e)} className="grid grid-gap--l" >
                         <div className="flex justify-content--center">
@@ -98,11 +120,11 @@ class NewCard extends Component {
                         <Input placeholder = "Numero do cartão" name = "cardNumber" value = {this.state.values.cardNumber} error = {this.state.errors.cardNumber} onChange = {(value)=>this.handleInputChange(value)}/>
                         
                         <div className="grid grid-gap--m grid-template-columns--2fr">
-                            <Select options={optionsYear} placeholder = "Mês (combo)" name = "expirationMonth" value = {this.state.values.expirationMonth} error = {this.state.errors.expirationMonth} onChange = {(value)=>this.handleInputChange(value)} />
-                            <Select options={optionsMonth} placeholder = "Ano (combo)" name = "expirationYear" value = {this.state.values.expirationYear} error = {this.state.errors.expirationYear} onChange = {(value)=>this.handleInputChange(value)}/>
+                            <Select options={optionsYear} firstOption={{name:"Selecione o ano", value:""}} name = "expirationMonth" value = {this.state.values.expirationMonth} error = {this.state.errors.expirationMonth} onChange = {(value)=>this.handleInputChange(value)} />
+                            <Select options={optionsMonth} firstOption={{name:"Selecione o mês", value:""}} name = "expirationYear" value = {this.state.values.expirationYear} error = {this.state.errors.expirationYear} onChange = {(value)=>this.handleInputChange(value)}/>
                         </div>
                         
-                        <Input placeholder = "Código de segurança (CSV)" name = "csv" value = {this.state.values.csv} error = {this.state.errors.csv} onChange = {(value)=>this.handleInputChange(value)}/>
+                        <Input placeholder = "CVV" name = "cvv" value = {this.state.values.cvv} error = {this.state.errors.cvv} onChange = {(value)=>this.handleInputChange(value)}/>
                         
                         <div className="grid grid-gap--m grid-template-columns--1fr">
                             <Button type="submit" text={"confirmar"} addClassName="gradient-color--base-60" />
