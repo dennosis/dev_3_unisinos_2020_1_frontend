@@ -35,13 +35,13 @@ class MenuUser extends Component {
                         </div>
                         <div style={rentalTemplate} className="flex justify-content--center">
                             <div className="grid grid-template-columns--2fr grid-gap--2xl">
-                                <p>Entrega:</p>
+                                <p>Retirada:</p>
                                 <p>12/05/2020</p>
                             </div>
                         </div>
                         <div style={rentalTemplate} className="flex justify-content--center">
                             <div className="grid grid-template-columns--2fr grid-gap--2xl">
-                                <p>Retirada:</p>
+                                <p>Entrega:</p>
                                 <p>15/05/2020</p>
                             </div>
                         </div>
@@ -58,13 +58,13 @@ class MenuUser extends Component {
                         </div>
                         <div style={rentalTemplate} className="flex justify-content--center">
                             <div className="grid grid-template-columns--2fr grid-gap--2xl">
-                                <p>Entrega:</p>
+                                <p>Retirada:</p>
                                 <p>03/06/2020</p>
                             </div>
                         </div>
                         <div style={rentalTemplate} className="flex justify-content--center">
                             <div className="grid grid-template-columns--2fr grid-gap--2xl">
-                                <p>Retirada:</p>
+                                <p>Entrega:</p>
                                 <p>05/06/2020</p>
                             </div>
                         </div>
