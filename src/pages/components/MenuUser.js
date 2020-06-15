@@ -4,7 +4,6 @@ import ImageCar from '../../images/1299198-snow_004.png';
 import Title from './Title';
 
 const rentalTemplate = {
-    gridTemplateColumns: '5fr 1fr',
     marginBottom: '10px'
 };
 
@@ -31,9 +30,20 @@ class MenuUser extends Component {
                 <a href="/ConfirmRent">
                     <div className="margin--m">
                         <Img width={this.state.width} mode={1} addClassName="border-radius--xs" src={ImageCar} />
-                        <div style={rentalTemplate} className="grid grid-gap--2xl">
-                            <Title tag="h3" text="Chevrolet Chevette" />
-                            <Title tag="h3" text="1975" />
+                        <div style={rentalTemplate} className="flex justify-content--center">
+                            <p>Chevrolet Chevette - 1975</p>
+                        </div>
+                        <div style={rentalTemplate} className="flex justify-content--center">
+                            <div className="grid grid-template-columns--2fr grid-gap--2xl">
+                                <p>Entrega:</p>
+                                <p>12/05/2020</p>
+                            </div>
+                        </div>
+                        <div style={rentalTemplate} className="flex justify-content--center">
+                            <div className="grid grid-template-columns--2fr grid-gap--2xl">
+                                <p>Retirada:</p>
+                                <p>15/05/2020</p>
+                            </div>
                         </div>
                     </div>
                 </a>
@@ -43,9 +53,20 @@ class MenuUser extends Component {
                 <a href="/ConfirmRent">
                     <div className="margin--m">
                         <Img width={this.state.width} mode={1} addClassName="border-radius--xs" src={ImageCar} />
-                        <div style={rentalTemplate} className="grid grid-gap--2xl">
-                            <Title tag="h3" text="Fiat Mobi" />
-                            <Title tag="h3" text="2019" />
+                        <div style={rentalTemplate} className="flex justify-content--center">
+                            <p>Fiat Mobi - 2019</p>
+                        </div>
+                        <div style={rentalTemplate} className="flex justify-content--center">
+                            <div className="grid grid-template-columns--2fr grid-gap--2xl">
+                                <p>Entrega:</p>
+                                <p>03/06/2020</p>
+                            </div>
+                        </div>
+                        <div style={rentalTemplate} className="flex justify-content--center">
+                            <div className="grid grid-template-columns--2fr grid-gap--2xl">
+                                <p>Retirada:</p>
+                                <p>05/06/2020</p>
+                            </div>
                         </div>
                     </div>
                 </a>
