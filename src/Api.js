@@ -26,6 +26,9 @@ const getRentalCompanies = () => api.get('/rental-companies',{headers: {...heade
 const getRentalCompanyById = (id) => api.get(`/rental-company/${id}`,{headers: {...header}})
 
 const card = (card) => api.post('/cards',card,{headers: {...header}})
+const cards = () => api.get('/cards',{headers: {...header}})
+
+const rent = (rent) => api.post('/rents',rent, {headers: {...header}})
 
 
 const test = () => api.get('/',{headers: {...header}})
@@ -41,6 +44,9 @@ const apis = {
     setUser,
     test,
     search,
+    card,
+    cards,
+    rent,
     getRentalCompanies,
     rentalCompany
 }

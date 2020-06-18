@@ -4,22 +4,11 @@ import api from '../Api'
 import Layout from './components/Layout';
 import Img from './components/Img';
 import Title from './components/Title';
+import Container from './components/Container';
+
 import ImageBankSlip from '../images/BankSlip.png';
 import ImageCreditCard from '../images/CreditCard.png';
 
-const componentPaymentMethods = {
-    position: 'relative',
-    left: '25%',
-    right: '25%',
-    top: '25%',
-    height: '25%',
-    width: '25%',
-    marginBottom: '35px'
-}
-
-const templateCreditCardNumber = {
-    gridTemplateColumns: '1fr 19fr 1fr'
-};
 
 
 class PaymentMethods extends Component {
@@ -27,75 +16,82 @@ class PaymentMethods extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            values: {},
-            errors: {}
+            cards:[]
         };
     }
+
+
+    componentWillMount() {
+        api.cards().then(
+            res => {
+                const cards = res.data.cards.map(card=>{return{id:card._id,cardNumber:card.cardNumber}})
+                this.setState({
+                    cards
+                })
+                
+            },
+            error => {
+  
+            }
+        )
+    }
+
 
     render() {
         return (
             <Layout>
-                <div className="flex justify-content--center">
-                    <Title text="Seus Cartões Salvos" />
-                </div>
+                <Container addClassName="align-self--center">
+                    <Title tag="h2" text="Forma de pagamento" />
 
-                <div className="grid grid-template-columns--5fr grid-gap--2xl margin--m">
-                    <div></div>
-                    <div></div>
-                        <a>
-                            <Img style={componentPaymentMethods} width={this.state.width} mode={1} addClassName="border-radius--xs" src={ImageCreditCard} />
-                            <div style={templateCreditCardNumber} className="grid">
-                                <div></div>
-                                <Title style={templateCreditCardNumber} tag="h3" text="**** **** **** 1234" />
-                                <div></div>
-                            </div>                        
-                        </a>
-                    <div></div>
-                    <div></div>
-                </div>
+                    <div className="grid grid-gap--l">
+                        {
+                            this.state.cards &&
+              
+                            <Container addClassName="flex flex--column align-items--center">
 
-                <div className="grid grid-template-columns--5fr grid-gap--2xl margin--m">
-                    <div></div>
-                    <div></div>
-                    <a>
-                        <Img style={componentPaymentMethods} width={this.state.width} mode={1} addClassName="border-radius--xs" src={ImageCreditCard} />
-                        <div style={templateCreditCardNumber} className="grid">
-                            <div></div>
-                            <Title style={templateCreditCardNumber} tag="h3" text="**** **** **** 5678" />
-                            <div></div>
-                        </div>
-                    </a>
-                    <div></div>
-                    <div></div>
-                </div>
+                                <h3 className="padding-bottom--l">Seus Cartões Salvos</h3>
 
-                <div className="flex justify-content--center">
-                    <Title text="Novo Cartão" />
-                </div>
+                                <div className="grid grid--row grid-gap--l">
+                                    {
+                                        
+                                        this.state.cards.map((card, index)=>{
+                                            
+                                            return (
+                                                <a href={`/${card.id}`} key={index} className="flex flex--column align-items--center">
+                                                    <Img width={70} height={50} mode={1} addClassName="border-radius--xs" src={ImageCreditCard} />
+                                                    <span className="font--bold font-size--3xs padding-top--2xs">{card.cardNumber}</span>
+                                                </a>
+                                            )
+                                        })
+                                        
+                                    }
+                                </div>
+        
+                            </Container>
 
-                <div className="grid grid-template-columns--5fr grid-gap--2xl margin--m">
-                    <div></div>
-                    <div></div>
-                    <a>
-                        <Img style={componentPaymentMethods} width={this.state.width} mode={1} addClassName="border-radius--xs" src={ImageCreditCard} />
-                    </a>
-                    <div></div>
-                    <div></div>
-                </div>
+                        }
 
-                <div className="flex justify-content--center">
-                    <Title text="Boleto Bancário" />
-                </div>
+                        <Container addClassName="flex flex--column align-items--center">
 
-                <div className="grid grid-template-columns--5fr grid-gap--2xl margin--m">
-                    <div></div>
-                    <div></div>
-                    <a>
-                        <Img style={componentPaymentMethods} width={this.state.width} mode={1} addClassName="border-radius--xs" src={ImageBankSlip} />
-                    </a>
-                    <div></div>
-                    <div></div>
-                </div>
+                            <h3 className="padding-bottom--l">Novo Cartão</h3>
+
+                            <a href="/">
+                                <Img width={70} height={50} mode={1} addClassName="border-radius--xs" src={ImageCreditCard} />
+                            </a>
+
+                        </Container>
+
+                        <Container addClassName="flex flex--column align-items--center">
+                            
+                            <h3 className="padding-bottom--l">Boleto Bancário</h3>
+
+                            <a href="/">
+                                <Img width={70} height={50} mode={1} addClassName="border-radius--xs" src={ImageBankSlip} />
+                            </a>
+                        </Container>
+                    </div>
+
+            </Container>
 
             </Layout>
         );

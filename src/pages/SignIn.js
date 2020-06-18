@@ -26,7 +26,8 @@ class Login extends Component{
                 email:"",
                 password: "",
             },
-            errors:{}
+            errors:{},
+            alert:{}
         }
     }
 
@@ -58,7 +59,8 @@ class Login extends Component{
             },
             error => {
                 this.setState({
-                    errors:error.response.data.errors
+                    errors:error.response.data.errors,
+                    alert:{type:"error", content:"Erro ao logar, verfique os campos!"}
                 })
             }
         )
@@ -67,7 +69,7 @@ class Login extends Component{
 
     render(){
 		return (
-			<Layout headerMode={1}  >
+			<Layout alert={this.state.alert} headerMode={1}  >
                 <Container style={componentsLogin} className="grandeFera">
                     <form onSubmit={(e)=>this.onSubmit(e)} className="grid grid-gap--xs" >
                         <Input 

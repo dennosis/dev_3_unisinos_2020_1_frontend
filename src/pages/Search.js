@@ -20,23 +20,26 @@ class Search extends Component {
 	constructor(props) {
 		super(props)
 
-		let filter = queryString.parse(this.props.location.search)
-		if(!filter.datePickup){
-			const dateInit = new Date()
-			const dateEnd = new Date()
-			dateEnd.setDate(dateInit.getDate()+1)
-			filter["datePickup"] = dateInit.toISOString().substring(0, 10)
-			filter["dateDelivery"] = dateEnd.toISOString().substring(0, 10)
-		}
+		const filter = queryString.parse(this.props.location.search)
+		const dateValidate = this.validateDate(filter.datePickup, filter.dateDelivery)
+		
+		filter.datePickup = dateValidate.dateInit
+		filter.dateDelivery = dateValidate.dateEnd
+
 		this.state = {
 			filter,
-			cars:[]
+			cars:[],
+			days:dateValidate.days,
+			alert:{}
 		}
 	}
 
-	search = (value) => {
+	search = (values) => {
 
-
+		const dateValidate = this.validateDate(values.datePickup, values.dateDelivery)
+		
+		values.datePickup = dateValidate.dateInit
+		values.dateDelivery = dateValidate.dateEnd
 
 
 		this.setState({ cars:[
@@ -48,7 +51,7 @@ class Search extends Component {
 				model:"chevette",
 				board:"BEE4R22",
 				modelYear:"1975",
-				rentalCompany:{
+				currentRentalCompany:{
 					id:6554654,
 					name:"Locadora do Adão"
 				}, 
@@ -61,49 +64,103 @@ class Search extends Component {
 				airBag:true,
 				abs:true,
 				kilometrage:12100,
-
-				days:8
 			}
 		] })
 
 
 		/*
-		api.search(value)
+		api.search(values)
 			.then(
 				res => {
 					//console.log(res.data)
-					this.setState({ cars: res.data || [] })
+					this.setState({ 
+						cars: res.data || [],
+						days: dateValidate.days
+					})
 				},
 				error => {
 					console.log({ type: "error", content: "Erro ao buscar dados" })
 				}
 			)
 		*/
-		const stringified = queryString.stringify(value);
+
+		const stringified = queryString.stringify(values);
 		this.props.history.replace(`/search?${stringified}`);
 	}
 
+	validateDate(dateInit, dateEnd){
 
+		let datePickup = new Date(dateInit)
+		let dateDelivery = new Date(dateEnd)
+
+		datePickup =  this.isValidDate(datePickup) ? datePickup : new Date()
+		dateDelivery =  this.isValidDate(dateDelivery) ? dateDelivery : new Date()
+
+		if(datePickup.getTime() < (new Date()).getTime()){
+			datePickup = new Date()
+		}
+
+		if(dateDelivery.getTime() <= datePickup.getTime()){
+			dateDelivery = new Date()
+			dateDelivery.setDate(datePickup.getDate()+1)
+		}
+
+		return {
+			dateInit: datePickup.toISOString().substring(0, 10),
+			dateEnd: dateDelivery.toISOString().substring(0, 10),
+			days: Math.ceil(Math.abs(datePickup - dateDelivery) / (1000 * 60 * 60 * 24))
+		}
+		
+	}
+
+	isValidDate(date) {
+		return date instanceof Date && !isNaN(date);
+	}
 
 	async componentWillMount(){
 		await this.search(this.state.filter)
 	}
 
 
-	onSubmit=(value)=>{
-		this.search(value)
+	onSubmit=(filter)=>{
+		this.search(filter)
+	}
+	
+	onRent=(carId, rentalCompany)=>{
+
+		const data = {
+			rentalCompanyPickupId:rentalCompany,
+			rentalCompanyDeliveryId: this.state.filter.rentalCompanyDelivery ? this.state.filter.rentalCompanyDelivery : rentalCompany,
+			carId,
+			datePickup:this.state.filter.datePickup,
+			dateDelivery:this.state.filter.dateDelivery
+		}
+		console.log(data)
+		
+		api.rent(data)
+			.then(
+				res => {
+					this.props.history.push(`/rent/${res.data.id}/paymentmethods`)
+				},
+				error => {
+					this.setState({ 
+						alert: {type:"error", content:"Erro ao Iniciar a Reserva"},
+					})
+				}
+			)
+			
 	}
 
 
 	render(){
 		return (
-			<Layout>
+			<Layout alert={this.state.alert} >
 
 				<div style={templateColumns} className="grid grid-gap--l">
 					
 					<Container className="grid grid-gap--m margin-bottom--auto">
 						{this.state.cars.map((value, index) => {
-							return  <Car key={index} {...value}/>
+							return  <Car key={index} onRent={this.onRent} days={this.state.days} {...value }/>
 						})}
 					</Container>
 
