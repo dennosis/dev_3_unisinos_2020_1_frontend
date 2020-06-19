@@ -41,34 +41,6 @@ class Search extends Component {
 		values.datePickup = dateValidate.dateInit
 		values.dateDelivery = dateValidate.dateEnd
 
-
-		this.setState({ cars:[
-			{	
-				id:54545454,
-				image: "https://upload.wikimedia.org/wikipedia/pt/thumb/2/2e/Chevette_1985.png/300px-Chevette_1985.png",
-				description:"is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-				brand:"chevrolet",
-				model:"chevette",
-				board:"BEE4R22",
-				modelYear:"1975",
-				currentRentalCompany:{
-					id:6554654,
-					name:"Locadora do Adão"
-				}, 
-				manufactureYear:"1975",
-				cost:"40.70",
-				luggages:5,
-				apps:["Uber","Pop","Taxi"],
-				airConditioner:true,
-				passengers:5,
-				airBag:true,
-				abs:true,
-				kilometrage:12100,
-			}
-		] })
-
-
-		/*
 		api.search(values)
 			.then(
 				res => {
@@ -82,8 +54,7 @@ class Search extends Component {
 					console.log({ type: "error", content: "Erro ao buscar dados" })
 				}
 			)
-		*/
-
+			
 		const stringified = queryString.stringify(values);
 		this.props.history.replace(`/search?${stringified}`);
 	}

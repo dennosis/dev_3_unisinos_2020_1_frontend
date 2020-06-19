@@ -4,48 +4,6 @@ import api from '../../Api'
 import Img from './Img';
 import Title from './Title';
 
-
-
-/*
-
-        id: car._id,
-        image: car.image, 
-        description: car.description, 
-        brand: (car.brand) ? car.brand.name : '', 
-        model: (car.model) ? car.model.name : '', 
-        modelYear: car.modelYear, 
-        manufactureYear: car.manufactureYear, 
-        cost: (car.cost) ? car.cost.toString() : 0, 
-        security: (car.security) ? car.security.toString() : 0, 
-        adminTax: (car.adminTax) ? car.adminTax.toString() : 0, 
-        luggages: car.luggages,
-        airConditioner: car.airConditioner,
-        passengers: car.passengers,
-        airBag: car.airBag,
-        abs: car.abs,
-        abs: car.abs,
-        currentRentalCompany: currentRentalCompany,
-        rentalCompanies: rentalCompanies,
-        kilometrage: car.kilometrage,
-        color: car.color,
-        apps: apps
-
-    */
-   /*
-   Id,
-   rentalCompanyPickupName,
-   rentalCompanyPickupId,
-   rentalCompanyDeliveryName,
-   rentalCompanyDeliveryId,
-   model,
-   board,
-   modelYear,
-   carId,
-   datePickup,
-   dateDelivery,
-   paymentId,
-*/
-
 class ListCarItem extends Component {
 
     constructor(props) {
