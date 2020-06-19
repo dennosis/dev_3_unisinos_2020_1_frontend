@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import api from '../../Api'
 
 import Container from './Container';
-import Button from './Button';
 import Img from './Img';
 import Title from './Title';
 
@@ -22,44 +21,14 @@ class ResumeCar extends Component {
     }
 
     getCar(id){
-        /*
         api.getCarById(id).then(
             res => {
                 this.setState({
                     ...res.data
                 })
             },
-            error => {
-            
-                //this.setState({
-                //    alert: {type:"error", content:"Erro ao Buscar Carro"},
-                //})
-            
-            }
+            error => {}
         )
-        */
-
-       this.setState({
-            id:54545454,
-            image: "https://upload.wikimedia.org/wikipedia/pt/thumb/2/2e/Chevette_1985.png/300px-Chevette_1985.png",
-            description:"is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-            brand:"chevrolet",
-            model:"chevette",
-            board:"BEE4R22",
-            modelYear:"1975",
-            manufactureYear:"1975",
-            cost:40.70,
-            security:2.70,
-            adminTax:13.30,
-            luggages:5,
-            apps:["Uber","Pop","Taxi"],
-            airConditioner:true,
-            passengers:5,
-            airBag:true,
-            abs:true,
-            color:"cinza",
-            kilometrage:12100,
-        })
     }
 
 

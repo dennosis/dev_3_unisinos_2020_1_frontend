@@ -11,7 +11,6 @@ import {GoLocation} from 'react-icons/go';
 
 import Container from './Container';
 import Button from './Button';
-import Title from './Title';
 import Img from './Img';
 
 
@@ -98,8 +97,6 @@ class Car extends Component {
                                 <small className="font--bold">ABS</small>
                             </div>
                             }
-
-
                         </div>
 
 

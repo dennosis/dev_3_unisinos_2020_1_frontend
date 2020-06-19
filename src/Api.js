@@ -36,6 +36,7 @@ const getBilletById = (id) => api.get(`/billets/${id}`,{headers: {...header}})
 
 const rent = (rent) => api.post('/rents',rent, {headers: {...header}})
 const getRentById = (id) => api.get(`/rents/${id}`, {headers: {...header}})
+const getRents = (id) => api.get(`/rents`, {headers: {...header}})
 
 const paymentByCard = (payment) => api.post(`/payment/card`, payment, {headers: {...header}})
 const paymentByBillet = (payment) => api.post(`/payment/billet`, payment, {headers: {...header}})
@@ -63,6 +64,7 @@ const apis = {
     getBilletById,
     rent,
     getRentById,
+    getRents,
     getRentalCompanies,
     getRentalCompanyById,
     paymentByCard,
