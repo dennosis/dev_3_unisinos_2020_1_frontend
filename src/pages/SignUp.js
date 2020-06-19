@@ -13,12 +13,17 @@ class SignUp extends Component {
 
     constructor(props) {
         super(props);
+
+        const {rentId,cardId} = this.props.match.params
+
         this.state = {
             values:{},
             errors:{},
             optionsUf:[],
             optionsCity:[],
-            alert:{}
+            alert:{},
+            rentId,
+            cardId
 
         };
     }
@@ -149,15 +154,16 @@ class SignUp extends Component {
 
             api.setUser(this.state.values).then(
                 res => {
-                    this.props.history.push('/')
+                    let url = '/'
+                    url = url+(this.state.rentId?"rent/"+this.state.rentId:"")
+                    url = url+(this.state.cardId?"/card/"+this.state.cardId:"")
+                    this.props.history.push(url)
                 },
                 error => {
-                    console.log(error.response.data.errors)
-                    /*
                     this.setState({
-                        errors:
+                        errors: error.response.data.errors
                     })
-                    */
+                    
                 }
             )
 

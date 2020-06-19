@@ -15,16 +15,17 @@ class PaymentMethods extends Component {
 
     constructor(props) {
         super(props);
+        const {rentId} = this.props.match.params
         this.state = {
-            cards:[]
+            cards:[],
+            rentId
         };
     }
-
 
     componentWillMount() {
         api.cards().then(
             res => {
-                const cards = res.data.cards.map(card=>{return{id:card._id,cardNumber:card.cardNumber}})
+                const cards = res.data.cards.map(card=>{return{id:card.id,cardNumber:card.cardNumber}})
                 this.setState({
                     cards
                 })
@@ -57,7 +58,7 @@ class PaymentMethods extends Component {
                                         this.state.cards.map((card, index)=>{
                                             
                                             return (
-                                                <a href={`/${card.id}`} key={index} className="flex flex--column align-items--center">
+                                                <a href={`/rent/${this.state.rentId}/card/${card.id}`} key={index} className="flex flex--column align-items--center">
                                                     <Img width={70} height={50} mode={1} addClassName="border-radius--xs" src={ImageCreditCard} />
                                                     <span className="font--bold font-size--3xs padding-top--2xs">{card.cardNumber}</span>
                                                 </a>
@@ -75,7 +76,7 @@ class PaymentMethods extends Component {
 
                             <h3 className="padding-bottom--l">Novo Cartão</h3>
 
-                            <a href="/">
+                            <a href={`/rent/${this.state.rentId}/newcard`}>
                                 <Img width={70} height={50} mode={1} addClassName="border-radius--xs" src={ImageCreditCard} />
                             </a>
 
@@ -85,7 +86,7 @@ class PaymentMethods extends Component {
                             
                             <h3 className="padding-bottom--l">Boleto Bancário</h3>
 
-                            <a href="/">
+                            <a href={`/rent/${this.state.rentId}`}>
                                 <Img width={70} height={50} mode={1} addClassName="border-radius--xs" src={ImageBankSlip} />
                             </a>
                         </Container>

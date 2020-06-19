@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import { useParams } from 'react-router-dom';
+
 import api from '../Api'
 
 import Layout from './components/Layout';
@@ -26,6 +28,7 @@ const dateComp={
 class NewCard extends Component {
     constructor(props){
         super(props)
+        const {rentId} = this.props.match.params
         this.state = {
             values:{
                 holderBirthDate:"",
@@ -36,7 +39,8 @@ class NewCard extends Component {
                 csv:"",
             },
             errors:{},
-            alert:{}
+            alert:{},
+            rentId
 
         }
     }
@@ -62,7 +66,7 @@ class NewCard extends Component {
 
         api.card(this.state.values).then(
             res => {
-                this.props.history.push('/signin')
+                this.props.history.push(`/rent/${this.state.rentId}/card/${res.data.id}`)
             },
             error => {
                 this.setState({

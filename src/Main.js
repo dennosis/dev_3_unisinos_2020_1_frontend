@@ -8,7 +8,7 @@ import SignIn from './pages/SignIn.js';
 import SignUp from './pages/SignUp.js';
 import PaymentMethods from './pages/PaymentMethods.js';
 import NewCard from './pages/NewCard.js';
-import ConfirmRent from './pages/ConfirmRent.js';
+import Rent from './pages/Rent.js';
 
 class Main extends Component {
     render(){
@@ -27,17 +27,17 @@ class Main extends Component {
 
 
                         {/* Rotas para confirmação */}
-                        <Route exact path="/rent/:rentID" component={ConfirmRent} />
-                        <Route exact path="/rent/:rentID/card/:cardId" component={ConfirmRent} />
+                        <Route exact path="/rent/:rentId" component={Rent} />
+                        <Route exact path="/rent/:rentId/card/:cardId" component={Rent} />
 
 
                         {/* Rotas para escolha do metodo de pagamento */}
-                        <Route exact path="/rent/:rentID/paymentmethods" component={PaymentMethods} />
-                        <Route exact path="/rent/:rentID/newcard" component={NewCard} />
+                        <Route exact path="/rent/:rentId/paymentmethods" component={PaymentMethods} />
+                        <Route exact path="/rent/:rentId/newcard" component={NewCard} />
 
                         {/* Rotas para edição de usuario */}
-                        <Route exact path="/rent/:rentID/newcard" component={NewCard} />
-
+                        <Route exact path="/rent/:rentId/user" render={props => <SignUp {...props} isEdit={true} />} />
+                        <Route exact path="/rent/:rentId/card/:cardId/user" render={props => <SignUp {...props} isEdit={true} />} />
 
 
                     </Switch>
