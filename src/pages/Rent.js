@@ -20,6 +20,7 @@ class Rent extends Component {
     constructor(props) {
         super(props)
 
+
         //const {rentId} = this.props.match.params
         const {rentId,cardId} = this.props.match.params
         let baseUrl = '/'
@@ -30,7 +31,8 @@ class Rent extends Component {
             baseUrl,
             rent:{},
             rentId,
-            cardId
+            cardId,
+            days:1
         }
     }
 
@@ -41,8 +43,12 @@ class Rent extends Component {
     getRent(id){
         api.getRentById(id).then(
             res => {
+
+                const dateValidate = this.validateDate(res.data.datePickup, res.data.dateDelivery)
+                
                 this.setState({
-                    rent: res.data || {}
+                    rent: res.data || {},
+                    days:  dateValidate.days || 1
                 })
             },
             error => {
@@ -53,10 +59,36 @@ class Rent extends Component {
         )
     }
 
+	validateDate(dateInit, dateEnd){
+
+		let datePickup = new Date(dateInit)
+		let dateDelivery = new Date(dateEnd)
+
+		datePickup =  this.isValidDate(datePickup) ? datePickup : new Date()
+		dateDelivery =  this.isValidDate(dateDelivery) ? dateDelivery : new Date()
+
+		if(datePickup.getTime() < (new Date()).getTime()){
+			datePickup = new Date()
+		}
+
+		if(dateDelivery.getTime() <= datePickup.getTime()){
+			dateDelivery = new Date()
+			dateDelivery.setDate(datePickup.getDate()+1)
+		}
+
+		return {
+			dateInit: datePickup.toISOString().substring(0, 10),
+			dateEnd: dateDelivery.toISOString().substring(0, 10),
+			days: Math.ceil(Math.abs(datePickup - dateDelivery) / (1000 * 60 * 60 * 24))
+		}
+		
+	}
+
+
 	onSubmit=()=>{
        if(this.state.rent.id){
             if(this.state.cardId){
-                api.paymentByCard({rentId:this.state.rent.id, cardId: this.state.cardId}).then(
+                api.storePaymentByCard({rentId:this.state.rent.id, cardId: this.state.cardId}).then(
                     res => {
                         this.setState({
                             rent: {...this.state.rent, payment: res.data.id}
@@ -70,7 +102,7 @@ class Rent extends Component {
                 )
             }else{
 
-                api.paymentByBillet({rentId:this.state.rent.id}).then(
+                api.storePaymentByBillet({rentId:this.state.rent.id}).then(
                     res => {
                         this.setState({
                             rent: {...this.state.rent, payment: res.data.id}
@@ -113,7 +145,7 @@ class Rent extends Component {
 
                     </Container>
                     
-                    <ResumeCar numDays={9} id={this.state.rent.car} />
+                    <ResumeCar days={this.state.days} carId={this.state.rent.car} />
 
                 </form>
             </Layout>

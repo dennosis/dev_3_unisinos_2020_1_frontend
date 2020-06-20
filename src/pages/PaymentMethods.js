@@ -23,7 +23,7 @@ class PaymentMethods extends Component {
     }
 
     componentWillMount() {
-        api.cards().then(
+        api.getCards().then(
             res => {
                 const cards = res.data.cards.map(card=>{return{id:card.id,cardNumber:card.cardNumber}})
                 this.setState({

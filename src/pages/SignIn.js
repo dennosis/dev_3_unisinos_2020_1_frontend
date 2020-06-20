@@ -45,7 +45,8 @@ class Login extends Component{
             errors:{
                 ...this.state.errors,
                 [input.name]:undefined
-            }
+            },
+            alert:{}
         })
     }
 

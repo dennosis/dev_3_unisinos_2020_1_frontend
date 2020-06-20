@@ -63,7 +63,7 @@ class NewCard extends Component {
     async onSubmit(e) {
         e.preventDefault();
 
-        api.card(this.state.values).then(
+        api.storeCard(this.state.values).then(
             res => {
                 this.props.history.push(`/rent/${this.state.rentId}/card/${res.data.id}`)
             },
@@ -119,8 +119,8 @@ class NewCard extends Component {
                             <Input name = "holderBirthDate" type = "date" value = {this.state.values.holderBirthDate} error = {this.state.errors.holderBirthDate} onChange = {(value)=>this.handleInputChange(value)}/>
                         </div>
                         
-                        <Input placeholder = "CPF/CNPJ" name = "document" value = {this.state.values.document} error = {this.state.errors.document} onChange = {(value)=>this.handleInputChange(value)}/>
-                        <Input placeholder = "Numero do cartão" name = "cardNumber" value = {this.state.values.cardNumber} error = {this.state.errors.cardNumber} onChange = {(value)=>this.handleInputChange(value)}/>
+                        <Input mask="999.999.999-99" maskChar={null} placeholder = "CPF/CNPJ" name = "document" value = {this.state.values.document} error = {this.state.errors.document} onChange = {(value)=>this.handleInputChange(value)}/>
+                        <Input mask="999 9999 9999 9999" maskChar={null} placeholder = "Numero do cartão" name = "cardNumber" value = {this.state.values.cardNumber} error = {this.state.errors.cardNumber} onChange = {(value)=>this.handleInputChange(value)}/>
                         
                         <div className="grid grid-gap--m grid-template-columns--2fr">
                             <Select options={optionsYear} firstOption={{name:"Selecione o ano", value:""}} name = "expirationMonth" value = {this.state.values.expirationMonth} error = {this.state.errors.expirationMonth} onChange = {(value)=>this.handleInputChange(value)} />

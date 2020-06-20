@@ -71,7 +71,7 @@ class MiniFilter extends Component {
     render(){
         return(
             <section className="margin-top--xs">
-                <form className="grid grid-gap--m grid--row"  onSubmit={(e)=>this.onSubmit(e)}>
+                <form className="l-content grid grid-gap--m grid--row"  onSubmit={(e)=>this.onSubmit(e)}>
                     <Select name="locationPickup" firstOption={{name:"Selecione um local", value:""}} options={this.state.optionsLocal} onChange={(value)=>this.handleInputChange(value)}/>
                     <Input type="date" name="datePickup" value={this.state.values.datePickup} placeholder="Data de Retirada"  onChange={(value)=>this.handleInputChange(value)} />
                     <Input type="date" name="dateDelivery" value={this.state.values.dateDelivery} placeholder="Data de Entrega" onChange={(value)=>this.handleInputChange(value)} />

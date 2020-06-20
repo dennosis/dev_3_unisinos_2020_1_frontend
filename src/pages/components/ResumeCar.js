@@ -12,12 +12,12 @@ class ResumeCar extends Component {
         super(props)
 
         this.state = {
-            numDays : this.props.numDays || 1
+            days : this.props.days || 1
         }
     }
 
     componentWillMount() {
-        this.getCar(this.props.id)
+        this.getCar(this.props.carId)
     }
 
     getCar(id){
@@ -142,8 +142,8 @@ class ResumeCar extends Component {
                     <span>Total</span>
                     <span>R$ {
                                 (
-                                    (this.state.numDays * this.state.cost)+
-                                    (this.state.numDays * this.state.security)+
+                                    (this.state.days * this.state.cost)+
+                                    (this.state.days * this.state.security)+
                                     this.state.adminTax
                                 ).toFixed(2)
                             }

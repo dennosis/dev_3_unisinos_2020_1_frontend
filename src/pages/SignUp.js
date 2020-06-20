@@ -14,10 +14,14 @@ class SignUp extends Component {
     constructor(props) {
         super(props);
 
-        const {rentId,cardId} = this.props.match.params
+        const {isEdit,rentId,cardId} = this.props.match.params
 
         this.state = {
-            values:{},
+            isEdit,
+            values:{
+                password:"", 
+                passwordConfirm:""
+            },
             errors:{},
             optionsUf:[],
             optionsCity:[],
@@ -30,7 +34,7 @@ class SignUp extends Component {
 
     componentWillMount() {
 
-        if(this.props.isEdit){
+        if(this.state.isEdit){
             const user = getUser()
             if(!user)
                 this.props.history.push('/signin')
@@ -106,6 +110,7 @@ class SignUp extends Component {
     }
 
     handleInputChange(input){
+        console.log(input)
         this.setState({
             values:{
                 ...this.state.values,
@@ -132,7 +137,8 @@ class SignUp extends Component {
     onClear() {
         this.setState({
             values:{},
-            errors:{}
+            errors:{},
+            alert:{}
         })
     }
 
@@ -150,7 +156,7 @@ class SignUp extends Component {
             })
             return
         }
-        if(this.props.isEdit){
+        if(this.state.isEdit){
 
             api.setUser(this.state.values).then(
                 res => {
@@ -168,7 +174,7 @@ class SignUp extends Component {
             )
 
         }else{
-            api.register(this.state.values).then(
+            api.storeUser(this.state.values).then(
                 res => {
                     this.props.history.push('/signin')
                 },
@@ -184,6 +190,8 @@ class SignUp extends Component {
 
     render() {
 
+        const disabled = this.state.isEdit===true?true:false
+
         const cnhCategoryOpts = [
             {name:"A", value:"A"},
             {name:"B", value:"B"},
@@ -196,12 +204,12 @@ class SignUp extends Component {
                         <div className="grid grid-template-columns--2fr grid-gap--2xl">
                             <Container className="grid grid-gap--m margin-bottom--auto">
                                 <Input name="name" placeholder="Nome" error={this.state.errors.name } value={this.state.values.name} onChange={(value) => this.handleInputChange(value)} />
-                                <Input name="cpf" type="number" placeholder="CPF" error={this.state.errors.cpf } value={this.state.values.cpf} onChange={(value) => this.handleInputChange(value)} />
-                                <Input name="rg" type="number" placeholder="RG" error={this.state.errors.rg } value={this.state.values.rg} onChange={(value) => this.handleInputChange(value)} />
-                                <Input name="phone" type="number" placeholder="Telefone" error={this.state.errors.phone } value={this.state.values.phone} onChange={(value) => this.handleInputChange(value)} />
-                                <Input name="cellphone" type="number" placeholder="Celular" error={this.state.errors.cellphone } value={this.state.values.cellphone} onChange={(value) => this.handleInputChange(value)} />
-                                <Input name="email" type="email" autocomplete="off" placeholder="E-Mail" error={this.state.errors.email } value={this.state.values.email} onChange={(value) => this.handleInputChange(value)} />
-                                <Input name="cnhNumber" type="number" placeholder="CNH"  error={this.state.errors.cnhNumber } value={this.state.values.cnhNumber} onChange={(value) => this.handleInputChange(value)} />
+                                <Input mask="999.999.999-99" disabled={disabled} maskChar={null} name="cpf" placeholder="CPF" error={this.state.errors.cpf } value={this.state.values.cpf} onChange={(value) => this.handleInputChange(value)} />
+                                <Input mask="99.999.999-9" disabled={disabled} name="rg" placeholder="RG" error={this.state.errors.rg } value={this.state.values.rg} onChange={(value) => this.handleInputChange(value)} />
+                                <Input mask="(99) 9999 9999" maskChar={null} name="phone" placeholder="Telefone" error={this.state.errors.phone } value={this.state.values.phone} onChange={(value) => this.handleInputChange(value)} />
+                                <Input mask="(99) 99999 9999" maskChar={null} name="cellphone" placeholder="Celular" error={this.state.errors.cellphone } value={this.state.values.cellphone} onChange={(value) => this.handleInputChange(value)} />
+                                <Input name="email" type="email" disabled={disabled} autocomplete="off" placeholder="E-Mail" error={this.state.errors.email } value={this.state.values.email} onChange={(value) => this.handleInputChange(value)} />
+                                <Input mask="999.999.999-99" maskChar={null}  name="cnhNumber" placeholder="CNH"  error={this.state.errors.cnhNumber } value={this.state.values.cnhNumber} onChange={(value) => this.handleInputChange(value)} />
                                 <div className="grid grid-gap--m grid-template-columns--2fr">
                                     <Input  type="date" name="cnhExpirationDate"  error={this.state.errors.cnhExpirationDate } placeholder="Validade CNH" value={this.state.values.cnhExpirationDate} onChange={(value) => this.handleInputChange(value)} />
                                     <Select firstOption={{name:"Selecione Categoria", value:""}} options={cnhCategoryOpts} name="cnhCategory" placeholder="Categoria CNH"  error={this.state.errors.cnhCategory } value={this.state.values.cnhCategory} onChange={(value) => this.handleInputChange(value)} />
@@ -209,7 +217,7 @@ class SignUp extends Component {
                             </Container>
 
                             <Container className="grid grid-gap--m margin-bottom--auto">
-                                <Input name="cep"  max={99999999} type="number" placeholder="CEP"  error={this.state.errors.cep } value={this.state.values.cep} onChange={(value) => { this.handleInputChange(value); this.handleInputCep(value) }} />
+                                <Input mask="99999-999" maskChar={null} name="cep"  max={99999999} placeholder="CEP"  error={this.state.errors.cep } value={this.state.values.cep} onChange={(value) => { this.handleInputChange(value); this.handleInputCep(value) }} />
                                 <Input name="address" placeholder="Endereço"  error={this.state.errors.address } value={this.state.values.address} onChange={(value) => this.handleInputChange(value)} />
                                 <Input name="number" placeholder="Número" type="number"  error={this.state.errors.number } value={this.state.values.number} onChange={(value) => this.handleInputChange(value)} />
                                 <Input name="residentialComplement" placeholder="Complemento"  error={this.state.errors.residentialComplement } value={this.state.values.residentialComplement} onChange={(value) => this.handleInputChange(value)} />
@@ -220,16 +228,16 @@ class SignUp extends Component {
                         </div>
 
                         <div className="grid grid-template-columns--2fr grid-gap--2xl">
-                            <Input name="password" autocomplete="Off" type="password" placeholder="Senha"  error={this.state.errors.password } value={this.state.values.password || ""} onChange={(value) => this.handleInputChange(value)} />
-                            <Input name="passwordConfirm" autocomplete="false" type="password"  error={this.state.errors.passwordConfirm } placeholder="Confirmar senha" value={this.state.values.passwordConfirm || ""} onChange={(value) => this.handleInputChange(value)} />
+                            <Input name="password" autocomplete="false" type="password" placeholder="Senha"  error={this.state.errors.password } value={this.state.values.password } onChange={(value) => this.handleInputChange(value)} />
+                            <Input name="passwordConfirm" autocomplete="false" type="password"  error={this.state.errors.passwordConfirm } placeholder="Confirmar senha" value={this.state.values.passwordConfirm } onChange={(value) => this.handleInputChange(value)} />
                         </div>
 
                         <div className="grid grid-template-columns--2fr grid-gap--2xl">
                             {
-                                !this.props.isEdit &&
+                                !this.state.isEdit &&
                                 <Button type="reset" onClick={() => this.onClear()} text={'Limpar dados'} addClassName="gradient-color--black" />
                             }
-                            <Button type="submit" text={this.props.isEdit?'Salvar':'Cadastrar'} addClassName="gradient-color--base-60" />
+                            <Button type="submit" text={this.state.isEdit?'Salvar':'Cadastrar'} addClassName="gradient-color--base-60" />
                         </div>
 
                 </form>

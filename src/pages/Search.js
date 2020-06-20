@@ -41,7 +41,7 @@ class Search extends Component {
 		values.datePickup = dateValidate.dateInit
 		values.dateDelivery = dateValidate.dateEnd
 
-		api.search(values)
+		api.findCars(values)
 			.then(
 				res => {
 					//console.log(res.data)
@@ -51,7 +51,9 @@ class Search extends Component {
 					})
 				},
 				error => {
-					console.log({ type: "error", content: "Erro ao buscar dados" })
+					this.setState({
+						alert: { type: "error", content: "Erro ao buscar dados" }
+					})
 				}
 			)
 			
@@ -108,7 +110,7 @@ class Search extends Component {
 		}
 		console.log(data)
 		
-		api.rent(data)
+		api.storeRent(data)
 			.then(
 				res => {
 					this.props.history.push(`/rent/${res.data.id}/paymentmethods`)

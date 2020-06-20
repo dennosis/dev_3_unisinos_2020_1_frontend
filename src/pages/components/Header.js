@@ -26,7 +26,7 @@ class Header extends Component {
         switch(mode){
             case 1:
                 return (
-                    <section className="flex justify-content--center align-items--center ">
+                    <section className="l-content flex justify-content--center align-items--center ">
                         <a href="/">
                             <Img src={LogoLocadoraBoaViagem} alt="Logo" />
                         </a>
@@ -35,7 +35,7 @@ class Header extends Component {
 
             default:
                 return (
-                    <section className="flex justify-content--space-between align-items--center ">
+                    <section className="l-content flex justify-content--space-between align-items--center ">
                         <a href="/">
                             <Img src={LogoLocadoraBoaViagem} alt="Logo" />
                         </a>
@@ -56,7 +56,7 @@ class Header extends Component {
                     this.state.menu &&
                     <div onClick={()=>this.openMenu()} style={{background: 'rgba(0,0,0, 0.2)'}} className="position--fixed z-index--10 height--100 width--100 top--0 left--0"></div>
                 }
-                <header className="padding-right--2xl padding-left--2xl">
+                <header className="">
 
                     {
                         this.headerMode(this.props.mode)

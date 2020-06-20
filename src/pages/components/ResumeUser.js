@@ -12,7 +12,7 @@ class ResumeUser extends Component {
         super(props)
 
         this.state = {
-            linkTo:`${props.baseUrl}/user`
+            linkTo:`${props.baseUrl}/user/true`
         }
     }
 

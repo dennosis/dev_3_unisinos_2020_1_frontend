@@ -1,5 +1,6 @@
 
 import React, { Component } from 'react';
+import InputMask from "react-input-mask";
 
 
 class Input extends Component {
@@ -35,19 +36,23 @@ class Input extends Component {
             
         }
     }
-
     handleChange = async (event) =>{
+        const value = this.props.type==="number"?event.target.valueAsNumber:event.target.value
+        const returnValue = this.props.mask ? value.replace(/\D/g,'') : value
 
         await this.setState({
-            value: this.props.type==="number"?event.target.valueAsNumber:event.target.value,
+            value
         });
         
         if(this.props.onChange){
             let value
             if(this.state.name){
-                value = {name:this.state.name, value:this.state.value}
+                value = {
+                    name:this.state.name, 
+                    value:returnValue
+                }
             }else{
-                value = event.target.value
+                value = returnValue
             }
             await this.props.onChange(value)
         }
@@ -55,15 +60,22 @@ class Input extends Component {
     }
 
 
-
+    
     render(){
+
+        const Element = this.props.mask? InputMask:'input'
+        const maskChar = this.props.mask?{maskChar:this.props.maskChar}:{}
+        
         return(
             <label className="flex flex--column flex__item--grow">
-                <input 
+                <Element
                     type={this.props.type || "text"}  
                     name={this.state.name} 
                     id={this.props.id} 
                     value={this.state.value} 
+                    mask={this.props.mask} 
+                    {...maskChar} 
+                    disabled={this.props.disabled}
                     placeholder={this.props.placeholder || "..."}
                     onChange={this.handleChange} 
                     max={this.props.max}

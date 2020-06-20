@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import api from '../../Api'
+import { getUser} from '../../persist'
 
 import Title from './Title';
 import ListCarItem from './ListCarItem';
@@ -12,19 +13,23 @@ class MenuUser extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            rents:[]
+            rents:[],
+            user:getUser()||{}
+
         };
     }
 
     componentWillMount() {
-        api.getRents().then(
-            res => {
-                this.setState({
-                    rents:res.data.rents
-                })
-            },
-            error => {}
-        )
+        if(this.state.user.id){
+            api.getRents().then(
+                res => {
+                    this.setState({
+                        rents:res.data.rents
+                    })
+                },
+                error => {}
+            )
+        }
 
     }
 

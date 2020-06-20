@@ -29,7 +29,7 @@ class InfoUser extends Component {
                             {
                                 this.props.isEdit &&
                                 <div className="grid grid--row grid-gap--l margin-right--auto">
-                                    <a href="/user" className="font-size--xs font--bold color--base-30 hover-color--base-40">editar</a>
+                                    <a href="/user/true" className="font-size--xs font--bold color--base-30 hover-color--base-40">editar</a>
                                     <a href="/signout" className="font-size--xs font--bold color--base-30 hover-color--base-40">sair</a>
                                 </div>
                             }

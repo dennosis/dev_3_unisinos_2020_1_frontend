@@ -27,8 +27,16 @@ class Main extends Component {
                         <Route exact path="/signin" component={SignIn} />
                         <Route exact path="/signup" component={SignUp} />
                         <Route exact path="/signout" component={SignOut} />
+                        
+                        <Route exact path="/user/:isEdit" component={SignUp}  />
 
+                        {
+                            /*
                         <Route exact path="/user" render={props => <SignUp {...props} isEdit={true} />}  />
+
+                            */
+                        }
+                        
                         <Route exact path="/card" component={NewCard} />
 
                         {/* Rotas para confirmação */}
@@ -40,8 +48,8 @@ class Main extends Component {
                         <Route exact path="/rent/:rentId/newcard" component={NewCard} />
 
                         {/* Rotas para edição de usuario */}
-                        <Route exact path="/rent/:rentId/user" render={props => <SignUp {...props} isEdit={true} />} />
-                        <Route exact path="/rent/:rentId/card/:cardId/user" render={props => <SignUp {...props} isEdit={true} />} />
+                        <Route exact path="/rent/:rentId/user/:isEdit" component={SignUp} />
+                        <Route exact path="/rent/:rentId/card/:cardId/user/:isEdit" component={SignUp} />
 
 
                     </Switch>
