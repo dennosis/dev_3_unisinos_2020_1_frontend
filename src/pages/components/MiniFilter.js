@@ -50,9 +50,9 @@ class MiniFilter extends Component {
     async onSubmit(e){
         e.preventDefault();
 
-        const {locationPickup, datePickup, dateDelivery} = this.state.values
+        const {rentalCompanyPickup, datePickup, dateDelivery} = this.state.values
         
-        const values = {locationPickup, datePickup, dateDelivery}
+        const values = {rentalCompanyPickup, datePickup, dateDelivery}
 
         await Object.keys(values).forEach(key => {
             if(values[key] === null || values[key] === undefined || values[key] === "") 
@@ -72,7 +72,7 @@ class MiniFilter extends Component {
         return(
             <section className="margin-top--xs">
                 <form className="l-content grid grid-gap--m grid--row"  onSubmit={(e)=>this.onSubmit(e)}>
-                    <Select name="locationPickup" firstOption={{name:"Selecione um local", value:""}} options={this.state.optionsLocal} onChange={(value)=>this.handleInputChange(value)}/>
+                    <Select name="rentalCompanyPickup" value={this.state.values.rentalCompanyPickup} firstOption={{name:"Selecione um local", value:""}} options={this.state.optionsLocal} onChange={(value)=>this.handleInputChange(value)}/>
                     <Input type="date" name="datePickup" value={this.state.values.datePickup} placeholder="Data de Retirada"  onChange={(value)=>this.handleInputChange(value)} />
                     <Input type="date" name="dateDelivery" value={this.state.values.dateDelivery} placeholder="Data de Entrega" onChange={(value)=>this.handleInputChange(value)} />
                     <Button type="submit" text="Buscar"/>

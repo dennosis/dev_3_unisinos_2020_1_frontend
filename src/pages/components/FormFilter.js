@@ -22,11 +22,17 @@ class FormFilter extends Component {
                 manufactureYear: parseInt(props.values.manufactureYear) || "",
                 modelYear: parseInt(props.values.modelYear) || ""
             },
-            optionsLocal:[]
+            otherRentalCompanyDelivery:props.values.rentalCompanyDelivery?true:false,
+            optionsRentalCompany:[]
 
         }
 	}
 
+    otherRentalCompanyDelivery(input){
+        this.setState({
+            [input.name]:input.value,
+        })
+    }
 
     componentWillMount() {
         
@@ -34,7 +40,7 @@ class FormFilter extends Component {
             res => {
                 const options = res.data.map(opt=>{return{value:opt.id,name:opt.name}})
                 this.setState({
-                    optionsLocal: options || []
+                    optionsRentalCompany: options || []
                 })
             },
             error => {
@@ -66,6 +72,10 @@ class FormFilter extends Component {
             e.preventDefault();
 
             const values = this.state.values
+
+            if(!this.state.otherRentalCompanyDelivery){
+                delete values["rentalCompanyDelivery"]
+            }
 
             if(this.props.notEmptyValues){
                 await Object.keys(values).forEach(key => {
@@ -102,10 +112,13 @@ class FormFilter extends Component {
 
                     <div className="border-top--2 border-color--base-40"></div>
 
-                    <Select name="rentalCompanyPickup" firstOption={{name:"Selecione a Localização de Retirada", value:""}} options={this.state.values.optionsLocal} onChange={(value)=>this.handleInputChange(value)}/>
-                    <Select name="rentalCompanyDelivery" firstOption={{name:"Selecione a Localização de Entrega", value:""}} options={this.state.values.rentalCompanyDelivery} onChange={(value)=>this.handleInputChange(value)}/>
-
-                    <Toggle text={'Entrega em Outra Localização'} />
+                    <Select name="rentalCompanyPickup" value={this.state.values.rentalCompanyPickup} firstOption={{name:"Selecione a Localização de Retirada", value:""}} options={this.state.optionsRentalCompany} onChange={(value)=>this.handleInputChange(value)}/>
+                    
+                    {
+                        this.state.otherRentalCompanyDelivery &&
+                        <Select name="rentalCompanyDelivery" value={this.state.values.rentalCompanyDelivery} firstOption={{name:"Selecione a Localização de Entrega", value:""}} options={this.state.optionsRentalCompany} onChange={(value)=>this.handleInputChange(value)}/>
+                    }
+                    <Toggle name="otherRentalCompanyDelivery" value={this.state.otherRentalCompanyDelivery} onChange={(value)=>this.otherRentalCompanyDelivery(value)} text={'Entrega em Outra Localização'} />
                     
                     <div className="border-top--2 border-color--base-40"></div>
 
@@ -114,7 +127,7 @@ class FormFilter extends Component {
                     
                     <div className="border-top--2 border-color--base-40"></div>
 
-                    <Toggle name="isAplicationCar" value={this.state.isAplicationCar} text={'Veículos para Aplicativos'} onChange={(value)=>this.handleInputChange(value)} />
+                    <Toggle name="isAplicationCar" value={this.state.values.isAplicationCar} text={'Veículos para Aplicativos'} onChange={(value)=>this.handleInputChange(value)} />
                     
                     <div className="border-top--2 border-color--base-40"></div>
 
