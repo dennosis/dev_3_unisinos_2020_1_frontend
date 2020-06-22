@@ -6,7 +6,7 @@ class MenuUser extends Component {
     componentWillMount() {
         deleteUser()
         deleteToken()
-        this.props.history.replace("/");
+        this.props.history.push("/");
     }
 
     render() {

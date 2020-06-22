@@ -43,6 +43,7 @@ class SignUp extends Component {
                 res => {
                     const values = res.data
                     values.cnhExpirationDate = (new Date(values.cnhExpirationDate)).toISOString().substring(0, 10)
+                    values.cpf = '0'.repeat(11-(values.cpf+"").length)+values.cpf
                     this.setState({
                         values
                     })
@@ -191,7 +192,7 @@ class SignUp extends Component {
     render() {
 
         const disabled = this.state.isEdit==='true'?true:false
-        console.log(disabled)
+
         const cnhCategoryOpts = [
             {name:"A", value:"A"},
             {name:"B", value:"B"},
