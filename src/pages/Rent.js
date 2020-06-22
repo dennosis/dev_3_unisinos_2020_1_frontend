@@ -23,6 +23,7 @@ class Rent extends Component {
 
         //const {rentId} = this.props.match.params
         const {rentId,cardId} = this.props.match.params
+        console.log()
         let baseUrl = '/'
             baseUrl = baseUrl+(rentId?"rent/"+rentId:"")
             baseUrl = baseUrl+(cardId?"/card/"+cardId:"")
@@ -42,11 +43,11 @@ class Rent extends Component {
 
     getRent(id){
         api.getRentById(id).then(
-            res => {
+            async res => {
 
-                const dateValidate = this.validateDate(res.data.datePickup, res.data.dateDelivery)
+                const dateValidate = await this.validateDate(res.data.datePickup, res.data.dateDelivery)
                 
-                this.setState({
+                await this.setState({
                     rent: res.data || {},
                     days:  dateValidate.days || 1
                 })
@@ -84,14 +85,21 @@ class Rent extends Component {
 		
 	}
 
+    isValidDate(date) {
+		return date instanceof Date && !isNaN(date);
+	}
 
-	onSubmit=()=>{
-       if(this.state.rent.id){
+	onSubmit=(e)=>{
+
+        e.preventDefault();
+
+        if(this.state.rent.id){
             if(this.state.cardId){
                 api.storePaymentByCard({rentId:this.state.rent.id, cardId: this.state.cardId}).then(
                     res => {
                         this.setState({
-                            rent: {...this.state.rent, payment: res.data.id}
+                            rent: {...this.state.rent, paymentId: res.data.id},
+                            alert: {type:"success", content:"Reserva Confirmada"}
                         })
                     },
                     error => {
@@ -105,7 +113,9 @@ class Rent extends Component {
                 api.storePaymentByBillet({rentId:this.state.rent.id}).then(
                     res => {
                         this.setState({
-                            rent: {...this.state.rent, payment: res.data.id}
+                            rent: {...this.state.rent, paymentId: res.data.id}, 
+                            alert: {type:"success", content:"Reserva Confirmada"}
+
                         })
                     },
                     error => {
@@ -122,30 +132,30 @@ class Rent extends Component {
     render(){
         return (
 
-            <Layout>
+            <Layout alert={this.state.alert} >
 
                 <Title text="Reserva" />
 
-                <form onSubmit={()=>this.onSubmit()} style={templateColumns} className="grid grid-gap--m">
+                <form onSubmit={(e)=>this.onSubmit(e)} style={templateColumns} className="grid grid-gap--m">
                     <Container className="grid grid-gap--m margin-bottom--auto">
 
-                        <ResumeRentalCompany editMode={!this.state.rent.payment} baseUrl={this.state.baseUrl} rentalCompanyPickupId={this.state.rent.rentalCompanyPickup} rentalCompanyDeliveryId={this.state.rent.rentalCompanyDelivery} />
+                        <ResumeRentalCompany editMode={!this.state.rent.paymentId} baseUrl={this.state.baseUrl} dateDelivery={this.state.rent.dateDelivery} datePickup={this.state.rent.datePickup} rentalCompanyPickupId={this.state.rent.rentalCompanyPickupId} rentalCompanyDeliveryId={this.state.rent.rentalCompanyDeliveryId} />
 
                         <div className="grid grid--row grid-gap--m grid-template-columns--2fr">
                             
-                            <ResumeUser editMode={!this.state.rent.payment} baseUrl={this.state.baseUrl} />
+                            <ResumeUser editMode={!this.state.rent.paymentId} baseUrl={this.state.baseUrl} />
 
-                            <ResumePayment editMode={!this.state.rent.payment} paymentId={this.state.rent.payment}  rentId={this.state.rentId} cardId={this.state.cardId} />
+                            <ResumePayment editMode={!this.state.rent.paymentId} totalAmount={this.state.rent.totalAmount} paymentId={this.state.rent.paymentId}  rentId={this.state.rentId} cardId={this.state.cardId} />
 
                         </div>
                         {
-                            !this.state.rent.payment &&
-                            <Button text={'Confirmar reserva'} addClassName="gradient-color--base-60" />
+                            !this.state.rent.paymentId &&
+                            <Button type="submit" text={'Confirmar reserva'} addClassName="gradient-color--base-60" />
                         }
 
                     </Container>
                     
-                    <ResumeCar days={this.state.days} carId={this.state.rent.car} />
+                    <ResumeCar days={this.state.days} carId={this.state.rent.carId} />
 
                 </form>
             </Layout>

@@ -17,45 +17,48 @@ class ResumePayment extends Component {
         this.state = {
             payment:{},
             card:{},
-            billet:{}
+            billet:{},
+            totalAmount: props.totalAmount
         }
     }
 
-    async componentWillMount() {
-        if(this.props.paymentId){
-            await this.getPayment(this.props.paymentId)
-            
-            if(this.state.payment.card)
-                await this.getCard(this.state.payment.card)
-            
-            if(this.state.payment.billet)
-                await this.getBillet(this.state.payment.billet)
 
-        }else{
-            if(this.props.cardId)
-                await this.getCard(this.props.cardId)
-        }
-    }
 
-    async componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps(nextProps) {
 
         if (this.state.payment.id !== nextProps.paymentId) {
-
-            await this.getPayment(this.props.paymentId)
-                
-                if(this.state.payment.card)
-                    await this.getCard(this.state.payment.card)
-                
-                if(this.state.payment.billet)
-                    await this.getBillet(this.state.payment.billet)
-
-
+            this.findPayment(nextProps)
         }
+        if (this.state.card.id !== nextProps.cardId) {
+            this.findPayment(nextProps)
+        }
+        if (this.state.totalAmount !== nextProps.totalAmount) {
+            this.setState({
+                totalAmount:nextProps.totalAmount
+            })
+        }
+
 
     }
 
-    getPayment(id){
-        api.getPaymentById(id).then(
+
+    async findPayment(props){
+        const {paymentId, cardId} = props
+        if(paymentId){
+
+            await this.getPayment(paymentId)
+            
+            await this.getCard(this.state.payment.card)
+            
+            await this.getBillet(this.state.payment.billet)
+
+        }else{
+            await this.getCard(cardId)
+        } 
+    }
+
+    async getPayment(id){
+        await api.getPaymentById(id).then(
             res => {
                 this.setState({
                     payment:res.data
@@ -65,26 +68,28 @@ class ResumePayment extends Component {
         )
     }
 
-    getCard(id){
-        api.getCardById(id).then(
-            res => {
-                this.setState({
-                    card: res.data
-                })
-            },
-            error => {}
-        )
+    async getCard(id){
+        if(id)
+            await api.getCardById(id).then(
+                res => {
+                    this.setState({
+                        card: res.data
+                    })
+                },
+                error => {}
+            )
     }
 
-    getBillet(id){
-        api.getBilletById(id).then(
-            res => {
-                this.setState({
-                    billet: res.data
-                })
-            },
-            error => {}
-        )
+    async getBillet(id){
+        if(id)
+           await api.getBilletById(id).then(
+                res => {
+                    this.setState({
+                        billet: res.data
+                    })
+                },
+                error => {}
+            )
     }
 
 
@@ -111,6 +116,8 @@ class ResumePayment extends Component {
 
     render(){
 
+        const totalAmount = this.state.payment.value ? this.state.payment.value : this.state.totalAmount
+
         return (
             <Container>
 
@@ -118,13 +125,13 @@ class ResumePayment extends Component {
 
                 <section className="font--xs grid grid-template-columns--2fr grid-gap-row--2xs grid-gap-column--xl padding--2xs">
                     <span>Valor:</span>
-                    <span className="font--bold">{this.state.payment.value}</span>
+                    <span className="font--bold">{ parseFloat(totalAmount).toFixed(2) }</span>
 
                     <span>Status:</span>
                     <span className="font--bold">{this.state.payment.isPaidOut?"Pago":"Não Pago"}</span>
                 </section>
 
-                <section className="font--xs padding--2xs margin-top--s padding-bottom--5xl border-top--1 border-color--base-30">
+                <section className="font--xs padding--2xs margin-top--s border-top--1 border-color--base-30">
 
                     {
                         this.state.card.id &&
@@ -152,7 +159,7 @@ class ResumePayment extends Component {
                                 }
                                 {
                                     this.state.billet.url &&
-                                    <Button  href={this.state.billet.url} text={"Gerar"} addClassName="gradient-color--black align-self--stretch margin-top--2xl"/>
+                                    <Button target="_blank" href={this.state.billet.url} text={"Gerar"} addClassName="gradient-color--black align-self--stretch margin-top--2xl"/>
                                 }
                             </div>
                         </>
@@ -161,7 +168,7 @@ class ResumePayment extends Component {
 
                 {
                     (this.props.editMode &&  !this.props.id) &&
-                    <Button  href={`/rent/${this.props.rentId}/paymentmethods`} text={"alterar"} addClassName="gradient-color--black margin-top--auto"/>
+                    <Button href={`/rent/${this.props.rentId}/paymentmethods`} text={"alterar"} addClassName="gradient-color--black margin-top--auto"/>
                 }
 
             </Container>

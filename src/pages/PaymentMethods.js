@@ -46,7 +46,7 @@ class PaymentMethods extends Component {
 
                     <div className="grid grid-gap--l">
                         {
-                            this.state.cards &&
+                            this.state.cards.length > 0 &&
               
                             <Container addClassName="flex flex--column align-items--center">
 

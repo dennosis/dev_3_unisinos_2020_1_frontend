@@ -13,6 +13,11 @@ class Button extends Component {
         }else{
             attribs['href'] = this.props.href
         }
+
+        if(this.props.target)
+            attribs['target'] = this.props.target
+        
+
         attribs['onClick'] = this.props.onClick
         attribs['className'] = `button font-size--m font--regular flex justify-content--center align-items--center shadow-neumorphic padding--s border-radius--2xs hover-gradient-color--white ${this.props.addClassName || ""}` 
 

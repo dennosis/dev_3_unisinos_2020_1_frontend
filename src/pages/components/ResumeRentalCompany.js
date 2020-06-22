@@ -14,33 +14,47 @@ class ResumeRentalCompany extends Component {
         this.state = {
             rentalCompanyPickup:{},
             rentalCompanyDelivery:{},
-            addressRentalCompanyPickup:{},
-            addressRentalCompanyDelivery:{},
+            datePickup:this.props.datePickup,
+            dateDelivery:this.props.dateDelivery
+        }
+    }
+    componentWillReceiveProps(nextProps){
+        if (this.state.rentalCompanyPickup.id !== nextProps.rentalCompanyPickupId) {
+            this.findRentalCompanies(nextProps)
+        }
+
+        if (this.state.datePickup !== nextProps.datePickup) {
+            this.setState({
+                datePickup: nextProps.datePickup
+            })
+        }
+
+        if (this.state.dateDelivery !== nextProps.dateDelivery) {
+            this.setState({
+                dateDelivery: nextProps.dateDelivery
+            })
         }
     }
 
-    componentWillMount() {
-        
-        if(this.props.rentalCompanyPickupId){
-            this.getRentalCompany(this.props.rentalCompanyPickupId,"rentalCompanyPickup")
-            this.getAddress(this.state.rentalCompanyPickup.address, "addressRentalCompanyPickup")
+    async findRentalCompanies(props){
+            const {rentalCompanyPickupId, rentalCompanyDeliveryId} = props
+            if(rentalCompanyPickupId){
+                await this.getRentalCompany(rentalCompanyPickupId,"rentalCompanyPickup")
 
-            if(this.props.rentalCompanyPickupId === this.props.rentalCompanyDeliveryId){
-                this.setState({
-                    rentalCompanyDelivery: this.state.rentalCompanyPickup,
-                    addressRentalCompanyDelivery: this.state.addressRentalCompanyPickup
-                })
-            }else{
-                this.getRentalCompany(this.props.rentalCompanyDeliveryId,"rentalCompanyDelivery")
-                this.getAddress(this.state.rentalCompanyDelivery.address, "addressRentalCompanyDelivery")
+                if(rentalCompanyPickupId === rentalCompanyDeliveryId){
+                    await this.setState({
+                        rentalCompanyDelivery: this.state.rentalCompanyPickup,
+                    })
+                }else{
+                    await this.getRentalCompany(rentalCompanyDeliveryId,"rentalCompanyDelivery")
+                }
             }
-        }
-
+        
     }
+    
 
-
-    getRentalCompany(id, index){
-        api.getRentalCompanyById(id).then(
+    async getRentalCompany(id, index){
+        await api.getRentalCompanyById(id).then(
             res => {
                 this.setState({
                     [index]: res.data || {}
@@ -50,8 +64,8 @@ class ResumeRentalCompany extends Component {
         )
     }
 
-    getAddress(id, index){
-        api.getAddressById(id).then(
+    async getAddress(id, index){
+        await api.getAddressById(id).then(
             res => {
                 this.setState({
                     [index]: res.data || {}
@@ -66,6 +80,9 @@ class ResumeRentalCompany extends Component {
 
     render(){
 
+        const dateDelivery = new Date(this.state.dateDelivery)
+        const datePickup = new Date(this.state.datePickup)
+
         return (
             <Container>
 
@@ -75,36 +92,50 @@ class ResumeRentalCompany extends Component {
 
                         <Title tag="h3" text="Retirada" />
 
-                        <div className="font--xs grid grid-template-columns--2fr grid-gap-row--2xs grid-gap-column--xl padding--2xs padding-bottom--5xl">
+                        <div className="font--xs grid grid-template-columns--2fr grid-gap-row--2xs grid-gap-column--xl padding--2xs padding-bottom--5xl margin-right--auto">
+                            
+                            {
+                                this.state.datePickup && 
+                                <>
+                                <span>Data:</span>
+                                <span className="font--bold">{`${datePickup.getDate()}/${datePickup.getMonth()}/${datePickup.getFullYear()}`}</span>
+                                </>
+                            }
+
                             <span>Nome:</span>
                             <span className="font--bold">{this.state.rentalCompanyPickup.name}</span>
 
                             <span>Celular:</span>
                             <span className="font--bold">{this.state.rentalCompanyPickup.cellphone}</span>
-
-                            <span>Telefone:</span>
-                            <span className="font--bold">{this.state.rentalCompanyPickup.phone}</span>
                             
+                            {
+                                this.state.rentalCompanyPickup.phone && 
+                                <>
+                                <span>Telefone:</span>
+                                <span className="font--bold">{this.state.rentalCompanyPickup.phone}</span>
+                                </>
+                            }
+
                             <span>Email:</span>
                             <span className="font--bold">{this.state.rentalCompanyPickup.email}</span>
                         
                             <span>Cep:</span>
-                            <span className="font--bold">{this.state.addressRentalCompanyPickup.cep}</span>
+                            <span className="font--bold">{this.state.rentalCompanyPickup.cep}</span>
                             
                             <span>Address:</span>
-                            <span className="font--bold">{this.state.addressRentalCompanyPickup.address}</span>
+                            <span className="font--bold">{this.state.rentalCompanyPickup.address}</span>
                                                  
                             <span>Numero:</span>
-                            <span className="font--bold">{this.state.addressRentalCompanyPickup.number}</span>
+                            <span className="font--bold">{this.state.rentalCompanyPickup.number}</span>
                                                  
                             <span>Bairro:</span>
-                            <span className="font--bold">{this.state.addressRentalCompanyPickup.neighborhood}</span>
+                            <span className="font--bold">{this.state.rentalCompanyPickup.neighborhood}</span>
                                                  
-                            <span>City:</span>
-                            <span className="font--bold">{this.state.addressRentalCompanyPickup.City}</span>
+                            <span>Cidade:</span>
+                            <span className="font--bold">{this.state.rentalCompanyPickup.city}</span>
                         
-                            <span>Uf:</span>
-                            <span className="font--bold">{this.state.addressRentalCompanyPickup.uf}</span>
+                            <span>Estado:</span>
+                            <span className="font--bold">{this.state.rentalCompanyPickup.uf}</span>
                        
                         </div>
 
@@ -116,36 +147,49 @@ class ResumeRentalCompany extends Component {
 
                         <Title tag="h3" text="Devolução" />
 
-                        <div className="font--xs grid grid-template-columns--2fr grid-gap-row--2xs grid-gap-column--xl padding--2xs padding-bottom--5xl">
+                        <div className="font--xs grid grid-template-columns--2fr grid-gap-row--2xs grid-gap-column--xl padding--2xs padding-bottom--5xl margin-right--auto">
+                            {
+                                this.state.dateDelivery && 
+                                <>
+                                <span>Data:</span>
+                                <span className="font--bold">{`${dateDelivery.getDate()}/${dateDelivery.getMonth()}/${dateDelivery.getFullYear()}`}</span>
+                                </>
+                            }
+                            
                             <span>Nome:</span>
                             <span className="font--bold">{this.state.rentalCompanyDelivery.name}</span>
 
                             <span>Celular:</span>
                             <span className="font--bold">{this.state.rentalCompanyDelivery.cellphone}</span>
 
-                            <span>Telefone:</span>
-                            <span className="font--bold">{this.state.rentalCompanyDelivery.phone}</span>
-                            
+                            {
+                                this.state.rentalCompanyDelivery.phone && 
+                                <>
+                                <span>Telefone:</span>
+                                <span className="font--bold">{this.state.rentalCompanyDelivery.phone}</span>
+                                </>
+                            }
+        
                             <span>Email:</span>
                             <span className="font--bold">{this.state.rentalCompanyDelivery.email}</span>
                         
                             <span>Cep:</span>
-                            <span className="font--bold">{this.state.addressRentalCompanyDelivery.cep}</span>
+                            <span className="font--bold">{this.state.rentalCompanyDelivery.cep}</span>
                             
                             <span>Address:</span>
-                            <span className="font--bold">{this.state.addressRentalCompanyDelivery.address}</span>
+                            <span className="font--bold">{this.state.rentalCompanyDelivery.address}</span>
                                                  
                             <span>Numero:</span>
-                            <span className="font--bold">{this.state.addressRentalCompanyDelivery.number}</span>
+                            <span className="font--bold">{this.state.rentalCompanyDelivery.number}</span>
                                                  
                             <span>Bairro:</span>
-                            <span className="font--bold">{this.state.addressRentalCompanyDelivery.neighborhood}</span>
+                            <span className="font--bold">{this.state.rentalCompanyDelivery.neighborhood}</span>
                                                  
-                            <span>City:</span>
-                            <span className="font--bold">{this.state.addressRentalCompanyDelivery.City}</span>
+                            <span>Cidade:</span>
+                            <span className="font--bold">{this.state.rentalCompanyDelivery.city}</span>
                         
-                            <span>Uf:</span>
-                            <span className="font--bold">{this.state.addressRentalCompanyDelivery.uf}</span>
+                            <span>Estado:</span>
+                            <span className="font--bold">{this.state.rentalCompanyDelivery.uf}</span>
                         
                         </div>
 
@@ -155,7 +199,7 @@ class ResumeRentalCompany extends Component {
 
 
                 {
-                    this.props.editMode &&
+                    this.props.editMode && false &&
                     <Button text={"alterar"} href={this.state.linkTo} addClassName="gradient-color--black margin-top--auto"/>
                 }
 

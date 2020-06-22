@@ -46,7 +46,7 @@ class Search extends Component {
 				res => {
 					//console.log(res.data)
 					this.setState({ 
-						cars: res.data || [],
+						cars: res.data.cars || [],
 						days: dateValidate.days
 					})
 				},
@@ -116,6 +116,7 @@ class Search extends Component {
 					this.props.history.push(`/rent/${res.data.id}/paymentmethods`)
 				},
 				error => {
+					console.log(error)
 					this.setState({ 
 						alert: {type:"error", content:"Erro ao Iniciar a Reserva"},
 					})

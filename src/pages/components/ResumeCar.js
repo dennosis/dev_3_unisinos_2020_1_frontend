@@ -17,13 +17,28 @@ class ResumeCar extends Component {
     }
 
     componentWillMount() {
-        this.getCar(this.props.carId)
+        if(this.props.carId){
+            this.getCar(this.props.carId)
+        }
     }
 
-    getCar(id){
+    componentWillReceiveProps(nextProps){
+
+        if(this.state.id !== nextProps.carId){
+            this.getCar(nextProps.carId)
+        }
+
+        if(this.state.days !== nextProps.days){
+            this.setState({
+                days:nextProps.days
+            })
+        }
+    }
+
+     getCar(id){
         api.getCarById(id).then(
-            res => {
-                this.setState({
+            async res => {
+                await this.setState({
                     ...res.data
                 })
             },
@@ -114,17 +129,17 @@ class ResumeCar extends Component {
 
                     <div className="flex justify-content--space-between">
                         <span>Diaria</span>
-                        <span className="font--bold">R$ {this.state.cost}</span>
+                        <span className="font--bold">R$ {parseFloat(this.state.cost).toFixed(2)}</span>
                     </div>
 
                     <div className="flex justify-content--space-between">
                         <span>Seguro/dia</span>
-                        <span className="font--bold">R$ {this.state.security}</span>
+                        <span className="font--bold">R$ {parseFloat(this.state.security).toFixed(2)}</span>
                     </div>
 
                     <div className="flex justify-content--space-between">
                         <span>Taxa administrativa</span>
-                        <span className="font--bold">R$ {this.state.adminTax}</span>
+                        <span className="font--bold">R$ {parseFloat(this.state.adminTax).toFixed(2)}</span>
                     </div>
 
                 </section>
@@ -142,9 +157,9 @@ class ResumeCar extends Component {
                     <span>Total</span>
                     <span>R$ {
                                 (
-                                    (this.state.days * this.state.cost)+
-                                    (this.state.days * this.state.security)+
-                                    this.state.adminTax
+                                    (this.state.days * parseFloat(this.state.cost))+
+                                    (this.state.days * parseFloat(this.state.security))+
+                                    parseFloat(this.state.adminTax)
                                 ).toFixed(2)
                             }
                     </span>
