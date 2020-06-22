@@ -127,7 +127,7 @@ class NewCard extends Component {
                             <Select options={optionsMonth} firstOption={{name:"Selecione o mês", value:""}} name = "expirationYear" value = {this.state.values.expirationYear} error = {this.state.errors.expirationYear} onChange = {(value)=>this.handleInputChange(value)}/>
                         </div>
                         
-                        <Input type="password" placeholder = "CVV" name = "cvv" value = {this.state.values.cvv} error = {this.state.errors.cvv} onChange = {(value)=>this.handleInputChange(value)}/>
+                        <Input mask="9999" maskChar={null} type="password" placeholder = "CVV" name = "cvv" value = {this.state.values.cvv} error = {this.state.errors.cvv} onChange = {(value)=>this.handleInputChange(value)}/>
                         
                         <div className="grid grid-gap--m grid-template-columns--1fr">
                             <Button type="submit" text={"confirmar"} addClassName="gradient-color--base-60" />
