@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import api from '../../Api'
+import { formatMoney } from  '../../utils'
+
 
 import Container from './Container';
 import Button from './Button';
@@ -106,13 +108,6 @@ class ResumePayment extends Component {
     
     }
 
-/*
-    id: payment._id,
-    isPaidOut: payment.isPaidOut,
-    value: payment.value,
-    card: payment.card,
-    billet: payment.billet        
-*/
 
     render(){
 
@@ -125,7 +120,7 @@ class ResumePayment extends Component {
 
                 <section className="font--xs grid grid-template-columns--2fr grid-gap-row--2xs grid-gap-column--xl padding--2xs">
                     <span>Valor:</span>
-                    <span className="font--bold">{ parseFloat(totalAmount).toFixed(2) }</span>
+                    <span className="font--bold">{ formatMoney(totalAmount) }</span>
 
                     <span>Status:</span>
                     <span className="font--bold">{this.state.payment.isPaidOut?"Pago":"Não Pago"}</span>

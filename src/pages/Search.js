@@ -41,6 +41,24 @@ class Search extends Component {
 		values.datePickup = dateValidate.dateInit
 		values.dateDelivery = dateValidate.dateEnd
 
+		const stringified = queryString.stringify(values);
+
+		if(values.manufactureYear)
+			values.manufactureYear =  {equals: values.manufactureYear}
+			
+		if(values.modelYear)
+			values.modelYear =  {equals: values.modelYear}
+
+		if(values.cost)
+			values.cost =  {to: values.cost}
+
+		if(values.passengers)
+			values.passengers =  {from: values.passengers}
+		
+		if(values.kilometrage)
+			values.kilometrage =  {to: values.kilometrage}
+
+
 		api.findCars(values)
 			.then(
 				res => {
@@ -56,8 +74,9 @@ class Search extends Component {
 					})
 				}
 			)
+
+
 			
-		const stringified = queryString.stringify(values);
 		this.props.history.replace(`/search?${stringified}`);
 	}
 

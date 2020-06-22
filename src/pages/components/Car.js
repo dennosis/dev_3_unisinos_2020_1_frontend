@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { formatMoney } from  '../../utils'
 
 import {AiFillCar} from 'react-icons/ai';
 import {FaRegSnowflake} from 'react-icons/fa';
@@ -111,8 +112,8 @@ class Car extends Component {
                     </div>
 
                     <div className="flex flex--column align-items--center">
-                        <span className="font-size--s color--base-30 margin-bottom--3xs">{`R$ ${this.props.cost}/dia`}</span>
-                        <span className="font-size--3xl font--bold margin-bottom--xs">{`R$ ${this.props.cost * this.props.days }`}</span>
+                        <span className="font-size--s color--base-30 margin-bottom--3xs">{`${formatMoney(this.props.cost)}/dia`}</span>
+                        <span className="font-size--3xl font--bold margin-bottom--xs">{formatMoney(this.props.cost * this.props.days)}</span>
                         <Button text={'Alugar'} onClick={()=>this.props.onRent(this.props.id, this.props.currentRentalCompany.id)} addClassName="gradient-color--base-60 align-self--stretch"/>
                     </div>
 

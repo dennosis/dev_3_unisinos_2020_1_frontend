@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import { formatPhone, formatDate, formatCep } from  '../../utils'
+
 import api from '../../Api'
 
 import Container from './Container';
@@ -79,10 +81,7 @@ class ResumeRentalCompany extends Component {
 
 
     render(){
-
-        const dateDelivery = new Date(this.state.dateDelivery)
-        const datePickup = new Date(this.state.datePickup)
-
+        
         return (
             <Container>
 
@@ -98,7 +97,7 @@ class ResumeRentalCompany extends Component {
                                 this.state.datePickup && 
                                 <>
                                 <span>Data:</span>
-                                <span className="font--bold">{`${datePickup.getDate()}/${datePickup.getMonth()}/${datePickup.getFullYear()}`}</span>
+                                <span className="font--bold">{formatDate(this.state.datePickup)}</span>
                                 </>
                             }
 
@@ -106,13 +105,13 @@ class ResumeRentalCompany extends Component {
                             <span className="font--bold">{this.state.rentalCompanyPickup.name}</span>
 
                             <span>Celular:</span>
-                            <span className="font--bold">{this.state.rentalCompanyPickup.cellphone}</span>
+                            <span className="font--bold">{formatPhone(this.state.rentalCompanyPickup.cellphone)}</span>
                             
                             {
                                 this.state.rentalCompanyPickup.phone && 
                                 <>
                                 <span>Telefone:</span>
-                                <span className="font--bold">{this.state.rentalCompanyPickup.phone}</span>
+                                <span className="font--bold">{formatPhone(this.state.rentalCompanyPickup.phone)}</span>
                                 </>
                             }
 
@@ -120,7 +119,7 @@ class ResumeRentalCompany extends Component {
                             <span className="font--bold">{this.state.rentalCompanyPickup.email}</span>
                         
                             <span>Cep:</span>
-                            <span className="font--bold">{this.state.rentalCompanyPickup.cep}</span>
+                            <span className="font--bold">{formatCep(this.state.rentalCompanyPickup.cep)}</span>
                             
                             <span>Address:</span>
                             <span className="font--bold">{this.state.rentalCompanyPickup.address}</span>
@@ -152,7 +151,7 @@ class ResumeRentalCompany extends Component {
                                 this.state.dateDelivery && 
                                 <>
                                 <span>Data:</span>
-                                <span className="font--bold">{`${dateDelivery.getDate()}/${dateDelivery.getMonth()}/${dateDelivery.getFullYear()}`}</span>
+                                <span className="font--bold">{formatDate(this.state.dateDelivery)}</span>
                                 </>
                             }
                             
@@ -160,13 +159,13 @@ class ResumeRentalCompany extends Component {
                             <span className="font--bold">{this.state.rentalCompanyDelivery.name}</span>
 
                             <span>Celular:</span>
-                            <span className="font--bold">{this.state.rentalCompanyDelivery.cellphone}</span>
+                            <span className="font--bold">{formatPhone(this.state.rentalCompanyDelivery.cellphone)}</span>
 
                             {
                                 this.state.rentalCompanyDelivery.phone && 
                                 <>
                                 <span>Telefone:</span>
-                                <span className="font--bold">{this.state.rentalCompanyDelivery.phone}</span>
+                                <span className="font--bold">{formatPhone(this.state.rentalCompanyDelivery.phone)}</span>
                                 </>
                             }
         
@@ -174,7 +173,7 @@ class ResumeRentalCompany extends Component {
                             <span className="font--bold">{this.state.rentalCompanyDelivery.email}</span>
                         
                             <span>Cep:</span>
-                            <span className="font--bold">{this.state.rentalCompanyDelivery.cep}</span>
+                            <span className="font--bold">{formatCep(this.state.rentalCompanyDelivery.cep)}</span>
                             
                             <span>Address:</span>
                             <span className="font--bold">{this.state.rentalCompanyDelivery.address}</span>

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import api from '../../Api'
+import { formatMoney } from  '../../utils'
 
 import Container from './Container';
 import Img from './Img';
@@ -129,17 +130,17 @@ class ResumeCar extends Component {
 
                     <div className="flex justify-content--space-between">
                         <span>Diaria</span>
-                        <span className="font--bold">R$ {parseFloat(this.state.cost).toFixed(2)}</span>
+                        <span className="font--bold">{formatMoney(this.state.cost)}</span>
                     </div>
 
                     <div className="flex justify-content--space-between">
                         <span>Seguro/dia</span>
-                        <span className="font--bold">R$ {parseFloat(this.state.security).toFixed(2)}</span>
+                        <span className="font--bold">{formatMoney(this.state.security)}</span>
                     </div>
 
                     <div className="flex justify-content--space-between">
                         <span>Taxa administrativa</span>
-                        <span className="font--bold">R$ {parseFloat(this.state.adminTax).toFixed(2)}</span>
+                        <span className="font--bold">{formatMoney(this.state.adminTax)}</span>
                     </div>
 
                 </section>
@@ -155,12 +156,12 @@ class ResumeCar extends Component {
 
                 <div className=" font-size--l font--bold flex justify-content--space-between padding--xs border-radius--2xs background-color--white color--black">
                     <span>Total</span>
-                    <span>R$ {
-                                (
+                    <span>{
+                                formatMoney(
                                     (this.state.days * parseFloat(this.state.cost))+
                                     (this.state.days * parseFloat(this.state.security))+
                                     parseFloat(this.state.adminTax)
-                                ).toFixed(2)
+                                )
                             }
                     </span>
                 </div>

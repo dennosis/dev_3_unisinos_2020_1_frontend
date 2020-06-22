@@ -18,15 +18,25 @@ class FormFilter extends Component {
                 dateDelivery: props.values.dateDelivery || "",
                 rentalCompanyPickup: props.values.rentalCompanyPickup || "",
                 rentalCompanyDelivery: props.values.rentalCompanyDelivery || "",
-                isAplicationCar:  props.values.isAplicationCar && JSON.parse(props.values.isAplicationCar),
+                isAplicationCar:  (props.values.isAplicationCar && JSON.parse(props.values.isAplicationCar)) || true,
                 manufactureYear: parseInt(props.values.manufactureYear) || "",
-                modelYear: parseInt(props.values.modelYear) || ""
+                modelYear: parseInt(props.values.modelYear) || "",
+                cost: parseFloat(props.values.cost) || "",
+                passengers: parseInt(props.values.passengers) || "",
+                kilometrage: parseInt(props.values.kilometrage) || ""
             },
             otherRentalCompanyDelivery:props.values.rentalCompanyDelivery?true:false,
+            refinedFilter:false,
             optionsRentalCompany:[]
 
         }
 	}
+
+    refinedFilter(input){
+        this.setState({
+            [input.name]:input.value,
+        })
+    }
 
     otherRentalCompanyDelivery(input){
         this.setState({
@@ -71,17 +81,26 @@ class FormFilter extends Component {
 
             e.preventDefault();
 
-            const values = this.state.values
-
-            if(!this.state.otherRentalCompanyDelivery){
-                delete values["rentalCompanyDelivery"]
-            }
+            const values = {...this.state.values}
 
             if(this.props.notEmptyValues){
                 await Object.keys(values).forEach(key => {
                     if(values[key] === null || values[key] === undefined || values[key] === "") 
                         delete values[key]
                 })
+            }
+
+            if(!this.state.otherRentalCompanyDelivery){
+                delete values["rentalCompanyDelivery"]
+            }
+
+            if(!this.state.refinedFilter){
+                delete values["manufactureYear"]
+                delete values["modelYear"]
+                delete values["cost"]
+                delete values["passengers"]
+                delete values["kilometrage"]
+                delete values["isAplicationCar"]
             }
 
             await this.props.onSubmit(values)
@@ -110,8 +129,6 @@ class FormFilter extends Component {
                     <Input type="date" name="datePickup" value={this.state.values.datePickup} placeholder="Data de Retirada"  onChange={(value)=>this.handleInputChange(value)} />
                     <Input type="date" name="dateDelivery" value={this.state.values.dateDelivery} placeholder="Data de Entrega" onChange={(value)=>this.handleInputChange(value)} />
 
-                    <div className="border-top--2 border-color--base-40"></div>
-
                     <Select name="rentalCompanyPickup" value={this.state.values.rentalCompanyPickup} firstOption={{name:"Selecione a Localização de Retirada", value:""}} options={this.state.optionsRentalCompany} onChange={(value)=>this.handleInputChange(value)}/>
                     
                     {
@@ -120,16 +137,28 @@ class FormFilter extends Component {
                     }
                     <Toggle name="otherRentalCompanyDelivery" value={this.state.otherRentalCompanyDelivery} onChange={(value)=>this.otherRentalCompanyDelivery(value)} text={'Entrega em Outra Localização'} />
                     
-                    <div className="border-top--2 border-color--base-40"></div>
+                    <div className="border-top--1 border-color--base-20 margin-top--xs padding-top--xs padding-bottom--xs">
 
-                    <Input type="number" name="manufactureYear" value={this.state.values.manufactureYear} placeholder="Ano do Fabricação" onChange={(value)=>this.handleInputChange(value)} />
-                    <Input type="number" name="modelYear" value={this.state.values.modelYear} placeholder="Ano de Modelo" onChange={(value)=>this.handleInputChange(value)} />
-                    
-                    <div className="border-top--2 border-color--base-40"></div>
+                        <Toggle name="refinedFilter" value={this.state.refinedFilter} onChange={(value)=>this.refinedFilter(value)} text={'Filtro Refinado'} />
 
-                    <Toggle name="isAplicationCar" value={this.state.values.isAplicationCar} text={'Veículos para Aplicativos'} onChange={(value)=>this.handleInputChange(value)} />
-                    
-                    <div className="border-top--2 border-color--base-40"></div>
+                        {
+                            this.state.refinedFilter &&
+                            <div className="border--1 border-radius--xs border-color--base-20 padding--m grid grid-gap--xs margin-top--xs">
+
+                                <Input mask="9999" maskChar={null} name="manufactureYear" value={this.state.values.manufactureYear} placeholder="Ano do Fabricação" onChange={(value)=>this.handleInputChange(value)} />
+                                <Input mask="9999" maskChar={null} name="modelYear" value={this.state.values.modelYear} placeholder="Ano de Modelo" onChange={(value)=>this.handleInputChange(value)} />
+                                
+                                <Input mask="R$ 999" maskChar={null} name="cost" value={this.state.values.cost} placeholder="Preço/dia Máximo" onChange={(value)=>this.handleInputChange(value)} />
+                                
+                                <Input type="number" max="99999999" name="kilometrage" value={this.state.values.kilometrage} placeholder="Quilometragem Máxima" onChange={(value)=>this.handleInputChange(value)} />
+                                
+                                <Input mask="9" maskChar={null} name="passengers" value={this.state.values.passengers} placeholder="Passageiros" onChange={(value)=>this.handleInputChange(value)} />
+
+                                <Toggle name="isAplicationCar" value={this.state.values.isAplicationCar} text={'Veículos para Aplicativos'} onChange={(value)=>this.handleInputChange(value)} />
+                                
+                            </div>
+                        }
+                    </div>
 
                     <div className="grid grid-template-columns--2fr grid-gap--2xl">
                         <Button type="submit" text={'Pesquisar'}  addClassName="gradient-color--black" />

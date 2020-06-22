@@ -74,6 +74,8 @@ class Input extends Component {
                     id={this.props.id} 
                     value={this.state.value} 
                     mask={this.props.mask} 
+                    step={this.props.step} 
+
                     {...maskChar} 
                     disabled={this.props.disabled}
                     placeholder={this.props.placeholder || "..."}

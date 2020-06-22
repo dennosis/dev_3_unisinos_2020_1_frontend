@@ -10,12 +10,6 @@ if (process.env.NODE_ENV !== 'production')
     baseURL: process.env.REACT_APP_API_URL
 })
 
-let header = {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json, text/plain, */*',
-    "Authorization": `Bearer ${getToken()}`
-}
-
 const getHeader=()=>{
     return {
         'Content-Type': 'application/json',
