@@ -120,14 +120,14 @@ class NewCard extends Component {
                         </div>
                         
                         <Input mask="999.999.999-99" maskChar={null} placeholder = "CPF/CNPJ" name = "document" value = {this.state.values.document} error = {this.state.errors.document} onChange = {(value)=>this.handleInputChange(value)}/>
-                        <Input mask="999 9999 9999 9999" maskChar={null} placeholder = "Numero do cartão" name = "cardNumber" value = {this.state.values.cardNumber} error = {this.state.errors.cardNumber} onChange = {(value)=>this.handleInputChange(value)}/>
+                        <Input mask="9999 9999 9999 9999" maskChar={null} placeholder = "Numero do cartão" name = "cardNumber" value = {this.state.values.cardNumber} error = {this.state.errors.cardNumber} onChange = {(value)=>this.handleInputChange(value)}/>
                         
                         <div className="grid grid-gap--m grid-template-columns--2fr">
                             <Select options={optionsYear} firstOption={{name:"Selecione o ano", value:""}} name = "expirationMonth" value = {this.state.values.expirationMonth} error = {this.state.errors.expirationMonth} onChange = {(value)=>this.handleInputChange(value)} />
                             <Select options={optionsMonth} firstOption={{name:"Selecione o mês", value:""}} name = "expirationYear" value = {this.state.values.expirationYear} error = {this.state.errors.expirationYear} onChange = {(value)=>this.handleInputChange(value)}/>
                         </div>
                         
-                        <Input placeholder = "CVV" name = "cvv" value = {this.state.values.cvv} error = {this.state.errors.cvv} onChange = {(value)=>this.handleInputChange(value)}/>
+                        <Input type="password" placeholder = "CVV" name = "cvv" value = {this.state.values.cvv} error = {this.state.errors.cvv} onChange = {(value)=>this.handleInputChange(value)}/>
                         
                         <div className="grid grid-gap--m grid-template-columns--1fr">
                             <Button type="submit" text={"confirmar"} addClassName="gradient-color--base-60" />

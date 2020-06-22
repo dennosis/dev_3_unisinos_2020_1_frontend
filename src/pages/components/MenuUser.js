@@ -49,7 +49,7 @@ class MenuUser extends Component {
                         <div className="flex overflow--auto" >
                             <div className="grid grid-gap--m">
                                 {
-                                    this.state.rents.map((rent)=><ListCarItem rent={rent}/>)
+                                    this.state.rents.map((rent,index)=><ListCarItem key={index} rent={rent}/>)
                                 }
                             </div>
                         </div>

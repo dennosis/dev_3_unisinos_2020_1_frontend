@@ -190,8 +190,8 @@ class SignUp extends Component {
 
     render() {
 
-        const disabled = this.state.isEdit===true?true:false
-
+        const disabled = this.state.isEdit==='true'?true:false
+        console.log(disabled)
         const cnhCategoryOpts = [
             {name:"A", value:"A"},
             {name:"B", value:"B"},
@@ -205,7 +205,7 @@ class SignUp extends Component {
                             <Container className="grid grid-gap--m margin-bottom--auto">
                                 <Input name="name" placeholder="Nome" error={this.state.errors.name } value={this.state.values.name} onChange={(value) => this.handleInputChange(value)} />
                                 <Input mask="999.999.999-99" disabled={disabled} maskChar={null} name="cpf" placeholder="CPF" error={this.state.errors.cpf } value={this.state.values.cpf} onChange={(value) => this.handleInputChange(value)} />
-                                <Input mask="99.999.999-9" disabled={disabled} name="rg" placeholder="RG" error={this.state.errors.rg } value={this.state.values.rg} onChange={(value) => this.handleInputChange(value)} />
+                                <Input mask="999 999 999 9" maskChar={null} disabled={disabled} name="rg" placeholder="RG" error={this.state.errors.rg } value={this.state.values.rg} onChange={(value) => this.handleInputChange(value)} />
                                 <Input mask="(99) 9999 9999" maskChar={null} name="phone" placeholder="Telefone" error={this.state.errors.phone } value={this.state.values.phone} onChange={(value) => this.handleInputChange(value)} />
                                 <Input mask="(99) 99999 9999" maskChar={null} name="cellphone" placeholder="Celular" error={this.state.errors.cellphone } value={this.state.values.cellphone} onChange={(value) => this.handleInputChange(value)} />
                                 <Input name="email" type="email" disabled={disabled} autocomplete="off" placeholder="E-Mail" error={this.state.errors.email } value={this.state.values.email} onChange={(value) => this.handleInputChange(value)} />

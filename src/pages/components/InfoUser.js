@@ -24,7 +24,7 @@ class InfoUser extends Component {
                     <div className="flex flex--column align-content--flex-start">
                         <span className="font-size-s font--regular color--base-40">Seja bem vindo</span>
                         <div className="flex flex--column">
-                            <a href onClick={()=>this.props.openMenu()}  className={`font-size--2xl font--bold color--base-40 ${this.props.addClassNameName}`}>{this.state.user.name}</a>
+                            <span onClick={()=>this.props.openMenu()}  className={`font-size--2xl font--bold color--base-40 cursor--pointer ${this.props.addClassNameName}`}>{this.state.user.name}</span>
                             
                             {
                                 this.props.isEdit &&
