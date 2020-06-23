@@ -1,17 +1,18 @@
 
 import React, { Component } from 'react';
+import { Link }  from 'react-router-dom'
 
 
 class Button extends Component {
     render(){
 
-        const Element = this.props.href ? "a":"button"
+        const Element = this.props.href ? Link:"button"
 
         const attribs = {}
         if(Element==="button"){
             attribs['type'] = this.props.type || "button"
         }else{
-            attribs['href'] = this.props.href
+            attribs['to'] = this.props.href
         }
 
         if(this.props.target)

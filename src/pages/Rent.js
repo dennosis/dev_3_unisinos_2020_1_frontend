@@ -23,7 +23,7 @@ class Rent extends Component {
 
         //const {rentId} = this.props.match.params
         const {rentId,cardId} = this.props.match.params
-        console.log()
+
         let baseUrl = '/'
             baseUrl = baseUrl+(rentId?"rent/"+rentId:"")
             baseUrl = baseUrl+(cardId?"/card/"+cardId:"")
@@ -40,6 +40,28 @@ class Rent extends Component {
     componentWillMount() {
         this.getRent(this.state.rentId)
     }
+
+
+
+    async componentWillReceiveProps(nextProps) {
+        const {rentId,cardId} = nextProps.match.params
+
+        if (this.state.rentId !== rentId) {
+            await this.getRent(rentId)
+            
+            let baseUrl = '/'
+                baseUrl = baseUrl+(rentId?"rent/"+rentId:"")
+                baseUrl = baseUrl+(cardId?"/card/"+cardId:"")
+
+            await this.setState({
+                baseUrl,
+                cardId,
+                rentId
+            })
+
+        }
+    }
+
 
     getRent(id){
         api.getRentById(id).then(

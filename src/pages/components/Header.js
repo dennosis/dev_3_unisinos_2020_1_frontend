@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link }  from 'react-router-dom'
 
 import Img from './Img';
 import LogoLocadoraBoaViagem from '../../images/LogoLocadoraBoaViagem-title-wb.png';
@@ -27,18 +28,18 @@ class Header extends Component {
             case 1:
                 return (
                     <section className="l-content flex justify-content--center align-items--center ">
-                        <a href="/">
+                        <Link to="/">
                             <Img src={LogoLocadoraBoaViagem} alt="Logo" />
-                        </a>
+                        </Link>
                     </section>
                 )
 
             default:
                 return (
                     <section className="l-content flex justify-content--space-between align-items--center ">
-                        <a href="/">
+                        <Link to="/">
                             <Img src={LogoLocadoraBoaViagem} alt="Logo" />
-                        </a>
+                        </Link>
 
                         <InfoUser openMenu={()=>this.openMenu()} />
 

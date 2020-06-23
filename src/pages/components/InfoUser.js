@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link }  from 'react-router-dom'
 
 import { getUser} from '../../persist'
 import Button from './Button.js';
@@ -29,8 +30,8 @@ class InfoUser extends Component {
                             {
                                 this.props.isEdit &&
                                 <div className="grid grid--row grid-gap--l margin-right--auto">
-                                    <a href="/user/true" className="font-size--xs font--bold color--base-30 hover-color--base-40">editar</a>
-                                    <a href="/signout" className="font-size--xs font--bold color--base-30 hover-color--base-40">sair</a>
+                                    <Link to="/user/true" className="font-size--xs font--bold color--base-30 hover-color--base-40">editar</Link>
+                                    <Link to="/signout" className="font-size--xs font--bold color--base-30 hover-color--base-40">sair</Link>
                                 </div>
                             }
 

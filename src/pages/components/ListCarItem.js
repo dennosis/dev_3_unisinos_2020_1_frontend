@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link }  from 'react-router-dom'
+
 import api from '../../Api'
 import { formatDate } from  '../../utils'
 
@@ -30,7 +32,7 @@ class ListCarItem extends Component {
     render() {
 
         return (
-            <a href={`/rent/${this.state.rent.id}`} className="padding--m">
+            <Link to={`/rent/${this.state.rent.id}`} className="padding--m">
                 <Img mode={1} addClassName="border-radius--xs margin-bottom--l" src={this.state.car.image} />
 
                 <Title tag="h4" text={`${this.state.car.brand} ${this.state.car.model} ${this.state.car.modelYear}`} />
@@ -43,7 +45,7 @@ class ListCarItem extends Component {
                     <span className="font--bold">{formatDate(this.state.rent.dateDelivery)}</span>
 
                 </div>
-            </a>
+            </Link>
         );
     }
 }
