@@ -76,6 +76,7 @@ class Rent extends Component {
             },
             error => {
                 this.setState({
+                    rent: {},
                     alert: {type:"error", content:"Erro ao Buscar a Reserva"},
                 })
             }
@@ -157,29 +158,35 @@ class Rent extends Component {
             <Layout alert={this.state.alert} >
 
                 <Title text="Reserva" />
+                {
 
-                <form onSubmit={(e)=>this.onSubmit(e)} style={templateColumns} className="grid grid-gap--m">
-                    <Container className="grid grid-gap--m margin-bottom--auto">
-
-                        <ResumeRentalCompany editMode={!this.state.rent.paymentId} baseUrl={this.state.baseUrl} dateDelivery={this.state.rent.dateDelivery} datePickup={this.state.rent.datePickup} rentalCompanyPickupId={this.state.rent.rentalCompanyPickupId} rentalCompanyDeliveryId={this.state.rent.rentalCompanyDeliveryId} />
-
-                        <div className="grid grid--row grid-gap--m grid-template-columns--2fr">
-                            
-                            <ResumeUser editMode={!this.state.rent.paymentId} baseUrl={this.state.baseUrl} />
-
-                            <ResumePayment editMode={!this.state.rent.paymentId} totalAmount={this.state.rent.totalAmount} paymentId={this.state.rent.paymentId}  rentId={this.state.rentId} cardId={this.state.cardId} />
-
-                        </div>
-                        {
-                            !this.state.rent.paymentId &&
-                            <Button type="submit" text={'Confirmar reserva'} addClassName="gradient-color--base-60" />
-                        }
-
-                    </Container>
+                    this.state.rent.id &&
                     
-                    <ResumeCar days={this.state.days} carId={this.state.rent.carId} />
+                    <form onSubmit={(e)=>this.onSubmit(e)} style={templateColumns} className="grid grid-gap--m">
+                        <Container className="grid grid-gap--m margin-bottom--auto">
 
-                </form>
+                            <ResumeRentalCompany editMode={!this.state.rent.paymentId} baseUrl={this.state.baseUrl} dateDelivery={this.state.rent.dateDelivery} datePickup={this.state.rent.datePickup} rentalCompanyPickupId={this.state.rent.rentalCompanyPickupId} rentalCompanyDeliveryId={this.state.rent.rentalCompanyDeliveryId} />
+
+                            <div className="grid grid--row grid-gap--m grid-template-columns--2fr">
+                                
+                                <ResumeUser editMode={!this.state.rent.paymentId} baseUrl={this.state.baseUrl} />
+
+                                <ResumePayment editMode={!this.state.rent.paymentId} totalAmount={this.state.rent.totalAmount} paymentId={this.state.rent.paymentId}  rentId={this.state.rentId} cardId={this.state.cardId} />
+
+                            </div>
+                            {
+                                !this.state.rent.paymentId &&
+                                <Button type="submit" text={'Confirmar reserva'} addClassName="gradient-color--base-60" />
+                            }
+
+                        </Container>
+                        
+                        <ResumeCar days={this.state.days} carId={this.state.rent.carId} />
+
+                    </form>
+                    
+                }
+            
             </Layout>
         );
     }

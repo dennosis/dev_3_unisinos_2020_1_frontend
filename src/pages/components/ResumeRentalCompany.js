@@ -20,6 +20,13 @@ class ResumeRentalCompany extends Component {
             dateDelivery:this.props.dateDelivery
         }
     }
+
+    componentWillMount() {
+        if(this.props.rentalCompanyPickupId){
+            this.findRentalCompanies(this.props)
+        }
+    }
+
     componentWillReceiveProps(nextProps){
         if (this.state.rentalCompanyPickup.id !== nextProps.rentalCompanyPickupId) {
             this.findRentalCompanies(nextProps)
@@ -84,123 +91,127 @@ class ResumeRentalCompany extends Component {
         
         return (
             <Container>
+                {
+                    this.state.rentalCompanyPickup.id &&
+                
+                    <div className="grid grid--row grid-gap--m ">
 
-                <div className="grid grid--row grid-gap--m ">
+                        <section className="flex flex--column" >
 
-                    <section className="flex flex--column" >
+                            <Title tag="h3" text="Retirada" />
 
-                        <Title tag="h3" text="Retirada" />
+                            <div className="font--xs grid grid-template-columns--2fr grid-gap-row--2xs grid-gap-column--xl padding--2xs padding-bottom--5xl margin-right--auto">
+                                
+                                {
+                                    this.state.datePickup && 
+                                    <>
+                                    <span>Data:</span>
+                                    <span className="font--bold">{formatDate(this.state.datePickup)}</span>
+                                    </>
+                                }
 
-                        <div className="font--xs grid grid-template-columns--2fr grid-gap-row--2xs grid-gap-column--xl padding--2xs padding-bottom--5xl margin-right--auto">
+                                <span>Nome:</span>
+                                <span className="font--bold">{this.state.rentalCompanyPickup.name}</span>
+
+                                <span>Celular:</span>
+                                <span className="font--bold">{formatPhone(this.state.rentalCompanyPickup.cellphone)}</span>
+                                
+                                {
+                                    this.state.rentalCompanyPickup.phone && 
+                                    <>
+                                    <span>Telefone:</span>
+                                    <span className="font--bold">{formatPhone(this.state.rentalCompanyPickup.phone)}</span>
+                                    </>
+                                }
+
+                                <span>Email:</span>
+                                <span className="font--bold">{this.state.rentalCompanyPickup.email}</span>
                             
-                            {
-                                this.state.datePickup && 
-                                <>
-                                <span>Data:</span>
-                                <span className="font--bold">{formatDate(this.state.datePickup)}</span>
-                                </>
-                            }
-
-                            <span>Nome:</span>
-                            <span className="font--bold">{this.state.rentalCompanyPickup.name}</span>
-
-                            <span>Celular:</span>
-                            <span className="font--bold">{formatPhone(this.state.rentalCompanyPickup.cellphone)}</span>
+                                <span>Cep:</span>
+                                <span className="font--bold">{formatCep(this.state.rentalCompanyPickup.cep)}</span>
+                                
+                                <span>Address:</span>
+                                <span className="font--bold">{this.state.rentalCompanyPickup.address}</span>
+                                                    
+                                <span>Numero:</span>
+                                <span className="font--bold">{this.state.rentalCompanyPickup.number}</span>
+                                                    
+                                <span>Bairro:</span>
+                                <span className="font--bold">{this.state.rentalCompanyPickup.neighborhood}</span>
+                                                    
+                                <span>Cidade:</span>
+                                <span className="font--bold">{this.state.rentalCompanyPickup.city}</span>
                             
-                            {
-                                this.state.rentalCompanyPickup.phone && 
-                                <>
-                                <span>Telefone:</span>
-                                <span className="font--bold">{formatPhone(this.state.rentalCompanyPickup.phone)}</span>
-                                </>
-                            }
-
-                            <span>Email:</span>
-                            <span className="font--bold">{this.state.rentalCompanyPickup.email}</span>
+                                <span>Estado:</span>
+                                <span className="font--bold">{this.state.rentalCompanyPickup.uf}</span>
                         
-                            <span>Cep:</span>
-                            <span className="font--bold">{formatCep(this.state.rentalCompanyPickup.cep)}</span>
+                            </div>
+
+                        </section>
+
+
+
+                        <section className="flex flex--column" >
+
+                            <Title tag="h3" text="Devolução" />
+
+                            <div className="font--xs grid grid-template-columns--2fr grid-gap-row--2xs grid-gap-column--xl padding--2xs padding-bottom--5xl margin-right--auto">
+                                {
+                                    this.state.dateDelivery && 
+                                    <>
+                                    <span>Data:</span>
+                                    <span className="font--bold">{formatDate(this.state.dateDelivery)}</span>
+                                    </>
+                                }
+                                
+                                <span>Nome:</span>
+                                <span className="font--bold">{this.state.rentalCompanyDelivery.name}</span>
+
+                                <span>Celular:</span>
+                                <span className="font--bold">{formatPhone(this.state.rentalCompanyDelivery.cellphone)}</span>
+
+                                {
+                                    this.state.rentalCompanyDelivery.phone && 
+                                    <>
+                                    <span>Telefone:</span>
+                                    <span className="font--bold">{formatPhone(this.state.rentalCompanyDelivery.phone)}</span>
+                                    </>
+                                }
+            
+                                <span>Email:</span>
+                                <span className="font--bold">{this.state.rentalCompanyDelivery.email}</span>
                             
-                            <span>Address:</span>
-                            <span className="font--bold">{this.state.rentalCompanyPickup.address}</span>
-                                                 
-                            <span>Numero:</span>
-                            <span className="font--bold">{this.state.rentalCompanyPickup.number}</span>
-                                                 
-                            <span>Bairro:</span>
-                            <span className="font--bold">{this.state.rentalCompanyPickup.neighborhood}</span>
-                                                 
-                            <span>Cidade:</span>
-                            <span className="font--bold">{this.state.rentalCompanyPickup.city}</span>
-                        
-                            <span>Estado:</span>
-                            <span className="font--bold">{this.state.rentalCompanyPickup.uf}</span>
-                       
-                        </div>
-
-                    </section>
-
-
-
-                    <section className="flex flex--column" >
-
-                        <Title tag="h3" text="Devolução" />
-
-                        <div className="font--xs grid grid-template-columns--2fr grid-gap-row--2xs grid-gap-column--xl padding--2xs padding-bottom--5xl margin-right--auto">
-                            {
-                                this.state.dateDelivery && 
-                                <>
-                                <span>Data:</span>
-                                <span className="font--bold">{formatDate(this.state.dateDelivery)}</span>
-                                </>
-                            }
+                                <span>Cep:</span>
+                                <span className="font--bold">{formatCep(this.state.rentalCompanyDelivery.cep)}</span>
+                                
+                                <span>Address:</span>
+                                <span className="font--bold">{this.state.rentalCompanyDelivery.address}</span>
+                                                    
+                                <span>Numero:</span>
+                                <span className="font--bold">{this.state.rentalCompanyDelivery.number}</span>
+                                                    
+                                <span>Bairro:</span>
+                                <span className="font--bold">{this.state.rentalCompanyDelivery.neighborhood}</span>
+                                                    
+                                <span>Cidade:</span>
+                                <span className="font--bold">{this.state.rentalCompanyDelivery.city}</span>
                             
-                            <span>Nome:</span>
-                            <span className="font--bold">{this.state.rentalCompanyDelivery.name}</span>
-
-                            <span>Celular:</span>
-                            <span className="font--bold">{formatPhone(this.state.rentalCompanyDelivery.cellphone)}</span>
-
-                            {
-                                this.state.rentalCompanyDelivery.phone && 
-                                <>
-                                <span>Telefone:</span>
-                                <span className="font--bold">{formatPhone(this.state.rentalCompanyDelivery.phone)}</span>
-                                </>
-                            }
-        
-                            <span>Email:</span>
-                            <span className="font--bold">{this.state.rentalCompanyDelivery.email}</span>
-                        
-                            <span>Cep:</span>
-                            <span className="font--bold">{formatCep(this.state.rentalCompanyDelivery.cep)}</span>
+                                <span>Estado:</span>
+                                <span className="font--bold">{this.state.rentalCompanyDelivery.uf}</span>
                             
-                            <span>Address:</span>
-                            <span className="font--bold">{this.state.rentalCompanyDelivery.address}</span>
-                                                 
-                            <span>Numero:</span>
-                            <span className="font--bold">{this.state.rentalCompanyDelivery.number}</span>
-                                                 
-                            <span>Bairro:</span>
-                            <span className="font--bold">{this.state.rentalCompanyDelivery.neighborhood}</span>
-                                                 
-                            <span>Cidade:</span>
-                            <span className="font--bold">{this.state.rentalCompanyDelivery.city}</span>
-                        
-                            <span>Estado:</span>
-                            <span className="font--bold">{this.state.rentalCompanyDelivery.uf}</span>
-                        
-                        </div>
+                            </div>
 
-                    </section>
+                        </section>
 
-                </div>
+                    </div>
 
+                }
 
                 {
                     this.props.editMode && false &&
                     <Button text={"alterar"} to={this.state.linkTo} addClassName="gradient-color--black margin-top--auto"/>
                 }
+                
 
             </Container>
         );

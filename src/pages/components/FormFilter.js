@@ -150,7 +150,7 @@ class FormFilter extends Component {
                                 
                                 <Input mask="R$ 999" maskChar={null} name="cost" value={this.state.values.cost} placeholder="Preço/dia Máximo" onChange={(value)=>this.handleInputChange(value)} />
                                 
-                                <Input type="number" max="99999999" name="kilometrage" value={this.state.values.kilometrage} placeholder="Quilometragem Máxima" onChange={(value)=>this.handleInputChange(value)} />
+                                <Input type="number"min="999" max="99999999" name="kilometrage" value={this.state.values.kilometrage} placeholder="Quilometragem Máxima" onChange={(value)=>this.handleInputChange(value)} />
                                 
                                 <Input mask="9" maskChar={null} name="passengers" value={this.state.values.passengers} placeholder="Passageiros" onChange={(value)=>this.handleInputChange(value)} />
 

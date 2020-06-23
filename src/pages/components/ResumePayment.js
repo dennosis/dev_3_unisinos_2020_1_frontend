@@ -27,11 +27,14 @@ class ResumePayment extends Component {
 
         }
     }
-
+    componentWillMount() {
+        if (this.state.payment.id !== this.props.paymentId) {
+             this.findPayment(this.props)
+        }
+    }
 
 
     async componentWillReceiveProps(nextProps) {
-
 
         if (this.state.editMode !== nextProps.editMode) {
             await this.setState({

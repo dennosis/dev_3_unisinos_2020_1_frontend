@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import queryString from 'query-string'
+import Loader from 'react-loader-spinner'
 
 import api from '../Api'
 
@@ -34,7 +35,12 @@ class Search extends Component {
 		}
 	}
 
-	search = (values) => {
+	search = async (values) => {
+
+		await this.setState({
+			alert: {},
+			loader:true
+		})
 
 		const dateValidate = this.validateDate(values.datePickup, values.dateDelivery)
 		
@@ -59,18 +65,22 @@ class Search extends Component {
 			values.kilometrage =  {to: values.kilometrage}
 
 
-		api.findCars(values)
+		await api.findCars(values)
 			.then(
 				res => {
 					//console.log(res.data)
 					this.setState({ 
 						cars: res.data.cars || [],
-						days: dateValidate.days
+						days: dateValidate.days,
+						loader:false
+
 					})
 				},
 				error => {
 					this.setState({
-						alert: { type: "error", content: "Erro ao buscar dados" }
+						alert: { type: "error", content: "Erro ao buscar dados" },
+						loader:false
+
 					})
 				}
 			)
@@ -114,8 +124,8 @@ class Search extends Component {
 	}
 
 
-	onSubmit=(filter)=>{
-		this.search(filter)
+	onSubmit= async (filter)=>{
+		await this.search(filter)
 	}
 	
 	onRent=(carId, rentalCompany)=>{
@@ -127,7 +137,6 @@ class Search extends Component {
 			datePickup:this.state.filter.datePickup,
 			dateDelivery:this.state.filter.dateDelivery
 		}
-		console.log(data)
 		
 		api.storeRent(data)
 			.then(
@@ -135,9 +144,14 @@ class Search extends Component {
 					this.props.history.push(`/rent/${res.data.id}/paymentmethods`)
 				},
 				error => {
-					console.log(error)
+					let alert
+					if(error.response.status === 401){
+						alert = {type:"info", content:"Necessário logar-se ao sistema"}
+					}else{
+						alert = {type:"error", content:"Erro ao Iniciar a Reserva"}
+					}
 					this.setState({ 
-						alert: {type:"error", content:"Erro ao Iniciar a Reserva"},
+						alert
 					})
 				}
 			)
@@ -149,13 +163,31 @@ class Search extends Component {
 		return (
 			<Layout alert={this.state.alert} >
 
-				<div style={templateColumns} className="grid grid-gap--l">
-					
-					<Container className="grid grid-gap--m margin-bottom--auto">
-						{this.state.cars.map((value, index) => {
-							return  <Car key={index} onRent={this.onRent} days={this.state.days} {...value }/>
-						})}
-					</Container>
+				<div style={templateColumns} className="grid grid-gap--l position--relative">
+
+					{	
+						this.state.loader &&
+						<div  style={{background: 'rgba(0,0,0, 0.2)'}} className="position--absolute width--100 height--100 flex align-items--center justify-content--center border-radius--s">
+     							<Loader type="Puff" color="#b7bfcc" height={100} width={100} />
+						</div>
+					}
+
+					{
+						this.state.cars.length > 0 &&
+						<Container className="grid grid-gap--m margin-bottom--auto">
+							{this.state.cars.map((value, index) => {
+								return  <Car key={index} onRent={this.onRent} days={this.state.days} {...value }/>
+							})}
+						</Container>
+					}
+					{
+						this.state.cars.length === 0 &&
+						<Container className=" margin-bottom--auto">
+							<span className="font-size--4xl ">
+								Sua busca não obteve resultados
+							</span>
+						</Container>
+					}
 
 					<FormFilter values={this.state.filter} onSubmit={(value)=>this.onSubmit(value)} notEmptyValues />
 
