@@ -199,7 +199,7 @@ class ResumeRentalCompany extends Component {
 
                 {
                     this.props.editMode && false &&
-                    <Button text={"alterar"} href={this.state.linkTo} addClassName="gradient-color--black margin-top--auto"/>
+                    <Button text={"alterar"} to={this.state.linkTo} addClassName="gradient-color--black margin-top--auto"/>
                 }
 
             </Container>

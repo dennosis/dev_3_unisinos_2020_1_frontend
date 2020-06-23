@@ -20,78 +20,133 @@ class ResumePayment extends Component {
             payment:{},
             card:{},
             billet:{},
-            totalAmount: props.totalAmount
+            paymentId:props.paymentId,
+            cardId: props.cardId,
+            rentId: props.rentId,
+            totalAmount: props.totalAmount,
+
         }
     }
 
 
 
-    componentWillReceiveProps(nextProps) {
+    async componentWillReceiveProps(nextProps) {
 
-        if (this.state.payment.id !== nextProps.paymentId) {
-            this.findPayment(nextProps)
+
+        if (this.state.editMode !== nextProps.editMode) {
+            await this.setState({
+                editMode:nextProps.editMode
+            })
         }
-        if (this.state.card.id !== nextProps.cardId) {
-            this.findPayment(nextProps)
+
+        if (this.state.cardId !== nextProps.cardId) {
+            await this.setState({
+                cardId:nextProps.cardId
+            })
         }
+
+        if (this.state.rentId !== nextProps.rentId) {
+            await this.setState({
+                rentId:nextProps.rentId
+            })
+        }
+
+        if (this.state.paymentId !== nextProps.paymentId) {
+            await this.setState({
+                paymentId:nextProps.paymentId
+            })
+        }
+
         if (this.state.totalAmount !== nextProps.totalAmount) {
-            this.setState({
+            await this.setState({
                 totalAmount:nextProps.totalAmount
             })
         }
 
+        if (this.state.payment.id !== nextProps.paymentId) {
+            await this.findPayment(nextProps)
+        }
+
+
 
     }
 
 
-    async findPayment(props){
-        const {paymentId, cardId} = props
-        if(paymentId){
+    async findPayment(nextProps){
+        const {paymentId, cardId} = nextProps
 
-            await this.getPayment(paymentId)
+        if(paymentId !== "" && paymentId !== undefined){
+
+            await this.getPayment(this.state.paymentId)
             
             await this.getCard(this.state.payment.card)
             
             await this.getBillet(this.state.payment.billet)
 
         }else{
+
+            await this.setState({
+                payment:{},
+                billet:{},
+                card:{},
+            })
+
             await this.getCard(cardId)
         } 
     }
 
     async getPayment(id){
-        await api.getPaymentById(id).then(
-            res => {
-                this.setState({
-                    payment:res.data
-                })
-            },
-            error => {}
-        )
-    }
-
-    async getCard(id){
-        if(id)
-            await api.getCardById(id).then(
-                res => {
+        if(id!=="" && id!==undefined){
+            await api.getPaymentById(id).then(
+                 res => {
                     this.setState({
-                        card: res.data
+                        payment:res.data
                     })
                 },
                 error => {}
             )
+        }else{
+            await this.setState({
+                payment:{},
+            })
+        }
+    }
+
+    async getCard(id){
+        if(id!=="" && id!==undefined){
+            await api.getCardById(id).then(
+                res => {
+                    this.setState({
+                        card: res.data,
+                    })
+                },
+                error => {}
+            )
+
+        }else{
+            await this.setState({
+                card: {},
+            })
+
+        }
+                
     }
 
     async getBillet(id){
-        if(id)
-           await api.getBilletById(id).then(
-                res => {
+        if(id!=="" && id!==undefined){
+            await api.getBilletById(id).then(
+                 res => {
                     this.setState({
                         billet: res.data
                     })
                 },
                 error => {}
             )
+        }else{
+            await this.setState({
+                billet: {},
+            })
+        }
     }
 
 
@@ -142,7 +197,7 @@ class ResumePayment extends Component {
 
 
                     {
-                        (this.state.billet.id || (!this.props.cardId && !this.props.paymentId)) &&
+                        (this.state.billet.id || (!this.state.cardId && !this.state.payment.id)) &&
                         <>
                             <Title tag="h3" text="Pagamento via boleto bancario" />
 
@@ -162,8 +217,8 @@ class ResumePayment extends Component {
                 </section>
 
                 {
-                    (this.props.editMode &&  !this.props.id) &&
-                    <Button href={`/rent/${this.props.rentId}/paymentmethods`} text={"alterar"} addClassName="gradient-color--black margin-top--auto"/>
+                    (this.state.editMode &&  !this.state.payment.id) &&
+                    <Button to={`/rent/${this.state.rentId}/paymentmethods`} text={"alterar"} addClassName="gradient-color--black margin-top--auto"/>
                 }
 
             </Container>

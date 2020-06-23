@@ -43,8 +43,8 @@ class InfoUser extends Component {
                 { 
                     !this.state.user['id'] &&
                     <div className="grid grid-template-columns--2fr grid-gap--m">
-                        <Button href="/signin" text="Login"/>
-                        <Button href="/signUp" text="Cadastre-se"/>
+                        <Button to="/signin" text="Login"/>
+                        <Button to="/signUp" text="Cadastre-se"/>
                     </div>
                 }
 

@@ -6,13 +6,15 @@ import { Link }  from 'react-router-dom'
 class Button extends Component {
     render(){
 
-        const Element = this.props.href ? Link:"button"
+        let Element = this.props.to ? Link:"button"
+              Element = this.props.href ? "a":Element
 
         const attribs = {}
         if(Element==="button"){
             attribs['type'] = this.props.type || "button"
         }else{
-            attribs['to'] = this.props.href
+            attribs['to'] = this.props.to
+            attribs['href'] = this.props.href
         }
 
         if(this.props.target)
