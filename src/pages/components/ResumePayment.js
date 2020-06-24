@@ -24,6 +24,7 @@ class ResumePayment extends Component {
             cardId: props.cardId,
             rentId: props.rentId,
             totalAmount: props.totalAmount,
+            editMode:props.editMode
 
         }
     }
@@ -167,8 +168,7 @@ class ResumePayment extends Component {
     }
 
 
-    render(){
-
+    render(){     
         const totalAmount = this.state.payment.value ? this.state.payment.value : this.state.totalAmount
 
         return (
