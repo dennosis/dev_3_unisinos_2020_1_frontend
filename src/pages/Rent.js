@@ -176,7 +176,7 @@ class Rent extends Component {
                             </div>
                             {
                                 !this.state.rent.paymentId &&
-                                <Button type="submit" text={'Confirmar reserva'} addClassName="gradient-color--base-60" />
+                                <Button type="submit" text={'Confirmar reserva'} addClassName="gradient-color--base-60 background-color--base-75" />
                             }
 
                         </Container>

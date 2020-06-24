@@ -11,6 +11,7 @@ import Container from './components/Container';
 
 import Car from './components/Car';
 import FormFilter from './components/FormFilter';
+import Title from './components/Title';
 
 
 const templateColumns = {
@@ -162,6 +163,8 @@ class Search extends Component {
 	render(){
 		return (
 			<Layout alert={this.state.alert} >
+                
+				<Title text="Busca" />
 
 				<div style={templateColumns} className="grid grid-gap--l position--relative">
 

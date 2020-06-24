@@ -114,7 +114,7 @@ class Car extends Component {
                     <div className="flex flex--column align-items--center">
                         <span className="font-size--s color--base-30 margin-bottom--3xs">{`${formatMoney(this.props.cost)}/dia`}</span>
                         <span className="font-size--3xl font--bold margin-bottom--xs">{formatMoney(this.props.cost * this.props.days)}</span>
-                        <Button text={'Alugar'} onClick={()=>this.props.onRent(this.props.id, this.props.currentRentalCompany.id)} addClassName="gradient-color--base-60 align-self--stretch"/>
+                        <Button text={'Alugar'} onClick={()=>this.props.onRent(this.props.id, this.props.currentRentalCompany.id)} addClassName="gradient-color--base-60 align-self--stretch background-color--base-75"/>
                     </div>
 
             </Container>

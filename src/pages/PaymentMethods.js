@@ -43,8 +43,9 @@ class PaymentMethods extends Component {
     render() {
         return (
             <Layout>
+                <Title tag="h1" text="Forma de pagamento"/>
+
                 <Container addClassName="align-self--center">
-                    <Title tag="h2" text="Forma de pagamento" />
 
                     <div className="grid grid-gap--l">
                         {
@@ -73,7 +74,7 @@ class PaymentMethods extends Component {
                             </Container>
 
                         }
-
+                        <div className="grid grid-template-columns--2fr grid-gap--l">
                         <Container addClassName="flex flex--column align-items--center">
 
                             <h3 className="padding-bottom--l">Novo Cartão</h3>
@@ -92,6 +93,8 @@ class PaymentMethods extends Component {
                                 <Img width={70} height={50} mode={1} addClassName="border-radius--xs" src={ImageBankSlip} />
                             </Link>
                         </Container>
+                        </div>
+
                     </div>
 
             </Container>

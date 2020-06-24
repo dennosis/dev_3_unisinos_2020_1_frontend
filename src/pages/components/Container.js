@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class Container extends Component {
   render(){
 
-		let className = `container shadow-neumorphic padding--l border-radius--s`
+		let className = `container shadow-container shadow-neumorphic padding--l border-radius--s`
 
 		if(this.props.className){
 			className = `${className} ${this.props.className}`

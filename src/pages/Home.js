@@ -20,7 +20,7 @@ class Home extends Component {
 		return(
 			<Layout isMiniFilter={true} history={this.props.history}>
 				
-				<Img mode={1} src={BannerLarge} addClassName="border-radius--xs"/>
+				<Img mode={1} src={BannerLarge} addClassName="border-radius--xs margin-top--l"/>
 				
 				<div className="grid grid-gap--l grid-template-columns--3fr margin-bottom--l margin-top--l">
 					<Container>

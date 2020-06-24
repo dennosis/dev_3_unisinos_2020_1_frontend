@@ -90,7 +90,7 @@ class Login extends Component{
                             onChange={(value)=>this.handleInputChange(value)} 
                         />
 
-                        <Button type="submit" text={"entrar"} addClassName="gradient-color--base-60" />
+                        <Button type="submit" text={"entrar"} addClassName="gradient-color--base-75 " />
                     </form>
                 </Container>
 			</Layout>

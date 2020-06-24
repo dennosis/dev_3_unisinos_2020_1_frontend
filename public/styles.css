@@ -438,16 +438,16 @@ select.select {
 
 /*---base-10---*/
 .background-color--base-10, .hover-background-color--base-10:hover {
-  background-color: #2d333e; }
+  background-color: #1a1f27; }
 
 .color--base-10, .hover-color--base-10:hover {
-  color: #2d333e; }
+  color: #1a1f27; }
 
 .border-color--base-10, .hover-border-color--base-10:hover {
-  border-color: #2d333e; }
+  border-color: #1a1f27; }
 
 .gradient-color--base-10, .hover-gradient-color--base-10:hover {
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0), rgba(45, 51, 62, 0.01) 35%, rgba(45, 51, 62, 0.01) 65%, rgba(0, 0, 0, 0)), linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(45, 51, 62, 0.1) 25%, rgba(45, 51, 62, 0.1) 75%, rgba(0, 0, 0, 0)); }
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0), rgba(26, 31, 39, 0.01) 35%, rgba(26, 31, 39, 0.01) 65%, rgba(0, 0, 0, 0)), linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(26, 31, 39, 0.1) 25%, rgba(26, 31, 39, 0.1) 75%, rgba(0, 0, 0, 0)); }
 
 /*---base-20---*/
 .background-color--base-20, .hover-background-color--base-20:hover {
@@ -526,6 +526,19 @@ select.select {
 
 .gradient-color--base-70, .hover-gradient-color--base-70:hover {
   background: linear-gradient(0deg, rgba(0, 0, 0, 0), rgba(1, 235, 252, 0.01) 35%, rgba(1, 235, 252, 0.01) 65%, rgba(0, 0, 0, 0)), linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(1, 235, 252, 0.1) 25%, rgba(1, 235, 252, 0.1) 75%, rgba(0, 0, 0, 0)); }
+
+/*---base-75---*/
+.background-color--base-75, .hover-background-color--base-75:hover {
+  background-color: #005f5f; }
+
+.color--base-75, .hover-color--base-75:hover {
+  color: #005f5f; }
+
+.border-color--base-75, .hover-border-color--base-75:hover {
+  border-color: #005f5f; }
+
+.gradient-color--base-75, .hover-gradient-color--base-75:hover {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0), rgba(0, 95, 95, 0.01) 35%, rgba(0, 95, 95, 0.01) 65%, rgba(0, 0, 0, 0)), linear-gradient(90deg, rgba(0, 0, 0, 0), rgba(0, 95, 95, 0.1) 25%, rgba(0, 95, 95, 0.1) 75%, rgba(0, 0, 0, 0)); }
 
 /*---base-80---*/
 .background-color--base-80, .hover-background-color--base-80:hover {
@@ -614,7 +627,7 @@ select.select {
 
 /*---base-10---*/
 .fill--base-10, .hover-fill--base-10:hover {
-  fill: #2d333e; }
+  fill: #1a1f27; }
 
 /*---base-20---*/
 .fill--base-20, .hover-fill--base-20:hover {
@@ -639,6 +652,10 @@ select.select {
 /*---base-70---*/
 .fill--base-70, .hover-fill--base-70:hover {
   fill: #01ebfc; }
+
+/*---base-75---*/
+.fill--base-75, .hover-fill--base-75:hover {
+  fill: #005f5f; }
 
 /*---base-80---*/
 .fill--base-80, .hover-fill--base-80:hover {
@@ -843,15 +860,18 @@ select.select {
     justify-content: flex-end;
     background-color: #7f8186; }
 
+.shadow-container {
+  background: linear-gradient(125deg, #1a1f27, #171c23); }
+
 .shadow {
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.15); }
 
 .shadow-neumorphic {
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.15), -2px -2px 2px rgba(255, 255, 255, 0.05); }
+  box-shadow: 5px 5px 12px rgba(0, 0, 0, 0.3), -2px -2px 2px rgba(255, 255, 255, 0.05); }
 
 .shadow-neumorphic--inset {
   box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.15), inset -2px -2px 2px rgba(255, 255, 255, 0.05);
-  background-color: #00000017; }
+  background-color: #00000025; }
 
 .color-alert-bloq {
   color: #fff;

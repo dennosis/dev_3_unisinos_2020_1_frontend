@@ -12,7 +12,7 @@ import PaymentMethods from './pages/PaymentMethods.js';
 import NewCard from './pages/NewCard.js';
 import Rent from './pages/Rent.js';
 
-class Main extends Component {
+class App extends Component {
     render(){
         return(
             <BrowserRouter>
@@ -30,12 +30,6 @@ class Main extends Component {
                         
                         <Route exact path="/user/:isEdit" component={SignUp}  />
 
-                        {
-                            /*
-                        <Route exact path="/user" render={props => <SignUp {...props} isEdit={true} />}  />
-
-                            */
-                        }
                         
                         <Route exact path="/card" component={NewCard} />
 
@@ -58,4 +52,4 @@ class Main extends Component {
     }
 }
 
-export default Main;
+export default App;

@@ -8,6 +8,7 @@ import Select from './components/Select';
 import Layout from './components/Layout';
 import Container from './components/Container';
 import Button from './components/Button';
+import Title from './components/Title';
 
 class SignUp extends Component {
 
@@ -201,6 +202,9 @@ class SignUp extends Component {
         ]
         return (
             <Layout alert={this.state.alert} headerMode={1} >
+                
+                <Title text="Cadastro" />
+
                 <form onSubmit={(e) => this.onSubmit(e)} className="grid grid-gap--l" autoComplete="false" >
                         <div className="grid grid-template-columns--2fr grid-gap--2xl">
                             <Container className="grid grid-gap--m margin-bottom--auto">
@@ -238,7 +242,7 @@ class SignUp extends Component {
                                 !this.state.isEdit &&
                                 <Button type="reset" onClick={() => this.onClear()} text={'Limpar dados'} addClassName="gradient-color--black" />
                             }
-                            <Button type="submit" text={this.state.isEdit?'Salvar':'Cadastrar'} addClassName="gradient-color--base-60" />
+                            <Button type="submit" text={this.state.isEdit?'Salvar':'Cadastrar'} addClassName="gradient-color--base-75" />
                         </div>
 
                 </form>

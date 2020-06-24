@@ -7,6 +7,7 @@ import Container from './components/Container';
 import Input from './components/Input';
 import Select from './components/Select';
 import Button from './components/Button';
+import Title from './components/Title';
 
 const componentsCard={
     position: 'relative',
@@ -108,11 +109,11 @@ class NewCard extends Component {
 
         return (
             <Layout alert={this.state.alert} >
+                
+                <Title tag="h1" text="Novo cartão"/>
+
                 <Container style={componentsCard} className = "newCard">
                     <form onSubmit={(e) => this.onSubmit(e)} className="grid grid-gap--l" >
-                        <div className="flex justify-content--center">
-                            <h2>Novo cartão</h2>
-                        </div>
 
                         <div className="grid grid-gap--m grid-template-columns--2fr">
                             <label style={dateComp}> Data de nascimento do titular:</label>
@@ -130,7 +131,7 @@ class NewCard extends Component {
                         <Input mask="9999" maskChar={null} type="password" placeholder = "CVV" name = "cvv" value = {this.state.values.cvv} error = {this.state.errors.cvv} onChange = {(value)=>this.handleInputChange(value)}/>
                         
                         <div className="grid grid-gap--m grid-template-columns--1fr">
-                            <Button type="submit" text={"confirmar"} addClassName="gradient-color--base-60" />
+                            <Button type="submit" text={"confirmar"} addClassName="gradient-color--base-75" />
                         </div>
                     </form>
                 </Container>
