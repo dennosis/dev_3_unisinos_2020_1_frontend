@@ -36,6 +36,31 @@ class Search extends Component {
 		}
 	}
 
+	async componentWillMount(){
+		await this.search(this.state.filter)
+	}
+
+	async componentWillReceiveProps(nextProps) {
+		const filter = queryString.parse(nextProps.location.search)
+
+		if (this.state.filter.datePickup !== filter.datePickup ||
+			this.state.filter.dateDelivery !== filter.dateDelivery ||
+			this.state.filter.rentalCompanyPickup !== filter.rentalCompanyPickup ||
+			this.state.filter.rentalCompanyDelivery !== filter.rentalCompanyDelivery 
+		) {
+			const dateValidate = this.validateDate(filter.datePickup, filter.dateDelivery)
+		
+			filter.datePickup = dateValidate.dateInit
+			filter.dateDelivery = dateValidate.dateEnd
+			
+            await this.setState({
+                filter,
+            })
+
+        }
+    }
+
+
 	search = async (values) => {
 
 		await this.setState({
@@ -118,10 +143,6 @@ class Search extends Component {
 
 	isValidDate(date) {
 		return date instanceof Date && !isNaN(date);
-	}
-
-	async componentWillMount(){
-		await this.search(this.state.filter)
 	}
 
 
