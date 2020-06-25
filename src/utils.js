@@ -20,8 +20,11 @@ export const formatCep = (cep) => {
 }
 
 export const formatDate = (date) => {
-    date = new Date(date)
-    return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`
+    console.log(date)
+
+    date = new Date(date).toLocaleDateString('pt-BR', {timeZone: 'UTC'})
+    return date
+    //return `${date.getDate()+1}/${date.getMonth()+1}/${date.getFullYear()}`
 }
 
 export const formatMoney = (money) => {
